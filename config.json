@@ -1,0 +1,41 @@
+{
+  "public": {
+    "default": {
+      "commerce-endpoint": "https://na1.api.commerce.adobe.com/R2BTcyPc7knfUJMozF1oQQ/graphql",
+      "headers": {
+        "all": {
+          "Store": "razerstoreview"
+        },
+        "cs": {
+          "Magento-Store-Code": "razer",
+          "Magento-Store-View-Code": "razerstoreview",
+          "Magento-Website-Code": "base"
+        }
+      },
+      "commerce-b2b-enabled": true,
+      "commerce-companies-enabled": true,
+      "commerce-assets-enabled": true,
+      "adobe-commerce-optimizer": false,
+      "analytics": {
+        "base-currency-code": "USD",
+        "environment": "Testing",
+        "environment-id": "R2BTcyPc7knfUJMozF1oQQ",
+        "store-code": "razer",
+        "store-id": "razer",
+        "store-name": "Razer",
+        "store-url": "https://coresaas-subgraph-external:8000/R2BTcyPc7knfUJMozF1oQQ/",
+        "store-view-code": "razerstoreview",
+        "store-view-id": "razerstoreview",
+        "store-view-name": "Razer",
+        "website-code": "base",
+        "website-id": "base",
+        "website-name": "Main Website"
+      },
+      "plugins": {
+        "picker": {
+          "rootCategory": "35"
+        }
+      }
+    }
+  }
+}
