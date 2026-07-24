@@ -133,6 +133,74 @@ They should be kept and the rule disabled inline per-line rather than "fixed" �
 them silently degrades the glassmorphic rendering on Safari. This is recorded so the
 styling wave does not blanket-`--fix` its way into a visual regression.
 
+## Ported shared-file changes, and what was deliberately not ported
+
+The import surfaced 4 `import/named` failures — imported blocks reaching for exports razer
+does not have. These are **shared-file export gaps, not dropin v3/v4 breaks**, so they were
+ported semantically onto razer's base rather than by replacing razer's files.
+
+### `scripts/commerce.js` — added `encodeSkuForUrl`, `getSearchContext`
+
+Source `commerce.js` has 8 exports razer lacks. Only the **read-only** subset needed by
+imported blocks was ported:
+
+| Ported | Why it is safe |
+|---|---|
+| `encodeSkuForUrl` | Pure string transform, no state |
+| `getStoredCustomerGroupUid` | `sessionStorage` read, try/caught |
+| `getSearchViewHistory` | `localStorage` read over `${storeViewCode}:productViewHistory` — **a key razer already writes**, in the same `{date, sku}` shape |
+| `getSearchContext` | Composes the two above |
+
+**Deliberately not ported** — the customer-group *writer* chain
+(`fetchCustomerGroupUid`, `setCatalogCustomerGroupHeader`,
+`refreshCatalogCustomerGroupHeader`, `refreshCatalogServiceEndpoint`, plus the
+`CUSTOMER_GROUP_UID_QUERY` GraphQL document). That chain issues network calls, mutates the
+`Magento-Customer-Group` fetch header, and rebuilds the Catalog Service endpoint. Importing
+it would change request behavior on **every existing razer page**, which the migration
+rules forbid.
+
+Consequence, stated plainly: nothing currently writes the customer-group session key, so
+`getSearchContext()` always reports the guest group `'MA=='`. `search-bar` therefore runs
+**unpersonalized by customer group** — view-history personalization works, group-based
+personalization does not. This is a real functional gap, not a silent one; adopting the
+writer chain is follow-up work that must be validated against razer's B2B pricing.
+
+razer's own `QUICK_ORDER_PATH` export (used by its target-only `commerce-b2b-quick-order`
+block) is untouched.
+
+### `blocks/fragment/fragment.js` — added `mountFragment`
+
+Exported for `quiz-router`. razer's `decorate` still uses its original
+`block.replaceChildren(...)` and was **not** rewired to the source's section-hoisting
+behavior. The source version is arguably better, but switching it would change fragment
+rendering on existing razer pages and put acceptance test 11 (visual isolation) at risk.
+Deferred as a standalone improvement.
+
+### Lint fixes applied to imported code
+
+- 27 auto-fixable formatting errors in `vip-member-block.js`.
+- 5 fixed by hand: 2 `no-nested-ternary` and 1 `max-len` in
+  `uniform-configurator.commerce.js`, 2 `max-len` in `auth-diagnostics.js`. Rewritten for
+  readability, not suppressed. (These fail in the source repo too.)
+- 38 auto-fixable CSS notation errors.
+- 4 `-webkit-backdrop-filter` declarations in `tabs.css` and `search-bar.css` carry a
+  scoped `stylelint-disable-next-line`. Stylelint reports them as "fixable", but its fix is
+  to **delete** them, which silently breaks glassmorphic rendering on Safari. A per-line
+  disable was chosen over relaxing razer's shared `.stylelintrc.json`, so the exception
+  stays with the code that needs it instead of becoming repo-wide policy.
+
+## Notes for later waves
+
+- **The pre-commit hook runs `build:json`.** Any commit touching `blocks/` regenerates
+  `component-definition.json`, `component-models.json`, and `component-filters.json`. They
+  cannot be byte-pinned; validate them by **ID preservation** instead. Verified after the
+  import: `+5 / +87 / +16` entries, **0 lost**. `preserved-paths.sha256` still lists these
+  three — treat those three lines as informational, not as a breach.
+- `.eslintignore` differs: source has `*.min.js`, razer does not. Pending in the root-config
+  wave.
+- `scripts/aem.js` is marked **NEVER MODIFY** in `AGENTS.md`. It is shared-different; any
+  source behavior it carries must be reached another way.
+
 ## Excluded from import (deferred, with reason)
 
 | Path | Reason |

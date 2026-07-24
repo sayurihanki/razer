@@ -289,7 +289,7 @@ export function buildCommerceContractIndex(product = {}) {
 }
 
 function normalizeCoreCustomizableValues(rawValues) {
-  const values = Array.isArray(rawValues) ? rawValues : rawValues ? [rawValues] : [];
+  const values = Array.isArray(rawValues) ? rawValues : [rawValues].filter(Boolean);
 
   return values
     .map((value) => ({
@@ -373,9 +373,9 @@ function mergeEnteredOptions(primary = [], secondary = []) {
 }
 
 export function mergeCommerceContractProduct(primaryProduct = {}, contractProduct = {}) {
-  const mergedOptions = Array.isArray(contractProduct?.options) && contractProduct.options.length > 0
-    ? contractProduct.options
-    : Array.isArray(primaryProduct?.options) ? primaryProduct.options : [];
+  const contractOptions = Array.isArray(contractProduct?.options) ? contractProduct.options : [];
+  const primaryOptions = Array.isArray(primaryProduct?.options) ? primaryProduct.options : [];
+  const mergedOptions = contractOptions.length > 0 ? contractOptions : primaryOptions;
 
   return {
     ...primaryProduct,

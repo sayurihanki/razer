@@ -12,6 +12,8 @@
     0 0 0 1px rgb(255 255 255 / 26%) inset,
     0 16px 34px rgb(46 23 84 / 8%);
   backdrop-filter: blur(14px) saturate(125%);
+
+  /* stylelint-disable-next-line property-no-vendor-prefix -- Safari still requires the prefix */
   -webkit-backdrop-filter: blur(14px) saturate(125%);
 }
 
@@ -75,6 +77,8 @@
     0 0 0 1px rgb(255 255 255 / 56%) inset,
     0 8px 22px rgb(101 46 198 / 13%);
   backdrop-filter: blur(7px);
+
+  /* stylelint-disable-next-line property-no-vendor-prefix -- Safari still requires the prefix */
   -webkit-backdrop-filter: blur(7px);
   font-weight: 700;
 }
@@ -91,6 +95,8 @@
   overflow: auto;
   position: relative;
   backdrop-filter: blur(14px) saturate(120%);
+
+  /* stylelint-disable-next-line property-no-vendor-prefix -- Safari still requires the prefix */
   -webkit-backdrop-filter: blur(14px) saturate(120%);
 }
 

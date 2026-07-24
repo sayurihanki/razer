@@ -25,7 +25,8 @@ export function getGraphQlRequestId(response) {
 }
 
 export function annotateAuthMutationResponse(request, response) {
-  if (!isAuthTokenMutation(request) || !Array.isArray(response?.errors) || response.errors.length === 0) {
+  const hasErrors = Array.isArray(response?.errors) && response.errors.length > 0;
+  if (!isAuthTokenMutation(request) || !hasErrors) {
     return response;
   }
 
@@ -58,7 +59,8 @@ export function annotateAuthMutationResponse(request, response) {
 }
 
 export function buildAuthFailureSnapshot(request, response) {
-  if (!isAuthTokenMutation(request) || !Array.isArray(response?.errors) || response.errors.length === 0) {
+  const hasErrors = Array.isArray(response?.errors) && response.errors.length > 0;
+  if (!isAuthTokenMutation(request) || !hasErrors) {
     return null;
   }
 

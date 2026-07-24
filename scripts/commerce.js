@@ -92,6 +92,10 @@ export const CUSTOMER_NEGOTIABLE_QUOTE_TEMPLATE_PATH = `${CUSTOMER_PATH}/negotia
 // TRACKING URL
 export const UPS_TRACKING_URL = 'https://www.ups.com/track';
 
+// CUSTOMER GROUP (search personalization)
+const CUSTOMER_GROUP_UID_SESSION_KEY = 'DROPINS_CUSTOMER_GROUP_UID';
+const DEFAULT_GUEST_CUSTOMER_GROUP_UID = 'MA==';
+
 // CUSTOMER B2B PATHS
 export const CUSTOMER_PO_RULES_PATH = `${CUSTOMER_PATH}/approval-rules`;
 export const CUSTOMER_PO_RULE_FORM_PATH = `${CUSTOMER_PATH}/approval-rule`;
@@ -725,6 +729,70 @@ export function getProductSku() {
  */
 export function getOptionsUIDsFromUrl() {
   return new URLSearchParams(window.location.search).get('optionsUIDs')?.split(',');
+}
+
+/**
+ * Encodes a SKU so it can be used safely inside a URL path segment.
+ * @param {string} sku - The SKU to encode
+ * @returns {string} The encoded SKU, or an empty string when no SKU is given
+ */
+export function encodeSkuForUrl(sku) {
+  return sku?.replace(/\//g, '__') || '';
+}
+
+/**
+ * Reads the cached Commerce customer group uid.
+ *
+ * Only the reader is provided here. Nothing in this repository writes the
+ * session key yet, so this resolves to null and callers fall back to the guest
+ * group. See docs/migration/README.md for the deferred writer chain.
+ *
+ * @returns {string|null} The stored customer group uid, or null when unavailable
+ */
+export function getStoredCustomerGroupUid() {
+  try {
+    return window.sessionStorage.getItem(CUSTOMER_GROUP_UID_SESSION_KEY);
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Reads recently viewed products from the history this module already records.
+ * @param {number} limit - Maximum number of entries to return
+ * @returns {Array<{dateTime: string, sku: string}>} Recently viewed products
+ */
+export function getSearchViewHistory(limit = 10) {
+  try {
+    const storeViewCode = getConfigValue('headers.cs.Magento-Store-View-Code');
+    const historyKey = `${storeViewCode}:productViewHistory`;
+    const parsedHistory = JSON.parse(window.localStorage.getItem(historyKey) || '[]');
+
+    if (!Array.isArray(parsedHistory)) {
+      return [];
+    }
+
+    return parsedHistory
+      .filter((item) => item?.sku)
+      .slice(-limit)
+      .map((item) => ({
+        dateTime: item.date || new Date(0).toISOString(),
+        sku: item.sku,
+      }));
+  } catch {
+    return [];
+  }
+}
+
+/**
+ * Builds the personalization context passed to Commerce search requests.
+ * @returns {{customerGroup: string, userViewHistory: Array}} The search context
+ */
+export function getSearchContext() {
+  return {
+    customerGroup: getStoredCustomerGroupUid() || DEFAULT_GUEST_CUSTOMER_GROUP_UID,
+    userViewHistory: getSearchViewHistory(),
+  };
 }
 
 /**

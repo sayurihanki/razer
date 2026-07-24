@@ -239,6 +239,8 @@ main > .section.search-bar-live-results-open {
 
 .search-bar-results {
   background: var(--search-bar-results-bg);
+
+  /* stylelint-disable-next-line property-no-vendor-prefix -- Safari still requires the prefix */
   -webkit-backdrop-filter: var(--search-bar-results-blur) var(--search-bar-results-saturate);
   backdrop-filter: var(--search-bar-results-blur) var(--search-bar-results-saturate);
   border: var(--search-bar-form-border-width) solid var(--search-bar-results-border);
