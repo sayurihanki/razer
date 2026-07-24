@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta
+      name="description"
+      content="Complete Razer Minipage Block 4 authoring integration preview">
+    <title>Razer Minipage Block 4 Preview</title>
+    <link rel="stylesheet" href="../../styles/styles.css">
+    <link rel="stylesheet" href="./razer-minipage-block4.css">
+    <style>
+      .razer-minipage-block4-demo-sentinel {
+        padding: 24px;
+        background: #f4efe5;
+        color: #27312b;
+        font: 16px/1.5 sans-serif;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body class="appear">
+    <header aria-label="Host site header">
+      <div class="razer-minipage-block4-demo-sentinel">Host header sentinel</div>
+    </header>
+    <main>
+      <div
+        class="section razer-minipage-block4-container appear"
+        data-section-status="loaded"
+        style="display: block">
+        <div class="razer-minipage-block4-wrapper">
+          <div
+            class="razer-minipage-block4 block"
+            data-block-name="razer-minipage-block4"
+            data-block-status="loaded">
+          </div>
+        </div>
+      </div>
+    </main>
+    <footer aria-label="Host site footer">
+      <div class="razer-minipage-block4-demo-sentinel">Host footer sentinel</div>
+    </footer>
+    <script type="module">
+      import decorate from './razer-minipage-block4.js';
+
+      if (new URLSearchParams(window.location.search).has('reduced-motion')) {
+        const nativeMatchMedia = window.matchMedia.bind(window);
+        window.matchMedia = (query) => {
+          const queryList = nativeMatchMedia(query);
+          if (query !== '(prefers-reduced-motion: reduce)') return queryList;
+          return new Proxy(queryList, {
+            get(target, property) {
+              return property === 'matches'
+                ? true
+                : Reflect.get(target, property, target);
+            },
+          });
+        };
+      }
+
+      const block = document.querySelector('.razer-minipage-block4');
+      const response = await fetch('./razer-minipage-block4-da-live.html');
+      if (!response.ok) {
+        throw new Error(`Unable to load the Block 4 handoff (${response.status})`);
+      }
+
+      const source = new DOMParser().parseFromString(await response.text(), 'text/html');
+      const authoredRows = [...source.querySelectorAll('table:first-of-type tr')].slice(1);
+      const blockRows = authoredRows.map((authoredRow) => {
+        const row = document.createElement('div');
+        [...authoredRow.children].forEach((authoredCell) => {
+          const cell = document.createElement('div');
+          cell.append(...authoredCell.cloneNode(true).childNodes);
+          row.append(cell);
+        });
+        return row;
+      });
+
+      block.replaceChildren(...blockRows);
+      decorate(block);
+    </script>
+  </body>
+</html>
