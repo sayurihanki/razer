@@ -128,10 +128,10 @@
     {
       "id": "section",
       "components": [
-        "hero",
         "accordion",
         "cards",
         "carousel",
+        "catalog-highlights",
         "columns",
         "commerce-account-header",
         "commerce-account-sidebar",
@@ -159,12 +159,16 @@
         "commerce-wishlist",
         "enrichment",
         "fragment",
+        "hero",
+        "how-it-works-stats",
+        "how-it-works-stats-2",
         "image",
         "product-details",
         "product-list-page",
         "product-recommendations",
         "targeted-block",
-        "text"
+        "text",
+        "vip-hero-block"
       ]
     }
   ]
