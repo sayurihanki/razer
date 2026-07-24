@@ -1,0 +1,74 @@
+/*
+ * Imported design tokens from the jenhankib2bbodea source repository.
+ *
+ * These are the source's glassmorphic/accent tokens. 25 imported blocks
+ * reference them with no fallback value, so without these definitions those
+ * blocks drop the affected declarations entirely.
+ *
+ * This file is NOT part of razer's global stylesheet chain. It is injected at
+ * runtime only when a block that needs it is present on the page (see
+ * loadBodeaSharedTokens in scripts/scripts.js), so razer pages that use none of
+ * these blocks never receive it and are visually unaffected.
+ *
+ * None of these names collide with a token razer defines: the set was derived
+ * by subtracting razer's global tokens from the tokens the imported blocks
+ * reference. Do not move these into styles/styles.css -- doing so would install
+ * the source's brand system globally, which the migration rules forbid.
+ *
+ * Generated from the source repo's styles/styles.css and transitively closed,
+ * so every var() reference below resolves within this file or razer's globals.
+ */
+
+:root {
+  --accent-1: var(--main-color-accent);
+  --accent-2: var(--green-500);
+  --accent-3: var(--gold);
+  --accent-dark-glow: 15 61 36;
+  --accent-deep-glow: 31 122 77;
+  --accent-glow: 46 190 122;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --font-display: var(--type-display-font-family);
+  --glass-bg: rgb(255 255 255 / 58%);
+  --glass-bg-hover: rgb(255 255 255 / 72%);
+  --glass-bg-strong: rgb(255 255 255 / 84%);
+  --glass-blur: blur(24px);
+  --glass-blur-sm: blur(12px);
+  --glass-border: rgb(255 255 255 / 74%);
+  --glass-border-subtle: rgb(var(--accent-dark-glow) / 12%);
+  --glass-saturate: saturate(160%);
+  --gold: #c9a84c;
+  --gold-light: #e8c97a;
+  --green-100: #a8edcc;
+  --green-300: #2ebe7a;
+  --green-400: #26a067;
+  --green-50: #e8faf2;
+  --green-500: #1f7a4d;
+  --green-600: #1a6640;
+  --green-700: #155230;
+  --green-900: #0a2918;
+  --ink-100: #d8e5da;
+  --ink-200: #b0c5b5;
+  --ink-300: #7f9985;
+  --ink-400: #5a7060;
+  --ink-50: #f2f7f3;
+  --ink-500: #3d5342;
+  --ink-600: #2d3d30;
+  --ink-700: #1f2b22;
+  --ink-800: #161d18;
+  --ink-900: #0e1410;
+  --ink-950: #080c0a;
+  --main-color-accent: var(--green-400);
+  --secondary-glow: 201 168 76;
+  --shadow-button: 0 4px 14px rgb(var(--accent-deep-glow) / 36%);
+  --shadow-button-hover: 0 6px 20px rgb(var(--accent-deep-glow) / 48%);
+  --shadow-focus: 0 0 0 3px var(--color-neutral-50), 0 0 0 5px rgb(var(--accent-glow) / 45%);
+  --shadow-glass: 0 8px 32px rgb(0 0 0 / 10%);
+  --shadow-glass-hover: 0 12px 40px rgb(0 0 0 / 14%);
+  --transition-fast: 0.2s;
+  --transition-medium: 0.4s;
+  --type-display-font-family: "Syne", "Sora", var(--type-base-font-family);
+  --type-price-default-font: normal normal 600 2.4rem/2.4rem var(--type-price-font-family);
+  --type-price-font-family: "Sora", "Syne", var(--type-base-font-family);
+  --type-price-letter-spacing: -0.01em;
+  --type-price-strong-font: normal normal 600 2.4rem/2.4rem var(--type-price-font-family);}

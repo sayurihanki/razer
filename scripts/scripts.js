@@ -168,6 +168,55 @@ async function loadEager(doc) {
   }
 }
 
+/*
+ * Blocks imported from the jenhankib2bbodea source repository that reference
+ * the source's design tokens without a fallback value. They need
+ * styles/bodea-shared.css or those declarations are dropped.
+ */
+const BODEA_TOKEN_BLOCKS = [
+  'age-gate',
+  'age-verification',
+  'catalog-highlights',
+  'commerce-account-hub',
+  'form',
+  'form-4',
+  'guided-selling-luxe',
+  'hero-3',
+  'hero-5',
+  'hero-6',
+  'medal-rack-configurator',
+  'newsletter',
+  'product-configurator-luxe',
+  'product-highlights',
+  'product-teaser',
+  'quiz-router',
+  'search',
+  'store-locator',
+  'table',
+  'tabs',
+  'uniform-configurator',
+  'vip-hero-block',
+  'vip-hero-mccs',
+  'vip-member-block',
+  'vip-member-block-real-v2',
+];
+
+/**
+ * Loads the imported source design tokens, but only when a block that needs
+ * them is actually on the page.
+ *
+ * Deliberately not part of the global stylesheet chain: installing the
+ * source's brand tokens globally would put its glassmorphic system on every
+ * razer page. A page using none of these blocks never requests this file.
+ *
+ * @param {Element} doc The container element
+ */
+function loadBodeaSharedTokens(doc) {
+  const selector = BODEA_TOKEN_BLOCKS.map((name) => `.${name}.block`).join(',');
+  if (!doc.querySelector(selector)) return;
+  loadCSS(`${window.hlx.codeBasePath}/styles/bodea-shared.css`);
+}
+
 /**
  * Loads everything that doesn't need to be delayed.
  * @param {Element} doc The container element
@@ -187,6 +236,7 @@ async function loadLazy(doc) {
   loadCommerceLazy();
 
   loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`);
+  loadBodeaSharedTokens(doc);
   loadFonts();
 }
 
