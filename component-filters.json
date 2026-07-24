@@ -66,6 +66,23 @@
     ]
   },
   {
+    "id": "circle-carousel",
+    "components": [
+      "circle-carousel-item"
+    ]
+  },
+  {
+    "id": "circle-carousel-item",
+    "components": []
+  },
+  {
+    "id": "circle-carousel-cell",
+    "components": [
+      "text",
+      "image"
+    ]
+  },
+  {
     "id": "columns",
     "components": [
       "columns-row"
@@ -80,6 +97,110 @@
     "components": [
       "text",
       "image"
+    ]
+  },
+  {
+    "id": "quiz-router-mccs",
+    "components": []
+  },
+  {
+    "id": "quiz-router",
+    "components": []
+  },
+  {
+    "id": "razer-minipage-block2",
+    "components": [
+      "razer-minipage-block2-setting",
+      "razer-minipage-block2-brand",
+      "razer-minipage-block2-product",
+      "razer-minipage-block2-gallery-image",
+      "razer-minipage-block2-option-group",
+      "razer-minipage-block2-option",
+      "razer-minipage-block2-delivery",
+      "razer-minipage-block2-trust",
+      "razer-minipage-block2-highlight",
+      "razer-minipage-block2-feature",
+      "razer-minipage-block2-feature-media",
+      "razer-minipage-block2-specification",
+      "razer-minipage-block2-related-product"
+    ]
+  },
+  {
+    "id": "razer-minipage-block3",
+    "components": [
+      "razer-minipage-block3-setting",
+      "razer-minipage-block3-brand",
+      "razer-minipage-block3-product",
+      "razer-minipage-block3-gallery-image",
+      "razer-minipage-block3-option-group",
+      "razer-minipage-block3-option",
+      "razer-minipage-block3-delivery",
+      "razer-minipage-block3-trust",
+      "razer-minipage-block3-highlight",
+      "razer-minipage-block3-feature",
+      "razer-minipage-block3-feature-media",
+      "razer-minipage-block3-specification",
+      "razer-minipage-block3-related-product"
+    ]
+  },
+  {
+    "id": "razer-minipage-block4",
+    "components": [
+      "razer-minipage-block4-setting",
+      "razer-minipage-block4-brand",
+      "razer-minipage-block4-product",
+      "razer-minipage-block4-gallery-image",
+      "razer-minipage-block4-option-group",
+      "razer-minipage-block4-option",
+      "razer-minipage-block4-delivery",
+      "razer-minipage-block4-trust",
+      "razer-minipage-block4-highlight",
+      "razer-minipage-block4-feature",
+      "razer-minipage-block4-feature-media",
+      "razer-minipage-block4-specification",
+      "razer-minipage-block4-related-product"
+    ]
+  },
+  {
+    "id": "search-bar",
+    "components": []
+  },
+  {
+    "id": "store-locator",
+    "components": [
+      "store-locator-item"
+    ]
+  },
+  {
+    "id": "store-locator-item",
+    "components": []
+  },
+  {
+    "id": "store-locator-cell",
+    "components": [
+      "text"
+    ]
+  },
+  {
+    "id": "table",
+    "components": [
+      "table-row"
+    ]
+  },
+  {
+    "id": "table-row",
+    "components": []
+  },
+  {
+    "id": "table-cell",
+    "components": [
+      "text"
+    ]
+  },
+  {
+    "id": "tabs",
+    "components": [
+      "tab-item"
     ]
   }
 ]
