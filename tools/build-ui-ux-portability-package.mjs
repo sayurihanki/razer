@@ -517,7 +517,7 @@ function writePackageFiles(manifests) {
   const portabilityPackageJson = {
     name: '@jenhanki/ui-ux-portability-package',
     version: '1.0.0',
-    description: 'Portable UI/UX package extracted from jenhankib2bbodea',
+    description: 'Portable UI/UX package extracted from razer',
     type: 'module',
     sideEffects: ['**/*.css'],
     files: [
@@ -597,7 +597,7 @@ function writeDocs(manifests) {
 
   const readme = `# UI/UX Portability Package
 
-This package is a portable extraction of the site UI/UX layer from \`jenhankib2bbodea\`.
+This package is a portable extraction of the site UI/UX layer from \`razer\`.
 
 ## What This Contains
 

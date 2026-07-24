@@ -1,14 +1,14 @@
 # Procurement-First Lead Capture Prompt Pack (15 Block Ideas)
 
 ## Summary
-Create **15 separate markdown files** at `/Users/hanki/Jenifer GitHub repository/jenhankib2bbodea/jenhankib2bbodea/docs/b2b-block-prompts`, each containing one high-conversion B2B block concept and a production-ready prompt pack.
+Create **15 separate markdown files** at `docs/b2b-block-prompts`, each containing one high-conversion B2B block concept and a production-ready prompt pack.
 The pack is optimized for:
 - Audience: procurement teams
 - Goal: lead capture
 - Build approach: ship-fast reuse of existing repo block patterns
 
 ## Deliverables
-1. Create folder: `/Users/hanki/Jenifer GitHub repository/jenhankib2bbodea/jenhankib2bbodea/docs/b2b-block-prompts`.
+1. Create folder: `docs/b2b-block-prompts`.
 2. Create these 15 files (exact names):
 1. `01-procurement-savings-calculator.md`
 2. `02-instant-rfq-qualifier.md`
