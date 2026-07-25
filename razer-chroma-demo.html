@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="razer-chroma block family integration preview">
+    <title>Razer Chroma Blocks Preview</title>
+    <link rel="stylesheet" href="/styles/styles.css">
+    <link rel="stylesheet" href="/styles/razer-chroma-shared.css">
+    <style>
+      .razer-chroma-demo-sentinel {
+        padding: 24px;
+        background: #f4efe5;
+        color: #27312b;
+        font: 16px/1.5 sans-serif;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body class="appear">
+    <header aria-label="Host site header">
+      <div class="razer-chroma-demo-sentinel">Host header sentinel</div>
+    </header>
+    <main></main>
+    <footer aria-label="Host site footer">
+      <div class="razer-chroma-demo-sentinel">Host footer sentinel</div>
+    </footer>
+
+    <script type="module">
+      /*
+       * Renders each razer-chroma block from its shipped DA.live paste table,
+       * rather than from hand-written DOM. That way this harness verifies the
+       * actual deliverable: if a table and its decorator disagree, the page
+       * breaks here instead of in DA.live.
+       */
+      /*
+       * Homepage content blocks, in page order. The site chrome
+       * (razer-site-header / razer-site-footer) is built by a separate effort
+       * and is not rendered here -- this harness covers the content blocks it
+       * owns, so a chrome change cannot break this preview.
+       */
+      const BLOCKS = [
+        'razer-home-promo-bar',
+        'razer-home-hero',
+        'razer-proof-strip',
+        'razer-campaign-carousel',
+        'razer-capability-grid',
+        'razer-family-grid',
+        'razer-use-case-tabs',
+        'razer-gear-finder',
+        'razer-resource-grid',
+        'razer-story-grid',
+        'razer-final-cta',
+      ];
+
+      const only = new URLSearchParams(window.location.search).get('block');
+      const list = only ? only.split(',') : BLOCKS;
+      const main = document.querySelector('main');
+
+      /** Converts an authored <table> into the div/div DOM EDS produces. */
+      function tableToBlock(table, name) {
+        const block = document.createElement('div');
+        block.className = `${name} block razer-chroma`;
+        block.dataset.blockName = name;
+        block.dataset.blockStatus = 'loaded';
+        [...table.querySelectorAll('tr')].slice(1).forEach((tr) => {
+          const row = document.createElement('div');
+          [...tr.children].forEach((td) => {
+            const cell = document.createElement('div');
+            // EDS wraps standalone text cells in <p>; mirror that faithfully.
+            if (!td.querySelector('p, img, picture, ul, ol, table')) {
+              const p = document.createElement('p');
+              p.innerHTML = td.innerHTML;
+              cell.append(p);
+            } else {
+              cell.innerHTML = td.innerHTML;
+            }
+            row.append(cell);
+          });
+          block.append(row);
+        });
+        return block;
+      }
+
+      for (const name of list) {
+        const section = document.createElement('div');
+        section.className = `section ${name}-container`;
+        section.dataset.sectionStatus = 'loaded';
+        const wrapper = document.createElement('div');
+        wrapper.className = `${name}-wrapper`;
+        section.append(wrapper);
+        main.append(section);
+
+        try {
+          const res = await fetch(`/blocks/${name}/${name}-da-live.html`);
+          if (!res.ok) throw new Error(`${res.status} fetching paste table`);
+          const doc = new DOMParser().parseFromString(await res.text(), 'text/html');
+          const table = doc.querySelector('table');
+          if (!table) throw new Error('no <table> in paste table');
+          wrapper.append(tableToBlock(table, name));
+
+          const css = document.createElement('link');
+          css.rel = 'stylesheet';
+          css.href = `/blocks/${name}/${name}.css`;
+          document.head.append(css);
+
+          const { default: decorate } = await import(`/blocks/${name}/${name}.js`);
+          await decorate(wrapper.firstElementChild);
+        } catch (e) {
+          wrapper.innerHTML = `<pre style="color:#f66;font:14px/1.5 monospace;padding:16px">
+${name}: ${e.message}</pre>`;
+          console.error(name, e);
+        }
+      }
+
+      document.body.classList.add('razer-chroma-page');
+    </script>
+  </body>
+</html>

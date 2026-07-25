@@ -1,0 +1,40 @@
+{
+  "definitions": [
+    {
+      "title": "Razer Proof Strip",
+      "id": "razer-proof-strip",
+      "model": "razer-proof-strip",
+      "plugins": {
+        "da": {
+          "type": "key-value-block"
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "razer-proof-strip",
+      "fields": [
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "label",
+          "label": "Section label"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "feature",
+          "label": "Feature (headline | source)"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "item",
+          "label": "Benefit (glyph | title | copy)"
+        }
+      ]
+    }
+  ],
+  "filters": []
+}

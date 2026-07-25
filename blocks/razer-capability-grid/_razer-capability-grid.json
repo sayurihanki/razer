@@ -1,0 +1,52 @@
+{
+  "definitions": [
+    {
+      "title": "Razer Capability Grid",
+      "id": "razer-capability-grid",
+      "model": "razer-capability-grid",
+      "plugins": {
+        "da": {
+          "type": "key-value-block"
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "razer-capability-grid",
+      "fields": [
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "eyebrow",
+          "label": "Eyebrow"
+        },
+        {
+          "component": "richtext",
+          "valueType": "string",
+          "name": "title",
+          "label": "Title"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "intro",
+          "label": "Intro"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "index-label",
+          "label": "Card index prefix"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "card",
+          "label": "Card (glyph | title | copy | link)"
+        }
+      ]
+    }
+  ],
+  "filters": []
+}

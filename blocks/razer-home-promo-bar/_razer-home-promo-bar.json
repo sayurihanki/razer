@@ -1,0 +1,34 @@
+{
+  "definitions": [
+    {
+      "title": "Razer Home Promo Bar",
+      "id": "razer-home-promo-bar",
+      "model": "razer-home-promo-bar",
+      "plugins": {
+        "da": {
+          "type": "key-value-block"
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "razer-home-promo-bar",
+      "fields": [
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "message",
+          "label": "Message"
+        },
+        {
+          "component": "richtext",
+          "valueType": "string",
+          "name": "cta",
+          "label": "CTA (link)"
+        }
+      ]
+    }
+  ],
+  "filters": []
+}

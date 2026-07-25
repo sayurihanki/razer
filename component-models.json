@@ -2957,6 +2957,279 @@
     ]
   },
   {
+    "id": "razer-campaign-carousel",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "label",
+        "label": "Carousel label"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "slide",
+        "label": "Slide (eyebrow | title | copy | learn | buy | image)"
+      }
+    ]
+  },
+  {
+    "id": "razer-capability-grid",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "eyebrow",
+        "label": "Eyebrow"
+      },
+      {
+        "component": "richtext",
+        "valueType": "string",
+        "name": "title",
+        "label": "Title"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "intro",
+        "label": "Intro"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "index-label",
+        "label": "Card index prefix"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "card",
+        "label": "Card (glyph | title | copy | link)"
+      }
+    ]
+  },
+  {
+    "id": "razer-family-grid",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "eyebrow",
+        "label": "Eyebrow"
+      },
+      {
+        "component": "richtext",
+        "valueType": "string",
+        "name": "title",
+        "label": "Title"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "intro",
+        "label": "Intro"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "card-wide",
+        "label": "Wide card (index | title | copy | link | image)"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "card",
+        "label": "Card (index | title | copy | link | image)"
+      }
+    ]
+  },
+  {
+    "id": "razer-family-rail",
+    "fields": []
+  },
+  {
+    "id": "razer-final-cta",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "eyebrow",
+        "label": "Eyebrow"
+      },
+      {
+        "component": "richtext",
+        "valueType": "string",
+        "name": "title",
+        "label": "Title"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "body",
+        "label": "Body copy"
+      },
+      {
+        "component": "richtext",
+        "valueType": "string",
+        "name": "cta-primary",
+        "label": "Primary CTA (link)"
+      },
+      {
+        "component": "richtext",
+        "valueType": "string",
+        "name": "cta-ghost",
+        "label": "Ghost CTA (link)"
+      }
+    ]
+  },
+  {
+    "id": "razer-gear-finder",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "eyebrow",
+        "label": "Eyebrow"
+      },
+      {
+        "component": "richtext",
+        "valueType": "string",
+        "name": "title",
+        "label": "Title"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "intro",
+        "label": "Intro"
+      },
+      {
+        "component": "richtext",
+        "valueType": "string",
+        "name": "steps-title",
+        "label": "Steps heading"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "step",
+        "label": "Step (title | copy)"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "question",
+        "label": "Question (key | text)"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "choice",
+        "label": "Choice (question | value | label | detail)"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "match",
+        "label": "Match (key | family | name | copy | link)"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "reveal",
+        "label": "Reveal button label"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "reset",
+        "label": "Reset button label"
+      }
+    ]
+  },
+  {
+    "id": "razer-home-hero",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "eyebrow",
+        "label": "Eyebrow"
+      },
+      {
+        "component": "richtext",
+        "valueType": "string",
+        "name": "title",
+        "label": "Title"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "body",
+        "label": "Body copy"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Desktop image"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image-mobile",
+        "label": "Mobile image"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "image-alt",
+        "label": "Image alt text"
+      },
+      {
+        "component": "richtext",
+        "valueType": "string",
+        "name": "cta-ghost",
+        "label": "Ghost CTA (link)"
+      },
+      {
+        "component": "richtext",
+        "valueType": "string",
+        "name": "cta-primary",
+        "label": "Primary CTA (link)"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "scroll-label",
+        "label": "Scroll cue label"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "scroll-target",
+        "label": "Scroll cue target"
+      }
+    ]
+  },
+  {
+    "id": "razer-home-promo-bar",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "message",
+        "label": "Message"
+      },
+      {
+        "component": "richtext",
+        "valueType": "string",
+        "name": "cta",
+        "label": "CTA (link)"
+      }
+    ]
+  },
+  {
     "id": "razer-minipage-block2-setting",
     "fields": [
       {
@@ -6051,6 +6324,162 @@
         "label": "Optional Sticky Offset",
         "description": "Leave empty to automatically clear the fixed site header on mobile.",
         "value": ""
+      }
+    ]
+  },
+  {
+    "id": "razer-plp-hero",
+    "fields": []
+  },
+  {
+    "id": "razer-plp-intro",
+    "fields": []
+  },
+  {
+    "id": "razer-product-explorer",
+    "fields": []
+  },
+  {
+    "id": "razer-promo-bar",
+    "fields": []
+  },
+  {
+    "id": "razer-proof-banner",
+    "fields": []
+  },
+  {
+    "id": "razer-proof-strip",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "label",
+        "label": "Section label"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "feature",
+        "label": "Feature (headline | source)"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "item",
+        "label": "Benefit (glyph | title | copy)"
+      }
+    ]
+  },
+  {
+    "id": "razer-resource-grid",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "eyebrow",
+        "label": "Eyebrow"
+      },
+      {
+        "component": "richtext",
+        "valueType": "string",
+        "name": "title",
+        "label": "Title"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "intro",
+        "label": "Intro"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "kind",
+        "label": "Kicker kind"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "link-label",
+        "label": "Card CTA label"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "card",
+        "label": "Card (title | copy | link)"
+      }
+    ]
+  },
+  {
+    "id": "razer-site-footer",
+    "fields": []
+  },
+  {
+    "id": "razer-site-header",
+    "fields": []
+  },
+  {
+    "id": "razer-story-grid",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "eyebrow",
+        "label": "Eyebrow"
+      },
+      {
+        "component": "richtext",
+        "valueType": "string",
+        "name": "title",
+        "label": "Title"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "intro",
+        "label": "Intro"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "card-main",
+        "label": "Main card (kicker | title | copy | link | image)"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "card",
+        "label": "Card (kicker | title | copy | link | image)"
+      }
+    ]
+  },
+  {
+    "id": "razer-use-case-tabs",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "eyebrow",
+        "label": "Eyebrow"
+      },
+      {
+        "component": "richtext",
+        "valueType": "string",
+        "name": "title",
+        "label": "Title"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "intro",
+        "label": "Intro"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "tab",
+        "label": "Tab (label | eyebrow | title | copy | tags)"
       }
     ]
   },

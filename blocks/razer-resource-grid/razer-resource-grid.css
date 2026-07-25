@@ -1,0 +1,141 @@
+.razer-resource-grid .section {
+  padding: 56px 0;
+}
+
+.razer-resource-grid .resource-section {
+  background: #000;
+  color: #fff;
+}
+
+.razer-resource-grid .resource-section .section-heading > p {
+  color: var(--rzr-text-tertiary);
+}
+
+.razer-resource-grid .resource-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  border: 0;
+}
+
+.razer-resource-grid .resource-card {
+  display: flex;
+  flex-direction: column;
+  min-height: 300px;
+  padding: 24px;
+  border: 0;
+  border-bottom: 1px solid #b8bcb8;
+  border-radius: var(--rzr-radius-2xl);
+  background: var(--rzr-surface-card);
+  transition:
+    background var(--rzr-duration-slow) ease,
+    transform var(--rzr-duration-slow) var(--rzr-ease-standard);
+}
+
+.razer-resource-grid .resource-card:hover {
+  background: var(--rzr-surface-card-alt);
+  color: #fff;
+  transform: translateY(-4px);
+}
+
+.razer-resource-grid .resource-card > span {
+  color: var(--rzr-text-tertiary);
+  font-family: var(--rzr-font-condensed);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.razer-resource-grid .resource-card h3 {
+  margin: auto 0 8px;
+  color: var(--rzr-text-primary);
+  font-size: var(--rzr-display-3-size);
+  font-weight: var(--rzr-display-3-weight);
+  line-height: var(--rzr-display-3-lh);
+  text-transform: uppercase;
+}
+
+/* Not a cascade conflict: card copy sits inside a card, the other rule targets
+ * the section heading's intro paragraph. */
+/* stylelint-disable-next-line no-descending-specificity */
+.razer-resource-grid .resource-card p {
+  margin: 0 0 22px;
+  color: var(--rzr-text-tertiary);
+  font-size: 14px;
+  line-height: 21px;
+}
+
+.razer-resource-grid .resource-card:hover p {
+  color: var(--muted);
+}
+
+.razer-resource-grid .resource-card > strong {
+  color: var(--rzr-text-primary);
+  font-family: var(--rzr-font-body);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.razer-resource-grid .resource-card:hover > strong {
+  color: var(--rzr-green);
+}
+
+.razer-resource-grid .resource-card b {
+  float: right;
+}
+
+.razer-resource-grid .resource-card:nth-child(-n+2) {
+  border-bottom: 1px solid #b8bcb8;
+}
+
+.razer-resource-grid .resource-card:last-child {
+  border: 0;
+}
+
+@media (min-width: 681px) {
+  .razer-resource-grid .section {
+    padding: 72px 0;
+  }
+
+  .razer-resource-grid .resource-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .razer-resource-grid .resource-card {
+    border-right: 1px solid #b8bcb8;
+    border-bottom: none;
+  }
+}
+
+@media (min-width: 821px) {
+  .razer-resource-grid .resource-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (min-width: 1261px) {
+  .razer-resource-grid .resource-card:nth-child(2) {
+    border-right: none;
+  }
+
+  .razer-resource-grid .resource-card:nth-child(-n+2) {
+    border-bottom: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .razer-resource-grid .resource-card:hover {
+    transform: none;
+  }
+}
+
+/* Full-bleed: the section paints its own black background edge to edge. */
+.razer-resource-grid-wrapper {
+  max-width: none;
+  padding: 0;
+}
+
+main > .section:has(> .razer-resource-grid-wrapper) {
+  margin: 0;
+}

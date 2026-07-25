@@ -1221,6 +1221,88 @@
           }
         },
         {
+          "title": "Razer Campaign Carousel",
+          "id": "razer-campaign-carousel",
+          "model": "razer-campaign-carousel",
+          "plugins": {
+            "da": {
+              "type": "key-value-block"
+            }
+          }
+        },
+        {
+          "title": "Razer Capability Grid",
+          "id": "razer-capability-grid",
+          "model": "razer-capability-grid",
+          "plugins": {
+            "da": {
+              "type": "key-value-block"
+            }
+          }
+        },
+        {
+          "title": "Razer Family Grid",
+          "id": "razer-family-grid",
+          "model": "razer-family-grid",
+          "plugins": {
+            "da": {
+              "type": "key-value-block"
+            }
+          }
+        },
+        {
+          "title": "Razer Family Rail",
+          "id": "razer-family-rail",
+          "model": "razer-family-rail",
+          "plugins": {
+            "da": {
+              "name": "razer-family-rail",
+              "rows": 1,
+              "columns": 6
+            }
+          }
+        },
+        {
+          "title": "Razer Final CTA",
+          "id": "razer-final-cta",
+          "model": "razer-final-cta",
+          "plugins": {
+            "da": {
+              "type": "key-value-block"
+            }
+          }
+        },
+        {
+          "title": "Razer Gear Finder",
+          "id": "razer-gear-finder",
+          "model": "razer-gear-finder",
+          "plugins": {
+            "da": {
+              "type": "key-value-block"
+            }
+          }
+        },
+        {
+          "title": "Razer Home Hero",
+          "id": "razer-home-hero",
+          "model": "razer-home-hero",
+          "plugins": {
+            "da": {
+              "type": "key-value-block"
+            }
+          }
+        },
+        {
+          "title": "Razer Home Promo Bar",
+          "id": "razer-home-promo-bar",
+          "model": "razer-home-promo-bar",
+          "plugins": {
+            "da": {
+              "type": "key-value-block"
+            }
+          }
+        },
+        {
           "title": "Razer Minipage Block 2",
           "id": "razer-minipage-block2",
           "model": "razer-minipage-block2",
@@ -2829,6 +2911,130 @@
           "title": "Razer Minipage",
           "id": "razer-minipage",
           "model": "razer-minipage",
+          "plugins": {
+            "da": {
+              "type": "key-value-block"
+            }
+          }
+        },
+        {
+          "title": "Razer PLP Hero",
+          "id": "razer-plp-hero",
+          "model": "razer-plp-hero",
+          "plugins": {
+            "da": {
+              "name": "razer-plp-hero",
+              "rows": 1,
+              "columns": 3
+            }
+          }
+        },
+        {
+          "title": "Razer PLP Intro",
+          "id": "razer-plp-intro",
+          "model": "razer-plp-intro",
+          "plugins": {
+            "da": {
+              "name": "razer-plp-intro",
+              "rows": 1,
+              "columns": 3
+            }
+          }
+        },
+        {
+          "title": "Razer Product Explorer",
+          "id": "razer-product-explorer",
+          "model": "razer-product-explorer",
+          "plugins": {
+            "da": {
+              "name": "razer-product-explorer",
+              "rows": 1,
+              "columns": 12
+            }
+          }
+        },
+        {
+          "title": "Razer Promo Bar",
+          "id": "razer-promo-bar",
+          "model": "razer-promo-bar",
+          "plugins": {
+            "da": {
+              "name": "razer-promo-bar",
+              "rows": 1,
+              "columns": 4
+            }
+          }
+        },
+        {
+          "title": "Razer Proof Banner",
+          "id": "razer-proof-banner",
+          "model": "razer-proof-banner",
+          "plugins": {
+            "da": {
+              "name": "razer-proof-banner",
+              "rows": 1,
+              "columns": 3
+            }
+          }
+        },
+        {
+          "title": "Razer Proof Strip",
+          "id": "razer-proof-strip",
+          "model": "razer-proof-strip",
+          "plugins": {
+            "da": {
+              "type": "key-value-block"
+            }
+          }
+        },
+        {
+          "title": "Razer Resource Grid",
+          "id": "razer-resource-grid",
+          "model": "razer-resource-grid",
+          "plugins": {
+            "da": {
+              "type": "key-value-block"
+            }
+          }
+        },
+        {
+          "title": "Razer Site Footer",
+          "id": "razer-site-footer",
+          "model": "razer-site-footer",
+          "plugins": {
+            "da": {
+              "name": "razer-site-footer",
+              "rows": 1,
+              "columns": 6
+            }
+          }
+        },
+        {
+          "title": "Razer Site Header",
+          "id": "razer-site-header",
+          "model": "razer-site-header",
+          "plugins": {
+            "da": {
+              "name": "razer-site-header",
+              "rows": 1,
+              "columns": 6
+            }
+          }
+        },
+        {
+          "title": "Razer Story Grid",
+          "id": "razer-story-grid",
+          "model": "razer-story-grid",
+          "plugins": {
+            "da": {
+              "type": "key-value-block"
+            }
+          }
+        },
+        {
+          "title": "Razer Use Case Tabs",
+          "id": "razer-use-case-tabs",
+          "model": "razer-use-case-tabs",
           "plugins": {
             "da": {
               "type": "key-value-block"

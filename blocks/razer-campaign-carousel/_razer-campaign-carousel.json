@@ -1,0 +1,34 @@
+{
+  "definitions": [
+    {
+      "title": "Razer Campaign Carousel",
+      "id": "razer-campaign-carousel",
+      "model": "razer-campaign-carousel",
+      "plugins": {
+        "da": {
+          "type": "key-value-block"
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "razer-campaign-carousel",
+      "fields": [
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "label",
+          "label": "Carousel label"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "slide",
+          "label": "Slide (eyebrow | title | copy | learn | buy | image)"
+        }
+      ]
+    }
+  ],
+  "filters": []
+}

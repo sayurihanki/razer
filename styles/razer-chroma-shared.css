@@ -1,0 +1,449 @@
+/*
+ * Shared design tokens and primitives for the razer-chroma block family.
+ *
+ * These are the tokens, typography and button/layout primitives that the 14
+ * razer-chroma blocks all reference. They were recovered by flattening the
+ * source site's stylesheet, which shipped three concatenated segments whose
+ * cascade had to be resolved before the effective values were knowable.
+ *
+ * This file is NOT part of razer's global stylesheet chain. It is injected at
+ * runtime only when a razer-chroma block is present on the page (see
+ * loadRazerChromaStyles in scripts/scripts.js), so pages that use none of
+ * these blocks never receive it and are visually unaffected.
+ *
+ * Scoping rules, and why they are what they are:
+ *  - Element-level rules (h1-h6, p, a, img, form controls) are scoped to
+ *    .razer-chroma, a marker class the loader stamps on each block root. A
+ *    broad [class*="razer-"] would also capture blocks/razer-minipage*, which
+ *    are unrelated and must not be restyled.
+ *  - The page-level background lives on body.razer-chroma-page rather than a
+ *    bare body selector, so the dark theme cannot leak onto other pages.
+ *  - .section is deliberately absent: it collides with EDS's own
+ *    main > .section wrappers. The six blocks that need that padding declare
+ *    it on their own root instead.
+ */
+
+/* stylelint-disable no-descending-specificity */
+
+@font-face {
+  font-family: 'RazerF5';
+  src: url('../fonts/RazerF5Light.woff') format('woff');
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'RazerF5';
+  src: url('../fonts/RazerF5.woff') format('woff');
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'RazerF5';
+  src: url('../fonts/RazerF5SemiBold.woff') format('woff');
+  font-style: normal;
+  font-weight: 500 600;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'RazerF5';
+  src: url('../fonts/RazerF5Bold.woff') format('woff');
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+}
+
+/* Fallback for the display stack. Reuses the OFL faces already committed for
+ * blocks/razer-minipage rather than adding another copy of the same files. */
+@font-face {
+  font-family: 'Titillium Web';
+  src: url('../blocks/razer-minipage/fonts/titillium-web/titillium-web-400-latin.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Titillium Web';
+  src: url('../blocks/razer-minipage/fonts/titillium-web/titillium-web-600-latin.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Titillium Web';
+  src: url('../blocks/razer-minipage/fonts/titillium-web/titillium-web-700-latin.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+}
+
+:root {
+  /* Font family aliases -- a deliberate fix, not a porting artifact.
+   *
+   * The source declares these via framework-generated classes on <body>, but
+   * references them from --rzr-font-* on :root. A custom property that
+   * references an undefined property is invalid at computed-value time, so on
+   * the source site --rzr-font-display and --rzr-font-body resolve to nothing
+   * and every heading and body string falls back to the browser's system sans
+   * -- RazerF5 downloads but is never actually used.
+   *
+   * Binding the aliases here, at :root, is what makes the intended Razer
+   * typography apply. Removing them would silently revert the whole family to
+   * system fonts. */
+  --font-roboto: roboto;
+  --font-roboto-condensed: roboto-condensed;
+  --font-titillium: 'Titillium Web';
+
+  /* v2 "rzr" design system */
+  --rzr-green: #44d62c;
+  --rzr-green-glow: #4f4;
+  --rzr-green-deep: #00754e;
+  --rzr-surface-base: #000;
+  --rzr-surface-raised: #111;
+  --rzr-surface-card: #212121;
+  --rzr-surface-card-alt: #222;
+  --rzr-surface-line: #333;
+  --rzr-light-base: #fff;
+  --rzr-light-raised: #efefef;
+  --rzr-light-sunken: #eee;
+  --rzr-text-primary: #fff;
+  --rzr-text-secondary: #bbb;
+  --rzr-text-tertiary: #999;
+  --rzr-text-muted: #888;
+  --rzr-text-on-accent: #000;
+  --rzr-info: #28aadc;
+  --rzr-scrim-medium: rgb(0 0 0 / 50%);
+  --rzr-scrim-heavy: rgb(0 0 0 / 80%);
+  --rzr-font-display: 'RazerF5', var(--font-titillium), 'Titillium Web', var(--font-roboto-condensed), 'Roboto Condensed', system-ui, sans-serif;
+  --rzr-font-body: var(--font-roboto), roboto, 'Helvetica Neue', arial, 'Noto Sans', sans-serif;
+  --rzr-font-condensed: var(--font-roboto-condensed), 'Roboto Condensed', sans-serif;
+  --rzr-display-1-size: 32px;
+  --rzr-display-1-weight: 700;
+  --rzr-display-1-lh: 35px;
+  --rzr-display-2-size: 25px;
+  --rzr-display-2-weight: 500;
+  --rzr-display-2-lh: 28px;
+  --rzr-display-3-size: 20px;
+  --rzr-display-3-weight: 400;
+  --rzr-display-3-lh: 24px;
+  --rzr-body-lg-size: 18px;
+  --rzr-body-lg-lh: 24px;
+  --rzr-body-size: 16px;
+  --rzr-body-lh: 24px;
+  --rzr-body-sm-size: 14px;
+  --rzr-body-sm-lh: 24px;
+  --rzr-body-xs-size: 12px;
+  --rzr-body-xs-lh: 18px;
+  --rzr-radius-xs: 2px;
+  --rzr-radius-sm: 3px;
+  --rzr-radius-md: 4px;
+  --rzr-radius-lg: 6px;
+  --rzr-radius-xl: 10px;
+  --rzr-radius-2xl: 12px;
+  --rzr-focus-ring: inset 0 0 0 1.5px #fff, 0 0 8px 2px rgb(68 255 68 / 60%);
+  --rzr-shadow-sm: 0 -1px 10px rgb(172 171 171 / 30%);
+  --rzr-shadow-md: 0 6px 14px rgb(25 28 33 / 30%);
+  --rzr-shadow-lg: 0 32px 68px rgb(0 0 0 / 30%);
+  --rzr-ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --rzr-ease-slow: cubic-bezier(0.4, 0, 0.6, 1);
+  --rzr-duration-fast: 0.24s;
+  --rzr-duration-base: 0.3s;
+  --rzr-duration-slow: 0.5s;
+  --rzr-duration-xslow: 0.8s;
+
+  /* v1 aliases. Retained because a number of ported rules still reference
+   * them; every one resolves to an --rzr-* value above. */
+  --razer-green: #44d62c;
+  --razer-green-bright: #66ff4d;
+  --ink: #000;
+  --ink-raised: #080b0a;
+  --panel: var(--rzr-surface-raised);
+  --panel-soft: var(--rzr-surface-card);
+  --line: var(--rzr-surface-line);
+  --line-bright: var(--rzr-green);
+  --text: var(--rzr-text-primary);
+  --muted: var(--rzr-text-secondary);
+  --dim: var(--rzr-text-tertiary);
+  --page: var(--rzr-surface-base);
+  --font: var(--rzr-font-body);
+  --font-razer: var(--rzr-font-display);
+  --shadow: 0 24px 90px rgb(0 0 0 / 50%);
+
+  /* Container width. The effective ladder resolves to three steps, not the
+   * five the source appeared to declare -- later base rules superseded the
+   * earlier max-width queries. */
+  --shell: calc(100vw - 24px);
+}
+
+@media (min-width: 681px) {
+  :root {
+    --shell: min(960px, calc(100vw - 32px));
+    --rzr-display-1-size: 40px;
+    --rzr-display-1-lh: 44px;
+    --rzr-display-2-size: 28px;
+    --rzr-display-2-lh: 31px;
+  }
+}
+
+@media (min-width: 1101px) {
+  :root {
+    --shell: min(1200px, calc(100vw - 48px));
+  }
+}
+
+/* Page-level theme. Only applied to pages that carry a razer-chroma block. */
+body.razer-chroma-page {
+  background: var(--rzr-surface-base);
+  color: var(--rzr-text-primary);
+  font-family: var(--rzr-font-body);
+  font-size: var(--rzr-body-size);
+  line-height: var(--rzr-body-lh);
+  scroll-behavior: smooth;
+  scroll-padding-top: 104px;
+  -webkit-font-smoothing: antialiased;
+}
+
+body.razer-chroma-page ::selection {
+  background: var(--rzr-green);
+  color: var(--rzr-text-on-accent);
+}
+
+/* The repo sets no global box-sizing, so this is load-bearing. */
+.razer-chroma,
+.razer-chroma *,
+.razer-chroma *::before,
+.razer-chroma *::after {
+  box-sizing: border-box;
+}
+
+.razer-chroma :is(h1, h2, h3, h4, h5, h6) {
+  font-family: var(--rzr-font-display);
+  letter-spacing: normal;
+  text-transform: uppercase;
+}
+
+.razer-chroma p {
+  color: var(--rzr-text-secondary);
+}
+
+.razer-chroma img {
+  max-width: 100%;
+  display: block;
+}
+
+.razer-chroma a {
+  color: inherit;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.razer-chroma :is(button, input, select, textarea) {
+  font: inherit;
+  font-family: var(--rzr-font-body);
+  color: inherit;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.razer-chroma button:disabled {
+  opacity: 0.42;
+  cursor: not-allowed;
+}
+
+.razer-chroma :where(a, button, input, select, textarea):focus-visible {
+  box-shadow: var(--rzr-focus-ring);
+  outline: 0;
+}
+
+.razer-chroma .shell {
+  width: var(--shell);
+  margin: 0 auto;
+}
+
+.razer-chroma .eyebrow {
+  color: var(--rzr-green);
+  font-family: var(--rzr-font-body);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 18px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+
+  /* 16px, not 12px: the source writes `margin-bottom: 12px` in an earlier
+   * segment and `margin: 0 0 16px` in a later one, so the shorthand wins. */
+  margin: 0 0 16px;
+}
+
+.razer-chroma .card-index {
+  color: var(--rzr-text-tertiary);
+  font-family: var(--rzr-font-condensed);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.razer-chroma .button-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+/* EDS styles `main a.button:any-link` at (0,2,2); the :any-link variant below
+ * is (0,3,2) so the Razer treatment wins outright rather than by load order. */
+.razer-chroma .button,
+.razer-chroma a.button:any-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-height: 40px;
+  padding: 0 16px;
+  padding-inline: 17px;
+  border: 0;
+  border-radius: var(--rzr-radius-sm);
+  font-family: var(--rzr-font-body);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: normal;
+  text-transform: none;
+  transition:
+    color var(--rzr-duration-slow) ease,
+    background var(--rzr-duration-base) ease,
+    border-color var(--rzr-duration-base) ease,
+    box-shadow var(--rzr-duration-base) ease,
+    transform var(--rzr-duration-fast) var(--rzr-ease-standard);
+}
+
+.razer-chroma .button:hover {
+  transform: none;
+}
+
+/* The base .button padding steps at 681px. The variants below re-declare
+ * `padding` wholesale, so they are ordered AFTER that media query -- at equal
+ * specificity, a later rule wins, and otherwise the base would clobber the
+ * ghost button's asymmetric 15px/30px/15px/0 padding. */
+@media (min-width: 681px) {
+  .razer-chroma .button,
+  .razer-chroma a.button:any-link {
+    padding-inline: 16px;
+  }
+}
+
+.razer-chroma .button-primary,
+.razer-chroma a.button-primary:any-link {
+  background: var(--rzr-green);
+  color: var(--rzr-text-on-accent);
+  border-color: var(--razer-green);
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.razer-chroma .button-primary:hover {
+  background: #5ce843;
+  border-color: var(--razer-green-bright);
+  color: #000;
+}
+
+.razer-chroma .button-ghost,
+.razer-chroma a.button-ghost:any-link {
+  min-height: 0;
+  padding: 15px 30px 15px 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+  color: var(--rzr-text-primary);
+}
+
+.razer-chroma .button-ghost:hover {
+  background: none;
+  color: var(--rzr-green);
+}
+
+.razer-chroma .button-ghost span {
+  color: var(--rzr-green);
+  margin-left: 5px;
+  font-size: 20px;
+}
+
+.razer-chroma .button-outline,
+.razer-chroma a.button-outline:any-link {
+  background: none;
+  border: 1px solid #555;
+  color: var(--rzr-text-primary);
+  backdrop-filter: none;
+}
+
+.razer-chroma .button-outline:hover {
+  border-color: var(--rzr-text-primary);
+  color: var(--rzr-text-primary);
+  background: rgb(255 255 255 / 5%);
+}
+
+.razer-chroma .section-heading {
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: end;
+  gap: 16px;
+  margin-bottom: 28px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--rzr-surface-line);
+}
+
+.razer-chroma .section-heading h2 {
+  margin: 0;
+  font-size: var(--rzr-display-2-size);
+  font-weight: var(--rzr-display-2-weight);
+  line-height: var(--rzr-display-2-lh);
+  letter-spacing: normal;
+  text-transform: uppercase;
+}
+
+.razer-chroma .section-heading h2 span {
+  color: var(--rzr-green);
+}
+
+.razer-chroma .section-heading > p {
+  margin: 0;
+  max-width: 520px;
+  color: var(--rzr-text-tertiary);
+  font-size: 16px;
+  line-height: 24px;
+}
+
+@media (min-width: 681px) {
+  .razer-chroma .section-heading {
+    margin-bottom: 40px;
+    padding-bottom: 24px;
+  }
+}
+
+@media (min-width: 821px) {
+  .razer-chroma .section-heading {
+    grid-template-columns: minmax(0, 1.3fr) minmax(280px, 0.7fr);
+    gap: 48px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.razer-chroma-page {
+    scroll-behavior: auto;
+  }
+
+  .razer-chroma,
+  .razer-chroma *,
+  .razer-chroma *::before,
+  .razer-chroma *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+}

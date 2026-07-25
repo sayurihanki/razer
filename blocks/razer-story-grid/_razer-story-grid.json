@@ -1,0 +1,52 @@
+{
+  "definitions": [
+    {
+      "title": "Razer Story Grid",
+      "id": "razer-story-grid",
+      "model": "razer-story-grid",
+      "plugins": {
+        "da": {
+          "type": "key-value-block"
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "razer-story-grid",
+      "fields": [
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "eyebrow",
+          "label": "Eyebrow"
+        },
+        {
+          "component": "richtext",
+          "valueType": "string",
+          "name": "title",
+          "label": "Title"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "intro",
+          "label": "Intro"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "card-main",
+          "label": "Main card (kicker | title | copy | link | image)"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "card",
+          "label": "Card (kicker | title | copy | link | image)"
+        }
+      ]
+    }
+  ],
+  "filters": []
+}

@@ -1,0 +1,46 @@
+{
+  "definitions": [
+    {
+      "title": "Razer Use Case Tabs",
+      "id": "razer-use-case-tabs",
+      "model": "razer-use-case-tabs",
+      "plugins": {
+        "da": {
+          "type": "key-value-block"
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "razer-use-case-tabs",
+      "fields": [
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "eyebrow",
+          "label": "Eyebrow"
+        },
+        {
+          "component": "richtext",
+          "valueType": "string",
+          "name": "title",
+          "label": "Title"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "intro",
+          "label": "Intro"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "tab",
+          "label": "Tab (label | eyebrow | title | copy | tags)"
+        }
+      ]
+    }
+  ],
+  "filters": []
+}

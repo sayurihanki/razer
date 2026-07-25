@@ -1,0 +1,168 @@
+/* Keyframe names are global, so they carry the block prefix to avoid
+ * colliding with anything else on the page. */
+@keyframes razer-hero-breathe {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.025); }
+}
+
+@keyframes razer-scroll-nudge {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(6px); }
+}
+
+.razer-home-hero .home-hero {
+  position: relative;
+  display: grid;
+  align-items: start;
+  overflow: hidden;
+  min-height: 680px;
+  background: #000;
+}
+
+.razer-home-hero .home-hero-media {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.razer-home-hero .home-hero-media img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center bottom;
+  animation: razer-hero-breathe 14s var(--rzr-ease-slow) infinite alternate;
+}
+
+.razer-home-hero .hero-atmosphere {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(rgb(0 0 0 / 74%) 0%, rgb(0 0 0 / 12%) 32%, rgb(0 0 0 / 0%) 56%, rgb(0 0 0 / 55%) 100%),
+    radial-gradient(circle at 50% 4%, rgb(0 0 0 / 68%), rgb(0 0 0 / 0%) 43%);
+}
+
+.razer-home-hero .home-hero-content {
+  position: relative;
+  z-index: 2;
+  width: calc(100vw - 24px);
+  margin: 0 auto;
+
+  /* The source declares `padding: 56px 0 116px` and overrides only the top to
+   * 36px below 681px, so the desktop tier restores 56px rather than zeroing. */
+  padding: 56px 0 116px;
+  padding-top: 36px;
+  text-align: center;
+}
+
+.razer-home-hero .home-hero-content .eyebrow {
+  margin-bottom: 8px;
+  color: var(--rzr-text-primary);
+  font-family: var(--rzr-font-display);
+  font-size: 22px;
+  font-weight: 500;
+  line-height: 25px;
+  letter-spacing: normal;
+}
+
+.razer-home-hero .home-hero-content h1 {
+  margin: 0;
+  max-width: none;
+  color: var(--rzr-green);
+  font-size: var(--rzr-display-1-size);
+  font-weight: var(--rzr-display-1-weight);
+  line-height: var(--rzr-display-1-lh);
+  letter-spacing: normal;
+  text-transform: uppercase;
+}
+
+.razer-home-hero .home-hero-content h1 span {
+  color: inherit;
+}
+
+.razer-home-hero .home-hero-content > p:not(.eyebrow) {
+  margin: 10px 0 6px;
+  color: var(--rzr-text-secondary);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+}
+
+.razer-home-hero .home-hero-content .button-row {
+  justify-content: center;
+}
+
+.razer-home-hero .hero-scroll {
+  position: absolute;
+  bottom: 18px;
+  left: 50%;
+  z-index: 3;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  color: var(--rzr-text-tertiary);
+  font-family: var(--rzr-font-body);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transform: translate(-50%);
+}
+
+/* Not a cascade conflict: this span is the scroll-cue arrow, never a heading
+ * span, so the two rules can't both match an element. */
+/* stylelint-disable-next-line no-descending-specificity */
+.razer-home-hero .hero-scroll span {
+  color: var(--razer-green);
+  font-size: 18px;
+  animation: razer-scroll-nudge 1.8s ease-in-out infinite;
+}
+
+@media (min-width: 681px) {
+  .razer-home-hero .home-hero {
+    min-height: min(720px, 100svh - 146px);
+  }
+
+  .razer-home-hero .home-hero-media img {
+    object-position: center;
+  }
+
+  .razer-home-hero .home-hero-content {
+    width: min(860px, calc(100vw - 48px));
+    padding-top: 56px;
+  }
+
+  .razer-home-hero .home-hero-content .eyebrow {
+    font-size: 28px;
+    line-height: 31px;
+  }
+
+  .razer-home-hero .home-hero-content > p:not(.eyebrow) {
+    font-size: var(--rzr-body-lg-size);
+    line-height: var(--rzr-body-lg-lh);
+  }
+
+  .razer-home-hero .hero-scroll {
+    display: flex;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .razer-home-hero .home-hero-media img {
+    transform: none !important;
+  }
+}
+
+/* Full-bleed: the hero image is absolutely positioned against the section, so
+ * EDS's 1200px wrapper cap and section margins have to be neutralised. */
+.razer-home-hero-wrapper {
+  max-width: none;
+  padding: 0;
+}
+
+main > .section:has(> .razer-home-hero-wrapper) {
+  margin: 0;
+}

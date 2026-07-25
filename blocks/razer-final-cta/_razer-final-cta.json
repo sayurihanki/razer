@@ -1,0 +1,52 @@
+{
+  "definitions": [
+    {
+      "title": "Razer Final CTA",
+      "id": "razer-final-cta",
+      "model": "razer-final-cta",
+      "plugins": {
+        "da": {
+          "type": "key-value-block"
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "razer-final-cta",
+      "fields": [
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "eyebrow",
+          "label": "Eyebrow"
+        },
+        {
+          "component": "richtext",
+          "valueType": "string",
+          "name": "title",
+          "label": "Title"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "body",
+          "label": "Body copy"
+        },
+        {
+          "component": "richtext",
+          "valueType": "string",
+          "name": "cta-primary",
+          "label": "Primary CTA (link)"
+        },
+        {
+          "component": "richtext",
+          "valueType": "string",
+          "name": "cta-ghost",
+          "label": "Ghost CTA (link)"
+        }
+      ]
+    }
+  ],
+  "filters": []
+}

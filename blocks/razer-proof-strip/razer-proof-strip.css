@@ -1,0 +1,110 @@
+.razer-proof-strip .proof-strip {
+  position: relative;
+  z-index: 3;
+  border-top: 1px solid var(--rzr-surface-line);
+  border-bottom: 1px solid var(--rzr-surface-line);
+  background: var(--rzr-surface-raised);
+}
+
+.razer-proof-strip .proof-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  width: 100%;
+}
+
+.razer-proof-strip .proof-grid article {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  min-height: 94px;
+  padding: 24px;
+  border: 0;
+  border-bottom: 1px solid var(--rzr-surface-line);
+}
+
+.razer-proof-strip .proof-grid article > span {
+  color: var(--rzr-green);
+  font-size: 24px;
+}
+
+.razer-proof-strip .proof-grid strong {
+  display: block;
+  font-family: var(--rzr-font-body);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: normal;
+  text-transform: none;
+}
+
+.razer-proof-strip .proof-grid p {
+  margin: 3px 0 0;
+  color: var(--rzr-text-tertiary);
+  font-size: 12px;
+  line-height: 18px;
+}
+
+.razer-proof-strip .proof-grid .proof-feature {
+  display: block;
+  background: var(--rzr-surface-card);
+}
+
+.razer-proof-strip .proof-feature strong {
+  color: var(--rzr-green);
+  font-family: var(--rzr-font-display);
+  font-size: 28px;
+  font-weight: 500;
+  line-height: 31px;
+}
+
+.razer-proof-strip .proof-grid article:nth-child(-n+2),
+.razer-proof-strip .proof-grid article:nth-child(3) {
+  border-bottom: 1px solid var(--line);
+}
+
+.razer-proof-strip .proof-grid article:last-child {
+  border: 0;
+}
+
+@media (min-width: 681px) {
+  .razer-proof-strip .proof-grid {
+    grid-template-columns: 1fr 1fr;
+    width: auto;
+  }
+
+  .razer-proof-strip .proof-grid article {
+    min-height: 120px;
+    border-right: 1px solid var(--line);
+    border-bottom: none;
+  }
+
+  .razer-proof-strip .proof-grid article:nth-child(3) {
+    border-bottom: none;
+  }
+}
+
+@media (min-width: 821px) {
+  .razer-proof-strip .proof-grid {
+    grid-template-columns: 1.25fr repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 981px) {
+  .razer-proof-strip .proof-grid article:nth-child(2) {
+    border-right: none;
+  }
+
+  .razer-proof-strip .proof-grid article:nth-child(-n+2) {
+    border-bottom: none;
+  }
+}
+
+/* Full-bleed: the top and bottom rules must span the viewport. */
+.razer-proof-strip-wrapper {
+  max-width: none;
+  padding: 0;
+}
+
+main > .section:has(> .razer-proof-strip-wrapper) {
+  margin: 0;
+}

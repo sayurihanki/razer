@@ -137,6 +137,30 @@
           "...": "../blocks/quote/_*.json#/definitions"
         },
         {
+          "...": "../blocks/razer-campaign-carousel/_*.json#/definitions"
+        },
+        {
+          "...": "../blocks/razer-capability-grid/_*.json#/definitions"
+        },
+        {
+          "...": "../blocks/razer-family-grid/_*.json#/definitions"
+        },
+        {
+          "...": "../blocks/razer-family-rail/_*.json#/definitions"
+        },
+        {
+          "...": "../blocks/razer-final-cta/_*.json#/definitions"
+        },
+        {
+          "...": "../blocks/razer-gear-finder/_*.json#/definitions"
+        },
+        {
+          "...": "../blocks/razer-home-hero/_*.json#/definitions"
+        },
+        {
+          "...": "../blocks/razer-home-promo-bar/_*.json#/definitions"
+        },
+        {
           "...": "../blocks/razer-minipage-block2/_*.json#/definitions"
         },
         {
@@ -147,6 +171,39 @@
         },
         {
           "...": "../blocks/razer-minipage/_*.json#/definitions"
+        },
+        {
+          "...": "../blocks/razer-plp-hero/_*.json#/definitions"
+        },
+        {
+          "...": "../blocks/razer-plp-intro/_*.json#/definitions"
+        },
+        {
+          "...": "../blocks/razer-product-explorer/_*.json#/definitions"
+        },
+        {
+          "...": "../blocks/razer-promo-bar/_*.json#/definitions"
+        },
+        {
+          "...": "../blocks/razer-proof-banner/_*.json#/definitions"
+        },
+        {
+          "...": "../blocks/razer-proof-strip/_*.json#/definitions"
+        },
+        {
+          "...": "../blocks/razer-resource-grid/_*.json#/definitions"
+        },
+        {
+          "...": "../blocks/razer-site-footer/_*.json#/definitions"
+        },
+        {
+          "...": "../blocks/razer-site-header/_*.json#/definitions"
+        },
+        {
+          "...": "../blocks/razer-story-grid/_*.json#/definitions"
+        },
+        {
+          "...": "../blocks/razer-use-case-tabs/_*.json#/definitions"
         },
         {
           "...": "../blocks/search-bar/_*.json#/definitions"

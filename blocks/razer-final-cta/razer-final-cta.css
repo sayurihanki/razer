@@ -1,0 +1,62 @@
+.razer-final-cta .final-cta {
+  position: relative;
+  overflow: hidden;
+  padding: 76px 0;
+  background: #000;
+  text-align: center;
+}
+
+.razer-final-cta .final-glow {
+  position: absolute;
+  top: -420px;
+  left: 50%;
+  width: 640px;
+  height: 640px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgb(68 214 44 / 14%), rgb(0 0 0 / 0%) 68%);
+  filter: none;
+  transform: translate(-50%);
+}
+
+.razer-final-cta .final-cta .shell {
+  position: relative;
+  z-index: 2;
+}
+
+.razer-final-cta .final-cta h2 {
+  margin: 0;
+  font-size: var(--rzr-display-1-size);
+  font-weight: var(--rzr-display-1-weight);
+  line-height: var(--rzr-display-1-lh);
+  letter-spacing: normal;
+  text-transform: uppercase;
+}
+
+.razer-final-cta .final-cta > .shell > p:not(.eyebrow) {
+  margin: 12px 0 4px;
+  color: var(--rzr-text-secondary);
+  font-size: 18px;
+  line-height: 24px;
+}
+
+.razer-final-cta .final-cta .button-row {
+  justify-content: center;
+}
+
+@media (min-width: 681px) {
+  .razer-final-cta .final-cta {
+    padding: 96px 0;
+  }
+}
+
+/* Full-bleed: EDS caps `main > .section > div` at 1200px and adds vertical
+ * section margins. The glow is 640px wide and positioned against the section,
+ * so it needs the section to span the viewport. */
+.razer-final-cta-wrapper {
+  max-width: none;
+  padding: 0;
+}
+
+main > .section:has(> .razer-final-cta-wrapper) {
+  margin: 0;
+}

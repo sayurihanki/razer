@@ -1,0 +1,139 @@
+/* The source's `.section` padding lives here rather than in the shared sheet,
+ * where a bare `.section` would collide with EDS's own section wrappers. */
+.razer-capability-grid .section {
+  padding: 56px 0;
+}
+
+.razer-capability-grid .technology-section {
+  overflow: hidden;
+  background: #000;
+}
+
+.razer-capability-grid .capability-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  border: 0;
+}
+
+.razer-capability-grid .capability-card {
+  position: relative;
+  overflow: hidden;
+  min-height: 330px;
+  padding: 24px;
+  border: 0;
+  border-radius: var(--rzr-radius-2xl);
+  background: var(--rzr-surface-card);
+  transition:
+    background var(--rzr-duration-slow) ease,
+    transform var(--rzr-duration-slow) var(--rzr-ease-standard);
+}
+
+.razer-capability-grid .capability-card::before {
+  content: "";
+  position: absolute;
+  top: 80px;
+  right: -130px;
+  display: none;
+  width: 240px;
+  height: 240px;
+  border: 1px solid rgb(68 214 44 / 22%);
+  border-radius: 50%;
+  box-shadow: 0 0 70px rgb(68 214 44 / 6%);
+  transition: transform 0.45s;
+}
+
+.razer-capability-grid .capability-card:hover::before {
+  transform: scale(1.18) translate(-16px);
+}
+
+.razer-capability-grid .capability-card:hover {
+  background: var(--rzr-surface-card-alt);
+  transform: translateY(-4px);
+}
+
+.razer-capability-grid .capability-glyph {
+  display: flex;
+  align-items: center;
+  min-height: 130px;
+  color: var(--rzr-green);
+  font-family: var(--rzr-font-display);
+  font-size: 48px;
+  font-weight: 500;
+  letter-spacing: normal;
+}
+
+.razer-capability-grid .capability-card h3 {
+  margin: 0 0 12px;
+  font-size: var(--rzr-display-3-size);
+  font-weight: var(--rzr-display-3-weight);
+  line-height: var(--rzr-display-3-lh);
+  text-transform: uppercase;
+}
+
+.razer-capability-grid .capability-card p {
+  margin: 0 0 48px;
+  color: var(--rzr-text-secondary);
+  font-size: 14px;
+  line-height: 21px;
+}
+
+.razer-capability-grid .capability-card a {
+  position: absolute;
+  right: 24px;
+  bottom: 24px;
+  left: 24px;
+  color: var(--rzr-text-primary);
+  font-family: var(--rzr-font-body);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.razer-capability-grid .capability-card a span {
+  float: right;
+  color: var(--rzr-green);
+}
+
+.razer-capability-grid .capability-card:nth-child(2) {
+  min-height: 360px;
+}
+
+@media (min-width: 681px) {
+  .razer-capability-grid .section {
+    padding: 72px 0;
+  }
+
+  .razer-capability-grid .capability-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .razer-capability-grid .capability-card {
+    min-height: 380px;
+  }
+
+  .razer-capability-grid .capability-card:nth-child(2) {
+    min-height: auto;
+  }
+}
+
+@media (min-width: 1101px) {
+  .razer-capability-grid .capability-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .razer-capability-grid .capability-card:hover {
+    transform: none;
+  }
+}
+
+/* Full-bleed: the section paints its own black background edge to edge. */
+.razer-capability-grid-wrapper {
+  max-width: none;
+  padding: 0;
+}
+
+main > .section:has(> .razer-capability-grid-wrapper) {
+  margin: 0;
+}

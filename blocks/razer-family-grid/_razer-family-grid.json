@@ -1,0 +1,52 @@
+{
+  "definitions": [
+    {
+      "title": "Razer Family Grid",
+      "id": "razer-family-grid",
+      "model": "razer-family-grid",
+      "plugins": {
+        "da": {
+          "type": "key-value-block"
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "razer-family-grid",
+      "fields": [
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "eyebrow",
+          "label": "Eyebrow"
+        },
+        {
+          "component": "richtext",
+          "valueType": "string",
+          "name": "title",
+          "label": "Title"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "intro",
+          "label": "Intro"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "card-wide",
+          "label": "Wide card (index | title | copy | link | image)"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "card",
+          "label": "Card (index | title | copy | link | image)"
+        }
+      ]
+    }
+  ],
+  "filters": []
+}

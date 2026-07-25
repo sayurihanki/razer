@@ -1,0 +1,118 @@
+.razer-family-grid .section {
+  padding: 56px 0;
+}
+
+.razer-family-grid .family-section {
+  background: var(--rzr-surface-raised);
+}
+
+.razer-family-grid .family-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+.razer-family-grid .family-card,
+.razer-family-grid .family-card.family-wide {
+  position: relative;
+  overflow: hidden;
+  grid-column: auto;
+  min-height: 480px;
+  border: 0;
+  border-radius: var(--rzr-radius-2xl);
+  background: var(--rzr-surface-card);
+}
+
+.razer-family-grid .family-card > img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition:
+    transform var(--rzr-duration-xslow) var(--rzr-ease-slow),
+    filter var(--rzr-duration-xslow) ease;
+}
+
+.razer-family-grid .family-card:hover > img {
+  transform: scale(1.025);
+  filter: saturate(1.05);
+}
+
+.razer-family-grid .family-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(rgb(0 0 0 / 6%), rgb(0 0 0 / 86%) 86%);
+}
+
+.razer-family-grid .family-card > .card-index {
+  position: absolute;
+  top: 24px;
+  left: 24px;
+  z-index: 2;
+  color: rgb(255 255 255 / 65%);
+}
+
+.razer-family-grid .family-content {
+  position: absolute;
+  right: 28px;
+  bottom: 28px;
+  left: 28px;
+  z-index: 2;
+}
+
+.razer-family-grid .family-content h3 {
+  margin: 0;
+  max-width: 900px;
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 27px;
+  letter-spacing: normal;
+  text-transform: uppercase;
+}
+
+.razer-family-grid .family-content p {
+  margin: 8px 0 4px;
+  color: var(--rzr-text-secondary);
+  font-size: 16px;
+  line-height: 24px;
+}
+
+@media (min-width: 681px) {
+  .razer-family-grid .section {
+    padding: 72px 0;
+  }
+
+  .razer-family-grid .family-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .razer-family-grid .family-card {
+    min-height: 560px;
+  }
+
+  .razer-family-grid .family-card.family-wide {
+    grid-column: 1 / -1;
+    min-height: 620px;
+  }
+
+  .razer-family-grid .family-card > img {
+    object-position: 50% 50%;
+  }
+
+  .razer-family-grid .family-content h3 {
+    font-size: 28px;
+    line-height: 31px;
+  }
+}
+
+/* Full-bleed: the section paints its own raised background edge to edge. */
+.razer-family-grid-wrapper {
+  max-width: none;
+  padding: 0;
+}
+
+main > .section:has(> .razer-family-grid-wrapper) {
+  margin: 0;
+}

@@ -1,0 +1,58 @@
+{
+  "definitions": [
+    {
+      "title": "Razer Resource Grid",
+      "id": "razer-resource-grid",
+      "model": "razer-resource-grid",
+      "plugins": {
+        "da": {
+          "type": "key-value-block"
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "razer-resource-grid",
+      "fields": [
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "eyebrow",
+          "label": "Eyebrow"
+        },
+        {
+          "component": "richtext",
+          "valueType": "string",
+          "name": "title",
+          "label": "Title"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "intro",
+          "label": "Intro"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "kind",
+          "label": "Kicker kind"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "link-label",
+          "label": "Card CTA label"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "card",
+          "label": "Card (title | copy | link)"
+        }
+      ]
+    }
+  ],
+  "filters": []
+}

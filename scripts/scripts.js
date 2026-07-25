@@ -135,6 +135,53 @@ export function decorateMain(main) {
   decorateButtons(main);
 }
 
+/*
+ * Homepage content blocks ported from the razer-chroma-reactor site. They
+ * share one set of design tokens and primitives in
+ * styles/razer-chroma-shared.css.
+ *
+ * The site chrome (razer-site-header, razer-site-footer, razer-promo-bar) is
+ * deliberately absent: those blocks are self-contained, carrying their own
+ * copy of the tokens, and stamping the shared marker class on them would let
+ * this file's element-level rules restyle them.
+ */
+const RAZER_CHROMA_BLOCKS = [
+  'razer-campaign-carousel',
+  'razer-capability-grid',
+  'razer-family-grid',
+  'razer-final-cta',
+  'razer-gear-finder',
+  'razer-home-hero',
+  'razer-home-promo-bar',
+  'razer-proof-strip',
+  'razer-resource-grid',
+  'razer-story-grid',
+  'razer-use-case-tabs',
+];
+
+/**
+ * Loads the razer-chroma tokens and marks up the page for them, but only when
+ * one of those blocks is actually present.
+ *
+ * Deliberately not part of the global stylesheet chain: these blocks are a
+ * dark, full-bleed brand system, and installing it globally would restyle
+ * every razer page. A page using none of these blocks never requests the file.
+ *
+ * Runs in the eager phase rather than the lazy one because the header and hero
+ * are LCP content -- deferring the theme would flash the default light page.
+ *
+ * @param {Element} doc The container element
+ */
+function loadRazerChromaStyles(doc) {
+  const blocks = doc.querySelectorAll(RAZER_CHROMA_BLOCKS.map((name) => `.${name}.block`).join(','));
+  if (!blocks.length) return;
+  // Marker class the shared stylesheet scopes to. A broader attribute selector
+  // would also catch the unrelated razer-minipage blocks.
+  blocks.forEach((block) => block.classList.add('razer-chroma'));
+  document.body.classList.add('razer-chroma-page');
+  loadCSS(`${window.hlx.codeBasePath}/styles/razer-chroma-shared.css`);
+}
+
 /**
  * Loads everything needed to get to LCP.
  * @param {Element} doc The container element
@@ -148,6 +195,7 @@ async function loadEager(doc) {
     try {
       await initializeCommerce();
       decorateMain(main);
+      loadRazerChromaStyles(doc);
       applyTemplates(doc);
       await loadCommerceEager();
     } catch (e) {

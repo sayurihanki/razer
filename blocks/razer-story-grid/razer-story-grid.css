@@ -1,0 +1,109 @@
+.razer-story-grid .section {
+  padding: 56px 0;
+}
+
+.razer-story-grid .story-section {
+  background: var(--rzr-surface-raised);
+}
+
+.razer-story-grid .story-grid {
+  display: grid;
+  grid-template-rows: auto;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  min-height: 0;
+}
+
+.razer-story-grid .story-card {
+  position: relative;
+  overflow: hidden;
+  min-height: 440px;
+  border: 0;
+  border-radius: var(--rzr-radius-2xl);
+  background: var(--rzr-surface-card);
+}
+
+.razer-story-grid .story-main {
+  grid-row: auto;
+}
+
+.razer-story-grid .story-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--rzr-duration-xslow) var(--rzr-ease-slow);
+}
+
+.razer-story-grid .story-card:hover img {
+  transform: scale(1.025);
+}
+
+.razer-story-grid .story-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(rgb(0 0 0 / 0%) 34%, rgb(0 0 0 / 88%));
+}
+
+.razer-story-grid .story-card > div {
+  position: absolute;
+  right: 24px;
+  bottom: 24px;
+  left: 24px;
+  z-index: 2;
+}
+
+.razer-story-grid .story-card span {
+  color: var(--rzr-green);
+  font-family: var(--rzr-font-body);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.razer-story-grid .story-card h3 {
+  margin: 5px 0;
+  font-size: 28px;
+  font-weight: 500;
+  line-height: 31px;
+  letter-spacing: normal;
+  text-transform: uppercase;
+}
+
+.razer-story-grid .story-card p {
+  margin: 0;
+  color: var(--rzr-text-secondary);
+  font-size: 14px;
+  line-height: 21px;
+}
+
+@media (min-width: 681px) {
+  .razer-story-grid .section {
+    padding: 72px 0;
+  }
+
+  .razer-story-grid .story-grid {
+    grid-template-rows: 1fr 1fr;
+    grid-template-columns: 1.2fr 0.8fr;
+    min-height: 620px;
+  }
+
+  .razer-story-grid .story-card {
+    min-height: 290px;
+  }
+
+  .razer-story-grid .story-main {
+    grid-row: 1 / 3;
+  }
+}
+
+/* Full-bleed: the section paints its own raised background edge to edge. */
+.razer-story-grid-wrapper {
+  max-width: none;
+  padding: 0;
+}
+
+main > .section:has(> .razer-story-grid-wrapper) {
+  margin: 0;
+}
