@@ -4,12 +4,13 @@
 
 `razer-pdp-hero` is the commerce heart of the Basilisk V3 Pro 35K
 product detail page: breadcrumbs, product masthead, a four-shot
-gallery with crossfade transitions, animated Chroma ambient glow,
-pointer tilt, swipe and keyboard navigation, and the three-step guided
-configurator (finish, model, RazerCare) with an animated running
-total, a Razer.com hand-off CTA, and the RazerStore services strip.
-All content is baked in, so a table containing only the block name
-renders the complete experience.
+gallery with crossfade, swipe, and keyboard navigation, and the
+three-step guided configurator (finish, model, RazerCare) with a live
+running total, a Razer.com hand-off CTA, and the RazerStore services
+strip. Styling stays close to razer.com: flat dark surfaces, green
+accents, and motion limited to the crossfade and the price roll. All
+content is baked in, so a table containing only the block name renders
+the complete experience.
 
 ## DA.live Authoring Model
 
@@ -46,19 +47,20 @@ Rules (shared with the razer-mice family):
 
 ## Behavior
 
-- Gallery: crossfade between shots with a sheen sweep, arrow buttons,
-  thumbnail rail (`aria-pressed`), `aria-live` caption with `01 / 04`
-  counter, ArrowLeft/ArrowRight keys, pointer swipe, and a subtle
-  pointer-tilt on fine pointers. Non-active shots are preloaded during
-  idle time; the first image is `fetchpriority="high"` for LCP.
+- Gallery: crossfade between shots, arrow buttons, thumbnail rail
+  (`aria-pressed`), `aria-live` caption with `01 / 04` counter,
+  ArrowLeft/ArrowRight keys, and pointer swipe. Non-active shots are
+  preloaded during idle time; the first image is `fetchpriority="high"`
+  for LCP. The crossfade is timer-driven (not rAF) so hidden-document
+  throttling can never wedge it.
 - Configurator: single-select button groups sync `aria-pressed` and
   `.is-selected`; the summary (finish + model) and total update live
-  in an `aria-live` region. The total tweens between values and the
-  stage glow re-tints via `data-finish` on the gallery stage.
+  in an `aria-live` region. The total tweens between values with a
+  settle timer that guarantees the final figure.
 - On desktop (≥981px) the configurator is sticky beside the gallery.
-- Scroll reveals stagger via `--reveal-i`; every animation (reveals,
-  crossfade, tilt, glow rotation, price tween) collapses to instant
-  states under `prefers-reduced-motion: reduce`.
+- The crossfade and price tween collapse to instant states under
+  `prefers-reduced-motion: reduce`; there are no scroll reveals or
+  ambient animations.
 - Breakpoints at 680/980/1260px (source parity; documented deviation
   from the repo ladder).
 

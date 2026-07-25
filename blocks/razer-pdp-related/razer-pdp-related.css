@@ -209,9 +209,7 @@ main > .section.appear > div > .razer-pdp-related-wrapper {
 
 .razer-pdp-related .related-section {
   padding: 12px 0 64px;
-  background:
-    radial-gradient(80% 60% at 50% 110%, rgb(68 214 44 / 6%), transparent 70%),
-    var(--rzrm-surface-base, #000);
+  background: var(--rzrm-surface-base, #000);
 }
 
 .razer-pdp-related .eyebrow {
@@ -283,9 +281,8 @@ main > .section.appear > div > .razer-pdp-related-wrapper {
 }
 
 .razer-pdp-related .related-card:hover {
-  transform: translateY(-5px);
+  transform: translateY(-4px);
   border-color: rgb(68 214 44 / 45%);
-  box-shadow: var(--rzrm-shadow-lg, 0 32px 68px rgb(0 0 0 / 30%));
 }
 
 .razer-pdp-related .related-media {
@@ -384,7 +381,6 @@ main > .section.appear > div > .razer-pdp-related-wrapper {
 .razer-pdp-related .button-outline:hover {
   border-color: var(--rzrm-green, #44d62c);
   color: var(--rzrm-green, #44d62c);
-  box-shadow: 0 0 14px rgb(68 214 44 / 25%);
 }
 
 /* ── Reveal (motion-safe only) ──────────────────────────────────── */
@@ -392,11 +388,10 @@ main > .section.appear > div > .razer-pdp-related-wrapper {
 @media (prefers-reduced-motion: no-preference) {
   .razer-pdp-related [data-reveal] {
     opacity: 0;
-    transform: translateY(24px);
+    transform: translateY(16px);
     transition:
-      opacity var(--rzrm-duration-xslow, 0.8s) var(--rzrm-ease-standard, ease),
-      transform var(--rzrm-duration-xslow, 0.8s) var(--rzrm-ease-standard, ease);
-    transition-delay: calc(var(--reveal-i, 0) * 120ms);
+      opacity var(--rzrm-duration-slow, 0.5s) var(--rzrm-ease-standard, ease),
+      transform var(--rzrm-duration-slow, 0.5s) var(--rzrm-ease-standard, ease);
   }
 
   .razer-pdp-related [data-reveal].is-inview {

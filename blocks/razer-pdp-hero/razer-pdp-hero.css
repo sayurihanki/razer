@@ -1,7 +1,7 @@
 /**
  * razer-pdp-hero.css — Basilisk V3 Pro 35K PDP commerce hero
- * (breadcrumbs, masthead, Chroma gallery, guided configurator,
- * services strip).
+ * (breadcrumbs, masthead, gallery, guided configurator, services
+ * strip).
  *
  * All selectors are scoped to `.razer-pdp-hero` / its EDS
  * container. The rzrm token preamble below is duplicated across all
@@ -210,17 +210,6 @@ main > .section.appear > div > .razer-pdp-hero-wrapper {
 
 .razer-pdp-hero .pdp-hero {
   padding: 0 0 40px;
-  position: relative;
-  overflow: hidden;
-}
-
-.razer-pdp-hero .pdp-hero::before {
-  content: "";
-  position: absolute;
-  inset: -30% 0 auto;
-  height: 60%;
-  background: radial-gradient(60% 80% at 50% 0%, rgb(68 214 44 / 7%), transparent 70%);
-  pointer-events: none;
 }
 
 /* ── Breadcrumbs ────────────────────────────────────────────────── */
@@ -236,7 +225,6 @@ main > .section.appear > div > .razer-pdp-hero-wrapper {
   line-height: var(--rzrm-body-xs-lh, 18px);
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  position: relative;
 }
 
 .razer-pdp-hero .pdp-breadcrumbs a {
@@ -256,18 +244,15 @@ main > .section.appear > div > .razer-pdp-hero-wrapper {
 
 .razer-pdp-hero .pdp-masthead {
   padding: 10px 0 26px;
-  position: relative;
 }
 
 .razer-pdp-hero .pdp-masthead h1 {
   margin: 0 0 6px;
-  font-size: clamp(28px, 5.4vw, 42px);
+  font-size: clamp(28px, 5.4vw, 40px);
   font-weight: var(--rzrm-display-1-weight, 700);
   line-height: 1.08;
   letter-spacing: -0.01em;
-  background: linear-gradient(180deg, #fff 55%, #b8b8b8);
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: var(--rzrm-text-primary, #fff);
 }
 
 .razer-pdp-hero .pdp-masthead p {
@@ -288,88 +273,24 @@ main > .section.appear > div > .razer-pdp-hero-wrapper {
   display: flex;
   flex-direction: column;
   gap: 28px;
-  position: relative;
 }
 
 /* ── Gallery ────────────────────────────────────────────────────── */
 
 .razer-pdp-hero .gallery-stage {
   position: relative;
-  border-radius: var(--rzrm-radius-2xl, 12px);
-  background: #050505;
-  isolation: isolate;
-  perspective: 1100px;
+  border-radius: var(--rzrm-radius-lg, 6px);
+  background: #0d0d0d;
   touch-action: pan-y;
   outline-offset: 4px;
-}
-
-.razer-pdp-hero .stage-glow {
-  position: absolute;
-  inset: -18%;
-  z-index: -1;
-  pointer-events: none;
-}
-
-.razer-pdp-hero .stage-glow::before,
-.razer-pdp-hero .stage-glow::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  transition: opacity var(--rzrm-duration-slow, 0.5s) ease;
-}
-
-/* Soft chroma aura from overlapping radial falloffs — no blur filter,
-   so the rotating layer stays compositor-cheap on weak GPUs. */
-.razer-pdp-hero .stage-glow::before {
-  background:
-    radial-gradient(42% 42% at 22% 30%, rgb(68 214 44 / 85%), transparent 70%),
-    radial-gradient(42% 42% at 78% 26%, rgb(40 170 220 / 80%), transparent 70%),
-    radial-gradient(44% 44% at 82% 74%, rgb(138 43 226 / 75%), transparent 70%),
-    radial-gradient(42% 42% at 24% 78%, rgb(255 45 120 / 70%), transparent 70%),
-    radial-gradient(36% 36% at 52% 50%, rgb(255 176 46 / 45%), transparent 72%);
-  opacity: 0.4;
-}
-
-.razer-pdp-hero .stage-glow::after {
-  opacity: 0;
-}
-
-.razer-pdp-hero .gallery-stage[data-finish="white"] .stage-glow::before {
-  opacity: 0.14;
-}
-
-.razer-pdp-hero .gallery-stage[data-finish="white"] .stage-glow::after {
-  background: radial-gradient(closest-side, rgb(214 232 255 / 85%), transparent 72%);
-  opacity: 0.5;
-}
-
-.razer-pdp-hero .gallery-stage[data-finish="phantom-green"] .stage-glow::before {
-  opacity: 0.12;
-}
-
-.razer-pdp-hero .gallery-stage[data-finish="phantom-green"] .stage-glow::after {
-  background: radial-gradient(closest-side, rgb(68 214 44 / 85%), rgb(0 117 78 / 45%) 55%, transparent 75%);
-  opacity: 0.55;
-}
-
-.razer-pdp-hero .gallery-stage[data-finish="phantom-white"] .stage-glow::before {
-  opacity: 0.16;
-}
-
-.razer-pdp-hero .gallery-stage[data-finish="phantom-white"] .stage-glow::after {
-  background: radial-gradient(closest-side, rgb(196 181 253 / 80%), rgb(103 232 249 / 40%) 55%, transparent 75%);
-  opacity: 0.55;
 }
 
 .razer-pdp-hero .stage-frame {
   position: relative;
   aspect-ratio: 3 / 2;
-  border-radius: var(--rzrm-radius-2xl, 12px);
+  border-radius: var(--rzrm-radius-lg, 6px);
   border: 1px solid rgb(255 255 255 / 7%);
   overflow: hidden;
-  transform-style: preserve-3d;
-  transition: transform var(--rzrm-duration-base, 0.3s) var(--rzrm-ease-standard, ease);
 }
 
 .razer-pdp-hero .stage-img {
@@ -382,38 +303,11 @@ main > .section.appear > div > .razer-pdp-hero-wrapper {
 
 .razer-pdp-hero .stage-img.is-back {
   opacity: 0;
-  transform: scale(1.035);
-  transition:
-    opacity 0.42s var(--rzrm-ease-standard, ease),
-    transform 0.6s var(--rzrm-ease-standard, ease);
+  transition: opacity 0.32s ease;
 }
 
 .razer-pdp-hero .stage-img.is-back.is-showing {
   opacity: 1;
-  transform: scale(1);
-}
-
-.razer-pdp-hero .stage-sheen {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    115deg,
-    transparent 40%,
-    rgb(255 255 255 / 13%) 50%,
-    transparent 60%
-  );
-  transform: translateX(-140%);
-  pointer-events: none;
-}
-
-.razer-pdp-hero .stage-sheen.is-sweeping {
-  animation: rzr-pdp-sweep 0.9s var(--rzrm-ease-standard, ease);
-}
-
-@keyframes rzr-pdp-sweep {
-  to {
-    transform: translateX(140%);
-  }
 }
 
 .razer-pdp-hero .gallery-arrows {
@@ -432,29 +326,21 @@ main > .section.appear > div > .razer-pdp-hero-wrapper {
   height: 42px;
   border: 1px solid rgb(255 255 255 / 16%);
   border-radius: 50%;
-  background: rgb(0 0 0 / 52%);
+  background: rgb(0 0 0 / 55%);
   color: var(--rzrm-text-primary, #fff);
   font-size: 22px;
   line-height: 1;
   display: grid;
   place-items: center;
   cursor: pointer;
-  backdrop-filter: blur(6px);
   transition:
     border-color var(--rzrm-duration-fast, 0.24s) ease,
-    box-shadow var(--rzrm-duration-fast, 0.24s) ease,
-    transform var(--rzrm-duration-fast, 0.24s) var(--rzrm-ease-standard, ease),
-    opacity var(--rzrm-duration-base, 0.3s) ease;
+    background var(--rzrm-duration-fast, 0.24s) ease;
 }
 
 .razer-pdp-hero .stage-arrow:hover {
   border-color: var(--rzrm-green, #44d62c);
-  box-shadow: 0 0 16px rgb(68 214 44 / 35%);
-  transform: scale(1.06);
-}
-
-.razer-pdp-hero .stage-arrow:active {
-  transform: scale(0.94);
+  background: rgb(0 0 0 / 75%);
 }
 
 .razer-pdp-hero .gallery-thumbs {
@@ -473,10 +359,7 @@ main > .section.appear > div > .razer-pdp-hero-wrapper {
   padding: 0;
   overflow: hidden;
   cursor: pointer;
-  transition:
-    border-color var(--rzrm-duration-fast, 0.24s) ease,
-    box-shadow var(--rzrm-duration-fast, 0.24s) ease,
-    transform var(--rzrm-duration-fast, 0.24s) var(--rzrm-ease-standard, ease);
+  transition: border-color var(--rzrm-duration-fast, 0.24s) ease;
 }
 
 .razer-pdp-hero .gallery-thumbs img {
@@ -484,9 +367,7 @@ main > .section.appear > div > .razer-pdp-hero-wrapper {
   height: 100%;
   object-fit: cover;
   opacity: 0.75;
-  transition:
-    opacity var(--rzrm-duration-fast, 0.24s) ease,
-    transform var(--rzrm-duration-base, 0.3s) var(--rzrm-ease-standard, ease);
+  transition: opacity var(--rzrm-duration-fast, 0.24s) ease;
 }
 
 .razer-pdp-hero .gallery-caption {
@@ -548,7 +429,6 @@ main > .section.appear > div > .razer-pdp-hero-wrapper {
 
 .razer-pdp-hero .text-link span {
   color: var(--rzrm-green, #44d62c);
-  transition: transform var(--rzrm-duration-fast, 0.24s) var(--rzrm-ease-standard, ease);
 }
 
 .razer-pdp-hero .text-link:hover {
@@ -562,27 +442,11 @@ main > .section.appear > div > .razer-pdp-hero-wrapper {
 /* ── Configurator ───────────────────────────────────────────────── */
 
 .razer-pdp-hero .pdp-configurator {
-  position: relative;
   background: var(--rzrm-surface-raised, #111);
   border: 1px solid rgb(255 255 255 / 9%);
-  border-radius: var(--rzrm-radius-2xl, 12px);
+  border-top: 2px solid var(--rzrm-green, #44d62c);
+  border-radius: var(--rzrm-radius-lg, 6px);
   padding: 24px 20px 20px;
-  overflow: hidden;
-}
-
-.razer-pdp-hero .pdp-configurator::before {
-  content: "";
-  position: absolute;
-  inset: 0 0 auto;
-  height: 2px;
-  background: linear-gradient(
-    90deg,
-    #44d62c,
-    #28aadc 35%,
-    #8a2be2 65%,
-    #44d62c
-  );
-  background-size: 200% 100%;
 }
 
 .razer-pdp-hero .eyebrow {
@@ -674,15 +538,13 @@ main > .section.appear > div > .razer-pdp-hero-wrapper {
   width: 100%;
   padding: 12px;
   border: 1px solid var(--rzrm-surface-line, #333);
-  border-radius: var(--rzrm-radius-lg, 6px);
+  border-radius: var(--rzrm-radius-sm, 3px);
   background: #181818;
   text-align: left;
   cursor: pointer;
   transition:
     border-color var(--rzrm-duration-fast, 0.24s) ease,
-    background var(--rzrm-duration-fast, 0.24s) ease,
-    box-shadow var(--rzrm-duration-fast, 0.24s) ease,
-    transform var(--rzrm-duration-fast, 0.24s) var(--rzrm-ease-standard, ease);
+    background var(--rzrm-duration-fast, 0.24s) ease;
 }
 
 .razer-pdp-hero .finish-options button {
@@ -723,13 +585,6 @@ main > .section.appear > div > .razer-pdp-hero-wrapper {
   border-radius: 50%;
   border: 1px solid rgb(255 255 255 / 25%);
   flex: none;
-  transition: box-shadow var(--rzrm-duration-fast, 0.24s) ease;
-}
-
-.razer-pdp-hero .config-step button.is-selected .swatch {
-  box-shadow:
-    0 0 0 2px var(--rzrm-surface-raised, #111),
-    0 0 0 4px var(--rzrm-green, #44d62c);
 }
 
 .razer-pdp-hero .swatch.black {
@@ -756,10 +611,8 @@ main > .section.appear > div > .razer-pdp-hero-wrapper {
   margin-top: 20px;
   padding: 16px;
   border: 1px solid rgb(255 255 255 / 10%);
-  border-radius: var(--rzrm-radius-lg, 6px);
-  background:
-    radial-gradient(120% 160% at 100% 0%, rgb(68 214 44 / 7%), transparent 55%),
-    #0d0d0d;
+  border-radius: var(--rzrm-radius-sm, 3px);
+  background: #0d0d0d;
 }
 
 .razer-pdp-hero .summary-eyebrow {
@@ -795,17 +648,6 @@ main > .section.appear > div > .razer-pdp-hero-wrapper {
   font-variant-numeric: tabular-nums;
 }
 
-.razer-pdp-hero .price-value.is-ticking {
-  animation: rzr-pdp-tick 0.45s var(--rzrm-ease-standard, ease);
-}
-
-@keyframes rzr-pdp-tick {
-  30% {
-    color: var(--rzrm-green, #44d62c);
-    transform: translateY(-2px);
-  }
-}
-
 .razer-pdp-hero .price-note {
   display: block;
   font-size: var(--rzrm-body-xs-size, 12px);
@@ -828,9 +670,7 @@ main > .section.appear > div > .razer-pdp-hero-wrapper {
   cursor: pointer;
   transition:
     background var(--rzrm-duration-base, 0.3s) ease,
-    color var(--rzrm-duration-base, 0.3s) ease,
-    box-shadow var(--rzrm-duration-base, 0.3s) ease,
-    transform var(--rzrm-duration-fast, 0.24s) var(--rzrm-ease-standard, ease);
+    color var(--rzrm-duration-base, 0.3s) ease;
 }
 
 .razer-pdp-hero .button-primary {
@@ -839,12 +679,7 @@ main > .section.appear > div > .razer-pdp-hero-wrapper {
 }
 
 .razer-pdp-hero .button-primary:hover {
-  box-shadow: 0 0 26px rgb(68 214 44 / 45%);
-  transform: translateY(-1px);
-}
-
-.razer-pdp-hero .button-primary:active {
-  transform: translateY(0);
+  background: var(--rzrm-green-glow, #4f4);
 }
 
 .razer-pdp-hero .availability-note {
@@ -860,7 +695,6 @@ main > .section.appear > div > .razer-pdp-hero-wrapper {
   display: grid;
   gap: 12px;
   margin-top: 34px;
-  position: relative;
 }
 
 .razer-pdp-hero .service-item {
@@ -871,14 +705,6 @@ main > .section.appear > div > .razer-pdp-hero-wrapper {
   border: 1px solid rgb(255 255 255 / 8%);
   border-radius: var(--rzrm-radius-lg, 6px);
   background: #0c0c0c;
-  transition:
-    border-color var(--rzrm-duration-base, 0.3s) ease,
-    transform var(--rzrm-duration-base, 0.3s) var(--rzrm-ease-standard, ease);
-}
-
-.razer-pdp-hero .service-item:hover {
-  border-color: rgb(68 214 44 / 45%);
-  transform: translateY(-2px);
 }
 
 .razer-pdp-hero .service-glyph {
@@ -923,79 +749,30 @@ main > .section.appear > div > .razer-pdp-hero-wrapper {
 
 .razer-pdp-hero .gallery-thumbs button:hover {
   border-color: var(--rzrm-text-muted, #888);
-  transform: translateY(-2px);
 }
 
 .razer-pdp-hero .gallery-thumbs button.is-active {
   border-color: var(--rzrm-green, #44d62c);
-  box-shadow: 0 0 14px rgb(68 214 44 / 30%);
 }
 
 .razer-pdp-hero .config-step button:hover {
   border-color: var(--rzrm-text-muted, #888);
 }
 
-.razer-pdp-hero .config-step button:active {
-  transform: scale(0.98);
-}
-
 .razer-pdp-hero .config-step button.is-selected {
   border-color: var(--rzrm-green, #44d62c);
   background: rgb(68 214 44 / 8%);
-  box-shadow: 0 0 14px rgb(68 214 44 / 22%);
 }
 
-.razer-pdp-hero .gallery-thumbs button:hover img {
-  opacity: 1;
-  transform: scale(1.05);
+.razer-pdp-hero .config-step button.is-selected .swatch {
+  box-shadow:
+    0 0 0 2px var(--rzrm-surface-raised, #111),
+    0 0 0 3px var(--rzrm-green, #44d62c);
 }
 
+.razer-pdp-hero .gallery-thumbs button:hover img,
 .razer-pdp-hero .gallery-thumbs button.is-active img {
   opacity: 1;
-}
-
-.razer-pdp-hero .gallery-spec-link:hover span {
-  transform: translateY(3px);
-}
-
-/* ── Reveal + ambient motion (motion-safe only) ─────────────────── */
-
-@media (prefers-reduced-motion: no-preference) {
-  .razer-pdp-hero [data-reveal],
-  .razer-pdp-hero [data-enter] {
-    opacity: 0;
-    transform: translateY(26px);
-    transition:
-      opacity var(--rzrm-duration-xslow, 0.8s) var(--rzrm-ease-standard, ease),
-      transform var(--rzrm-duration-xslow, 0.8s) var(--rzrm-ease-standard, ease);
-    transition-delay: calc(var(--reveal-i, 0) * 110ms);
-  }
-
-  .razer-pdp-hero [data-reveal].is-inview,
-  .razer-pdp-hero [data-enter].is-inview {
-    opacity: 1;
-    transform: none;
-  }
-
-  .razer-pdp-hero .stage-glow::before {
-    animation: rzr-pdp-spin 16s linear infinite;
-  }
-
-  .razer-pdp-hero .pdp-configurator::before {
-    animation: rzr-pdp-flow 7s linear infinite;
-  }
-}
-
-@keyframes rzr-pdp-spin {
-  to {
-    transform: rotate(1turn);
-  }
-}
-
-@keyframes rzr-pdp-flow {
-  to {
-    background-position: 200% 0;
-  }
 }
 
 /* ── Breakpoints ────────────────────────────────────────────────── */
@@ -1003,10 +780,6 @@ main > .section.appear > div > .razer-pdp-hero-wrapper {
 @media (min-width: 681px) {
   .razer-pdp-hero .pdp-services {
     grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-
-  .razer-pdp-hero .finish-options {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .razer-pdp-hero .config-summary {

@@ -303,9 +303,6 @@ main > .section.appear > div > .razer-pdp-specs-wrapper {
   font-size: var(--rzrm-body-xs-size, 12px);
   letter-spacing: 0.06em;
   color: var(--rzrm-light-sunken, #eee);
-  transition:
-    border-color var(--rzrm-duration-fast, 0.24s) ease,
-    box-shadow var(--rzrm-duration-fast, 0.24s) ease;
 }
 
 .razer-pdp-specs .text-link {
@@ -342,29 +339,14 @@ main > .section.appear > div > .razer-pdp-specs-wrapper {
   background: #0b0b0b;
   border-top: 1px solid rgb(255 255 255 / 6%);
   transition: background var(--rzrm-duration-fast, 0.24s) ease;
-  position: relative;
 }
 
 .razer-pdp-specs .spec-table > div:first-child {
   border-top: 0;
 }
 
-.razer-pdp-specs .spec-table > div::before {
-  content: "";
-  position: absolute;
-  inset: 0 auto 0 0;
-  width: 2px;
-  background: var(--rzrm-green, #44d62c);
-  opacity: 0;
-  transition: opacity var(--rzrm-duration-fast, 0.24s) ease;
-}
-
 .razer-pdp-specs .spec-table > div:hover {
   background: #111;
-}
-
-.razer-pdp-specs .spec-table > div:hover::before {
-  opacity: 1;
 }
 
 .razer-pdp-specs .spec-table dt {
@@ -383,23 +365,15 @@ main > .section.appear > div > .razer-pdp-specs-wrapper {
   color: var(--rzrm-light-sunken, #eee);
 }
 
-/* ── Interactions (state rules last for ascending specificity) ──── */
-
-.razer-pdp-specs .tag-row span:hover {
-  border-color: var(--rzrm-green, #44d62c);
-  box-shadow: 0 0 12px rgb(68 214 44 / 25%);
-}
-
 /* ── Reveal (motion-safe only) ──────────────────────────────────── */
 
 @media (prefers-reduced-motion: no-preference) {
   .razer-pdp-specs [data-reveal] {
     opacity: 0;
-    transform: translateY(18px);
+    transform: translateY(16px);
     transition:
       opacity var(--rzrm-duration-slow, 0.5s) var(--rzrm-ease-standard, ease),
       transform var(--rzrm-duration-slow, 0.5s) var(--rzrm-ease-standard, ease);
-    transition-delay: calc(var(--reveal-i, 0) * 55ms);
   }
 
   .razer-pdp-specs [data-reveal].is-inview {
