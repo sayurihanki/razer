@@ -173,6 +173,18 @@
           "...": "../blocks/razer-minipage/_*.json#/definitions"
         },
         {
+          "...": "../blocks/razer-pdp-hero/_*.json#/definitions"
+        },
+        {
+          "...": "../blocks/razer-pdp-related/_*.json#/definitions"
+        },
+        {
+          "...": "../blocks/razer-pdp-specs/_*.json#/definitions"
+        },
+        {
+          "...": "../blocks/razer-pdp-story/_*.json#/definitions"
+        },
+        {
           "...": "../blocks/razer-plp-hero/_*.json#/definitions"
         },
         {

@@ -1,0 +1,23 @@
+{
+  "definitions": [
+    {
+      "title": "Razer PDP Story",
+      "id": "razer-pdp-story",
+      "model": "razer-pdp-story",
+      "plugins": {
+        "da": {
+          "name": "razer-pdp-story",
+          "rows": 1,
+          "columns": 7
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "razer-pdp-story",
+      "fields": []
+    }
+  ],
+  "filters": []
+}

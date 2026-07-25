@@ -26,6 +26,10 @@ const BLOCKS = [
   'razer-plp-intro',
   'razer-product-explorer',
   'razer-site-footer',
+  'razer-pdp-hero',
+  'razer-pdp-story',
+  'razer-pdp-specs',
+  'razer-pdp-related',
 ];
 
 const START_MARKER = '/* rzrm:tokens:start */';

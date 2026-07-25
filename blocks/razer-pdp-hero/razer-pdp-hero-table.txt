@@ -1,0 +1,29 @@
+razer-pdp-hero
+setting	title	Razer Basilisk V3 Pro 35K
+setting	subtitle	Fully Customizable Wireless Ergonomic RGB Gaming Mouse
+setting	subtitle-link-href	https://www.razer.com/gaming-mice/razer-basilisk-v3-pro-35k
+setting	base-price	159.99
+setting	cta-href	https://www.razer.com/gaming-mice/razer-basilisk-v3-pro-35k/RZ01-05240100-R3U1
+crumb	crumb-01	Home	/
+crumb	crumb-02	Gaming Mice	/pc/gaming-mice
+crumb	crumb-03	Basilisk V3 Pro 35K	https://www.razer.com/gaming-mice/razer-basilisk-v3-pro-35k
+crumb	crumb-04	Black	
+image	image-01	/images/razer-mice/products/basilisk-v3-pro-35k.webp	Razer Basilisk V3 Pro 35K in black, three-quarter studio view	Razer Basilisk V3 Pro 35K in black, studio view
+image	image-02	/images/razer-mice/pdp/basilisk-angle.webp	Razer Basilisk V3 Pro 35K low angle with Chroma underglow on a dark desk	Multi-zone Chroma underglow, seen low across the desk
+image	image-03	/images/razer-mice/pdp/basilisk-top-chroma.webp	Top view of the Razer Basilisk V3 Pro 35K with full rainbow underglow beside a keyboard	Top view with the full 13-zone lighting ring active
+image	image-04	/images/razer-mice/pdp/basilisk-buttons.webp	Razer Basilisk V3 Pro 35K surrounded by eleven mapped game commands	11 programmable buttons, mapped your way
+keyspec	keyspec-01	Configurable Razer™ HyperScroll Tilt Wheel
+keyspec	keyspec-02	Razer™ Focus Pro 35K Optical Sensor Gen-2
+keyspec	keyspec-03	Up to 140 Hours on Razer™ HyperSpeed Wireless
+finish	finish-01	Black		black
+finish	finish-02	White		white
+finish	finish-03	Phantom Green Edition	10	phantom-green
+finish	finish-04	Phantom White Edition	10	phantom-white
+model	model-01	Basilisk V3 Pro 35K + Mouse Dock Pro		40
+model	model-02	Basilisk V3 Pro 35K + Wireless Charging Puck		20
+model	model-03	Basilisk V3 Pro 35K	Mouse only	
+care	care-01	RazerCare Elite for Mice		29.99
+care	care-02	No, thank you	No added cost	
+service	service-01	↯	Next Business Day Shipping	Get in the game sooner
+service	service-02	↺	Risk Free Return	Shop direct with confidence
+service	service-03	◎	Comprehensive Support	Help across the lifecycle of your gear

@@ -1,0 +1,23 @@
+{
+  "definitions": [
+    {
+      "title": "Razer PDP Specs",
+      "id": "razer-pdp-specs",
+      "model": "razer-pdp-specs",
+      "plugins": {
+        "da": {
+          "name": "razer-pdp-specs",
+          "rows": 1,
+          "columns": 4
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "razer-pdp-specs",
+      "fields": []
+    }
+  ],
+  "filters": []
+}

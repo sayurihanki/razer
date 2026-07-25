@@ -1,0 +1,23 @@
+{
+  "definitions": [
+    {
+      "title": "Razer PDP Hero",
+      "id": "razer-pdp-hero",
+      "model": "razer-pdp-hero",
+      "plugins": {
+        "da": {
+          "name": "razer-pdp-hero",
+          "rows": 1,
+          "columns": 6
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "razer-pdp-hero",
+      "fields": []
+    }
+  ],
+  "filters": []
+}
