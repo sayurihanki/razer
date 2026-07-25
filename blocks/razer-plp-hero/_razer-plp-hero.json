@@ -1,0 +1,23 @@
+{
+  "definitions": [
+    {
+      "title": "Razer PLP Hero",
+      "id": "razer-plp-hero",
+      "model": "razer-plp-hero",
+      "plugins": {
+        "da": {
+          "name": "razer-plp-hero",
+          "rows": 1,
+          "columns": 3
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "razer-plp-hero",
+      "fields": []
+    }
+  ],
+  "filters": []
+}

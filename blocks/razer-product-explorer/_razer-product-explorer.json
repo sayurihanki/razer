@@ -1,0 +1,23 @@
+{
+  "definitions": [
+    {
+      "title": "Razer Product Explorer",
+      "id": "razer-product-explorer",
+      "model": "razer-product-explorer",
+      "plugins": {
+        "da": {
+          "name": "razer-product-explorer",
+          "rows": 1,
+          "columns": 12
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "razer-product-explorer",
+      "fields": []
+    }
+  ],
+  "filters": []
+}

@@ -1,0 +1,23 @@
+{
+  "definitions": [
+    {
+      "title": "Razer PLP Intro",
+      "id": "razer-plp-intro",
+      "model": "razer-plp-intro",
+      "plugins": {
+        "da": {
+          "name": "razer-plp-intro",
+          "rows": 1,
+          "columns": 3
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "razer-plp-intro",
+      "fields": []
+    }
+  ],
+  "filters": []
+}

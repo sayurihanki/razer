@@ -1,0 +1,23 @@
+{
+  "definitions": [
+    {
+      "title": "Razer Promo Bar",
+      "id": "razer-promo-bar",
+      "model": "razer-promo-bar",
+      "plugins": {
+        "da": {
+          "name": "razer-promo-bar",
+          "rows": 1,
+          "columns": 4
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "razer-promo-bar",
+      "fields": []
+    }
+  ],
+  "filters": []
+}

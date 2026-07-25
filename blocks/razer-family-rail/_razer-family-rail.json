@@ -1,0 +1,23 @@
+{
+  "definitions": [
+    {
+      "title": "Razer Family Rail",
+      "id": "razer-family-rail",
+      "model": "razer-family-rail",
+      "plugins": {
+        "da": {
+          "name": "razer-family-rail",
+          "rows": 1,
+          "columns": 6
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "razer-family-rail",
+      "fields": []
+    }
+  ],
+  "filters": []
+}

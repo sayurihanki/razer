@@ -1,0 +1,785 @@
+/**
+ * razer-product-explorer.css — Razer gaming-mice product explorer
+ * (filter sidebar, toolbar, card grid, mobile drawer, empty state).
+ *
+ * All selectors are scoped to `.razer-product-explorer` / its EDS
+ * container. The rzrm token preamble below is duplicated across all
+ * razer-mice blocks and guarded by tests/razer-mice/tokens.test.mjs.
+ * Breakpoints mirror the source page (680/980/1260px), not the repo
+ * default ladder — required for pixel parity.
+ */
+
+/* rzrm:tokens:start */
+
+/*
+ * Shared Razer-mice design tokens. Duplicated verbatim in every
+ * razer-mice block stylesheet so each block stays copy-paste
+ * independent. tests/razer-mice/tokens.test.mjs asserts the copies
+ * never drift. Values mirror the final (--rzr-*) token layer of the
+ * source page, with RazerF5 (proprietary) removed from font stacks.
+ */
+
+@font-face {
+  font-family: "Titillium Web";
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url("/fonts/razer-mice/titillium-web/titillium-web-300-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Titillium Web";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/razer-mice/titillium-web/titillium-web-400-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Titillium Web";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("/fonts/razer-mice/titillium-web/titillium-web-600-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Titillium Web";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/fonts/razer-mice/titillium-web/titillium-web-700-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Roboto Condensed";
+  font-style: normal;
+  font-weight: 300 700;
+  font-display: swap;
+  src: url("/fonts/razer-mice/roboto-condensed/roboto-condensed-var-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+.razer-product-explorer,
+.razer-product-explorer-container {
+  --rzrm-green: #44d62c;
+  --rzrm-green-glow: #4f4;
+  --rzrm-green-deep: #00754e;
+  --rzrm-surface-base: #000;
+  --rzrm-surface-raised: #111;
+  --rzrm-surface-card: #212121;
+  --rzrm-surface-card-alt: #222;
+  --rzrm-surface-line: #333;
+  --rzrm-light-base: #fff;
+  --rzrm-light-raised: #efefef;
+  --rzrm-light-sunken: #eee;
+  --rzrm-text-primary: #fff;
+  --rzrm-text-secondary: #bbb;
+  --rzrm-text-tertiary: #999;
+  --rzrm-text-muted: #888;
+  --rzrm-text-on-accent: #000;
+  --rzrm-info: #28aadc;
+  --rzrm-scrim-medium: rgb(0 0 0 / 50%);
+  --rzrm-scrim-heavy: rgb(0 0 0 / 80%);
+  --rzrm-font-display: "Titillium Web", "Roboto Condensed", system-ui, sans-serif;
+  --rzrm-font-body: roboto, "Helvetica Neue", arial, "Noto Sans", sans-serif;
+  --rzrm-font-condensed: "Roboto Condensed", sans-serif;
+  --rzrm-display-1-size: 32px;
+  --rzrm-display-1-weight: 700;
+  --rzrm-display-1-lh: 35px;
+  --rzrm-display-2-size: 25px;
+  --rzrm-display-2-weight: 500;
+  --rzrm-display-2-lh: 28px;
+  --rzrm-display-3-size: 20px;
+  --rzrm-display-3-weight: 400;
+  --rzrm-display-3-lh: 24px;
+  --rzrm-body-lg-size: 18px;
+  --rzrm-body-lg-lh: 24px;
+  --rzrm-body-size: 16px;
+  --rzrm-body-lh: 24px;
+  --rzrm-body-sm-size: 14px;
+  --rzrm-body-sm-lh: 24px;
+  --rzrm-body-xs-size: 12px;
+  --rzrm-body-xs-lh: 18px;
+  --rzrm-radius-xs: 2px;
+  --rzrm-radius-sm: 3px;
+  --rzrm-radius-md: 4px;
+  --rzrm-radius-lg: 6px;
+  --rzrm-radius-xl: 10px;
+  --rzrm-radius-2xl: 12px;
+  --rzrm-focus-ring: inset 0 0 0 1.5px #fff, 0 0 8px 2px rgb(68 255 68 / 60%);
+  --rzrm-shadow-sm: 0 -1px 10px rgb(172 171 171 / 30%);
+  --rzrm-shadow-md: 0 6px 14px rgb(25 28 33 / 30%);
+  --rzrm-shadow-lg: 0 32px 68px rgb(0 0 0 / 30%);
+  --rzrm-ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --rzrm-ease-slow: cubic-bezier(0.4, 0, 0.6, 1);
+  --rzrm-duration-fast: 0.24s;
+  --rzrm-duration-base: 0.3s;
+  --rzrm-duration-slow: 0.5s;
+  --rzrm-duration-xslow: 0.8s;
+  --rzrm-scroll-offset: 104px;
+  --rzrm-shell: calc(100vw - 24px);
+}
+
+@media (min-width: 681px) {
+  .razer-product-explorer,
+  .razer-product-explorer-container {
+    --rzrm-display-1-size: 40px;
+    --rzrm-display-1-lh: 44px;
+    --rzrm-display-2-size: 28px;
+    --rzrm-display-2-lh: 31px;
+    --rzrm-shell: min(960px, calc(100vw - 32px));
+  }
+}
+
+@media (min-width: 1101px) {
+  .razer-product-explorer,
+  .razer-product-explorer-container {
+    --rzrm-shell: min(1200px, calc(100vw - 48px));
+  }
+}
+
+/* Container reset: paint the dark theme edge-to-edge inside the EDS section.
+   The main > .section qualifier out-ranks the styles.css section margin. */
+main > .section.razer-product-explorer-container,
+.razer-product-explorer-container {
+  margin: 0;
+  padding: 0;
+  background: var(--rzrm-surface-base, #000);
+}
+
+.razer-product-explorer-container > div,
+.razer-product-explorer-container .razer-product-explorer-wrapper {
+  max-width: unset;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+main > .section.appear > div > .razer-product-explorer-wrapper {
+  animation: none;
+}
+
+.razer-product-explorer {
+  background: var(--rzrm-surface-base, #000);
+  color: var(--rzrm-text-primary, #fff);
+  font-family: var(--rzrm-font-body, roboto, "Helvetica Neue", arial, sans-serif);
+  font-size: var(--rzrm-body-size, 16px);
+  line-height: var(--rzrm-body-lh, 24px);
+}
+
+.razer-product-explorer .rzrm-shell {
+  width: var(--rzrm-shell, min(1200px, calc(100vw - 48px)));
+  margin: 0 auto;
+}
+
+.razer-product-explorer h1,
+.razer-product-explorer h2,
+.razer-product-explorer h3 {
+  font-family: var(--rzrm-font-display, "Titillium Web", system-ui, sans-serif);
+}
+
+.razer-product-explorer img {
+  max-width: 100%;
+  display: block;
+}
+
+.razer-product-explorer a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.razer-product-explorer button {
+  font: inherit;
+  color: inherit;
+}
+
+.razer-product-explorer :focus-visible {
+  outline: 2px solid var(--rzrm-green, #44d62c);
+  outline-offset: 3px;
+}
+
+/* rzrm:tokens:end */
+
+/* ── Shared button primitives (effective final-layer values) ────── */
+.razer-product-explorer .button {
+  border-radius: var(--rzrm-radius-sm, 3px);
+  min-height: 40px;
+  font-family: var(--rzrm-font-body, roboto, sans-serif);
+  letter-spacing: normal;
+  text-transform: none;
+  transition:
+    color var(--rzrm-duration-slow, 0.5s) ease,
+    background var(--rzrm-duration-base, 0.3s) ease,
+    border-color var(--rzrm-duration-base, 0.3s) ease,
+    box-shadow var(--rzrm-duration-base, 0.3s) ease,
+    transform var(--rzrm-duration-fast, 0.24s) var(--rzrm-ease-standard, ease);
+  border: 0;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  padding: 0 16px;
+  font-size: var(--rzrm-body-size, 16px);
+  font-weight: 500;
+  line-height: 20px;
+  display: inline-flex;
+  cursor: pointer;
+}
+
+.razer-product-explorer .button:hover {
+  transform: none;
+}
+
+.razer-product-explorer .button-primary {
+  background: var(--rzrm-green, #44d62c);
+  color: var(--rzrm-text-on-accent, #000);
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.razer-product-explorer .button-primary:hover {
+  color: #000;
+  background: #5ce843;
+}
+
+.razer-product-explorer .button-compact {
+  border-radius: var(--rzrm-radius-xs, 2px);
+  background: var(--rzrm-green, #44d62c);
+  color: #000;
+  min-height: 42px;
+  padding: 0 18px;
+  font-size: var(--rzrm-body-sm-size, 14px);
+  font-weight: 500;
+}
+
+.razer-product-explorer .button-compact:hover {
+  background: #5ce843;
+}
+
+.razer-product-explorer .button-ghost {
+  min-height: 0;
+  color: var(--rzrm-text-primary, #fff);
+  box-shadow: none;
+  background: none;
+  border: 0;
+  border-radius: 0;
+  padding: 15px 30px 15px 0;
+}
+
+.razer-product-explorer .button-ghost:hover {
+  color: var(--rzrm-green, #44d62c);
+  background: none;
+}
+
+.razer-product-explorer .button-ghost span {
+  color: var(--rzrm-green, #44d62c);
+  margin-left: 5px;
+  font-size: 20px;
+}
+
+.razer-product-explorer .button-outline {
+  color: var(--rzrm-text-primary, #fff);
+  background: none;
+  border: 1px solid #555;
+}
+
+.razer-product-explorer .button-outline:hover {
+  border-color: var(--rzrm-text-primary, #fff);
+  color: var(--rzrm-text-primary, #fff);
+  background: rgb(255 255 255 / 5%);
+}
+
+.razer-product-explorer .button-small {
+  min-height: 36px;
+  padding: 0 14px;
+  font-size: var(--rzrm-body-sm-size, 14px);
+}
+
+/* ── Explorer layout ────────────────────────────────────────────── */
+.razer-product-explorer .plp-shell {
+  grid-template-columns: 220px minmax(0, 1fr);
+  gap: 28px;
+  padding-bottom: 96px;
+  display: grid;
+}
+
+/* ── Desktop filter sidebar ─────────────────────────────────────── */
+.razer-product-explorer .desktop-filters {
+  border-top: 1px solid var(--rzrm-surface-line, #333);
+  align-self: start;
+  position: sticky;
+  top: 112px;
+}
+
+.razer-product-explorer .filter-title {
+  border-bottom: 1px solid var(--rzrm-surface-line, #333);
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 0;
+  display: flex;
+}
+
+.razer-product-explorer .filter-title strong {
+  text-transform: uppercase;
+  font-family: var(--rzrm-font-body, roboto, sans-serif);
+  font-size: var(--rzrm-body-size, 16px);
+  font-weight: 500;
+}
+
+.razer-product-explorer .filter-title button {
+  color: var(--rzrm-green, #44d62c);
+  cursor: pointer;
+  background: none;
+  border: 0;
+  padding: 0;
+  font-family: var(--rzrm-font-body, roboto, sans-serif);
+  font-weight: 400;
+}
+
+.razer-product-explorer .filter-group {
+  border: 0;
+  border-bottom: 1px solid var(--rzrm-surface-line, #333);
+  margin: 0;
+  padding: 20px 0;
+}
+
+.razer-product-explorer .filter-group legend {
+  color: var(--rzrm-text-primary, #fff);
+  text-transform: none;
+  margin-bottom: 14px;
+  font-family: var(--rzrm-font-body, roboto, sans-serif);
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.razer-product-explorer .filter-group label {
+  min-height: 36px;
+  color: var(--rzrm-text-secondary, #bbb);
+  cursor: pointer;
+  align-items: center;
+  gap: 10px;
+  font-size: var(--rzrm-body-sm-size, 14px);
+  display: flex;
+}
+
+.razer-product-explorer .filter-group input {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--rzrm-green, #44d62c);
+}
+
+/* ── Results toolbar ────────────────────────────────────────────── */
+.razer-product-explorer .results-toolbar {
+  border-top: 1px solid var(--rzrm-surface-line, #333);
+  border-bottom: 1px solid var(--rzrm-surface-line, #333);
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  min-height: 58px;
+  margin-bottom: 16px;
+  display: flex;
+}
+
+.razer-product-explorer .results-toolbar > div {
+  align-items: center;
+  gap: 12px;
+  display: flex;
+}
+
+.razer-product-explorer .results-toolbar strong {
+  text-transform: none;
+  font-family: var(--rzrm-font-body, roboto, sans-serif);
+  font-size: var(--rzrm-body-sm-size, 14px);
+  font-weight: 500;
+}
+
+.razer-product-explorer .results-toolbar label {
+  color: var(--rzrm-text-tertiary, #999);
+  align-items: center;
+  gap: 10px;
+  font-size: var(--rzrm-body-xs-size, 12px);
+  display: flex;
+}
+
+.razer-product-explorer .filter-group label:hover {
+  color: var(--rzrm-text-primary, #fff);
+}
+
+.razer-product-explorer .results-toolbar select {
+  color: var(--rzrm-text-primary, #fff);
+  background: var(--rzrm-surface-raised, #111);
+  border: 1px solid #555;
+  border-radius: var(--rzrm-radius-md, 4px);
+  height: 40px;
+  padding: 0 34px 0 12px;
+}
+
+.razer-product-explorer .mobile-filter-button {
+  text-transform: uppercase;
+  cursor: pointer;
+  color: var(--rzrm-text-primary, #fff);
+  background: #0b0e0d;
+  border: 1px solid #4a504b;
+  min-height: 40px;
+  padding: 0 14px;
+  font-weight: 800;
+  display: none;
+}
+
+.razer-product-explorer .mobile-filter-button span {
+  color: var(--rzrm-green, #44d62c);
+  margin-left: 8px;
+}
+
+/* ── Product grid + cards ───────────────────────────────────────── */
+.razer-product-explorer .product-grid {
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  display: grid;
+}
+
+.razer-product-explorer .product-card {
+  border: 0;
+  border-radius: var(--rzrm-radius-2xl, 12px);
+  background: var(--rzrm-surface-card, #212121);
+  flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
+  transition:
+    background var(--rzrm-duration-slow, 0.5s) ease,
+    transform var(--rzrm-duration-slow, 0.5s) var(--rzrm-ease-standard, ease);
+  display: flex;
+}
+
+.razer-product-explorer .product-card[hidden] {
+  display: none;
+}
+
+.razer-product-explorer .product-card:hover {
+  background: var(--rzrm-surface-card-alt, #222);
+  box-shadow: none;
+  border-color: transparent;
+  transform: translateY(-4px);
+}
+
+.razer-product-explorer .product-image {
+  aspect-ratio: 1.12;
+  background: var(--rzrm-surface-raised, #111);
+  position: relative;
+  overflow: hidden;
+}
+
+.razer-product-explorer .product-image img {
+  object-fit: contain;
+  width: 100%;
+  height: 100%;
+  transition: transform var(--rzrm-duration-xslow, 0.8s) var(--rzrm-ease-slow, ease);
+}
+
+.razer-product-explorer .product-card:hover .product-image img {
+  transform: scale(1.025);
+}
+
+.razer-product-explorer .product-badge {
+  background: var(--rzrm-green, #44d62c);
+  color: #000;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border-radius: var(--rzrm-radius-xs, 2px);
+  padding: 6px 9px;
+  font-size: 11px;
+  font-weight: 900;
+  position: absolute;
+  top: 14px;
+  left: 14px;
+}
+
+.razer-product-explorer .product-card-body {
+  flex-direction: column;
+  flex: 1;
+  padding: 20px;
+  display: flex;
+}
+
+.razer-product-explorer .product-family {
+  color: var(--rzrm-green, #44d62c);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-family: var(--rzrm-font-condensed, "Roboto Condensed", sans-serif);
+  margin: 0 0 8px;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.razer-product-explorer .product-card h2 {
+  text-transform: uppercase;
+  letter-spacing: 0;
+  margin: 0 0 7px;
+  font-size: var(--rzrm-display-3-size, 20px);
+  font-weight: var(--rzrm-display-3-weight, 400);
+  line-height: var(--rzrm-display-3-lh, 24px);
+}
+
+.razer-product-explorer .product-card h2 a:hover {
+  color: var(--rzrm-green, #44d62c);
+}
+
+.razer-product-explorer .product-card-body > p {
+  color: var(--rzrm-text-secondary, #bbb);
+  min-height: 56px;
+  margin: 0;
+  font-size: var(--rzrm-body-sm-size, 14px);
+  line-height: 21px;
+}
+
+.razer-product-explorer .product-attributes {
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 16px 0;
+  display: flex;
+}
+
+.razer-product-explorer .product-attributes span {
+  color: var(--rzrm-text-secondary, #bbb);
+  border: 1px solid #444;
+  border-radius: var(--rzrm-radius-xs, 2px);
+  font-family: var(--rzrm-font-condensed, "Roboto Condensed", sans-serif);
+  padding: 6px 8px;
+  font-size: 11px;
+}
+
+.razer-product-explorer .product-service {
+  border-top: 1px solid var(--rzrm-surface-line, #333);
+  border-bottom: 1px solid var(--rzrm-surface-line, #333);
+  gap: 10px;
+  margin-top: auto;
+  padding: 13px 0;
+  display: flex;
+}
+
+.razer-product-explorer .product-service > span:first-child {
+  color: var(--rzrm-green, #44d62c);
+}
+
+.razer-product-explorer .product-service strong,
+.razer-product-explorer .product-service small {
+  display: block;
+}
+
+.razer-product-explorer .product-service strong {
+  text-transform: none;
+  font-family: var(--rzrm-font-body, roboto, sans-serif);
+  font-size: var(--rzrm-body-xs-size, 12px);
+  font-weight: 500;
+}
+
+.razer-product-explorer .product-service small {
+  color: var(--rzrm-text-tertiary, #999);
+  margin-top: 2px;
+}
+
+.razer-product-explorer .product-card-footer {
+  padding-top: 18px;
+}
+
+.razer-product-explorer .product-card-footer > strong {
+  margin-bottom: 15px;
+  font-family: var(--rzrm-font-body, roboto, sans-serif);
+  font-size: var(--rzrm-body-lg-size, 18px);
+  font-weight: 500;
+  display: block;
+}
+
+.razer-product-explorer .product-card-footer > div {
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  display: flex;
+}
+
+.razer-product-explorer .product-card-footer .button-ghost {
+  padding: 10px 0;
+  font-size: var(--rzrm-body-sm-size, 14px);
+}
+
+/* ── Empty state ────────────────────────────────────────────────── */
+.razer-product-explorer .empty-results {
+  border: 1px solid var(--rzrm-surface-line, #333);
+  border-radius: var(--rzrm-radius-2xl, 12px);
+  background: var(--rzrm-surface-raised, #111);
+  text-align: center;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 520px;
+  padding: 40px;
+  display: flex;
+}
+
+.razer-product-explorer .empty-results[hidden] {
+  display: none;
+}
+
+.razer-product-explorer .empty-results > span:first-child {
+  color: var(--rzrm-green, #44d62c);
+  font-size: 90px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.razer-product-explorer .empty-results h2 {
+  text-transform: uppercase;
+  margin: 20px 0 8px;
+  font-size: 34px;
+}
+
+.razer-product-explorer .empty-results p {
+  max-width: 480px;
+  color: var(--rzrm-text-secondary, #bbb);
+  margin: 0 0 26px;
+}
+
+.razer-product-explorer .empty-results > div {
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  display: flex;
+}
+
+/* ── Mobile filter drawer + backdrop ────────────────────────────── */
+.razer-product-explorer .filter-drawer {
+  display: none;
+}
+
+.razer-product-explorer .backdrop {
+  z-index: 190;
+  opacity: 0;
+  pointer-events: none;
+  background: var(--rzrm-scrim-heavy, rgb(0 0 0 / 80%));
+  transition: opacity 0.25s;
+  position: fixed;
+  inset: 0;
+}
+
+.razer-product-explorer .backdrop.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.razer-product-explorer .panel-head {
+  border-bottom: 1px solid var(--rzrm-surface-line, #333);
+  justify-content: space-between;
+  align-items: center;
+  min-height: 70px;
+  padding: 0 24px;
+  display: flex;
+}
+
+.razer-product-explorer .panel-head strong {
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 21px;
+}
+
+.razer-product-explorer .panel-head button {
+  cursor: pointer;
+  background: none;
+  border: 0;
+  width: 40px;
+  height: 40px;
+  font-size: 30px;
+}
+
+/* ── Responsive ─────────────────────────────────────────────────── */
+@media (max-width: 1260px) {
+  .razer-product-explorer .product-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 980px) {
+  .razer-product-explorer .plp-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .razer-product-explorer .desktop-filters {
+    display: none;
+  }
+
+  .razer-product-explorer .mobile-filter-button {
+    align-items: center;
+    display: inline-flex;
+  }
+
+  .razer-product-explorer .filter-drawer {
+    z-index: 251;
+    border-right: 1px solid var(--rzrm-green, #44d62c);
+    background: var(--rzrm-surface-raised, #111);
+    grid-template-rows: auto 1fr auto;
+    width: min(390px, 90vw);
+    height: 100dvh;
+    transition: transform var(--rzrm-duration-base, 0.3s);
+    display: grid;
+    position: fixed;
+    top: 0;
+    left: 0;
+    transform: translate(-105%);
+  }
+
+  .razer-product-explorer .filter-drawer.is-open {
+    transform: translate(0);
+  }
+
+  .razer-product-explorer .filter-drawer-body {
+    padding: 0 24px;
+    overflow-y: auto;
+  }
+
+  .razer-product-explorer .filter-drawer-footer {
+    border-top: 1px solid var(--rzrm-surface-line, #333);
+    padding: 18px 24px;
+  }
+
+  .razer-product-explorer .filter-drawer-footer .button {
+    width: 100%;
+  }
+}
+
+@media (max-width: 680px) {
+  .razer-product-explorer .product-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .razer-product-explorer .results-toolbar {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 12px 0;
+  }
+
+  .razer-product-explorer .results-toolbar label {
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .razer-product-explorer .filter-group label:hover {
+  color: var(--rzrm-text-primary, #fff);
+}
+
+.razer-product-explorer .results-toolbar select {
+    flex: 1;
+  }
+
+  .razer-product-explorer .product-card-body > p {
+    min-height: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .razer-product-explorer .product-card:hover {
+    transform: none;
+  }
+}

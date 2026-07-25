@@ -1,0 +1,33 @@
+razer-site-footer
+setting	logo	/images/razer-mice/razer-logo.svg
+social	social-01	IG	Instagram	https://www.instagram.com/razer/
+social	social-02	YT	YouTube	https://www.youtube.com/razer
+social	social-03	TW	Twitch	https://www.twitch.tv/razer
+social	social-04	DC	Discord	https://discord.com/invite/razer
+column	column-01	Shop
+column	column-02	Explore
+column	column-03	Support
+column	column-04	Company
+column-link	column-01	link-01	RazerStores	https://www.razer.com/razerstores
+column-link	column-01	link-02	Store Locator	https://www.razer.com/store-finder
+column-link	column-01	link-03	Purchase Programs	https://www.razer.com/corporate-programs
+column-link	column-01	link-04	Only at Razer	https://www.razer.com/exclusives
+column-link	column-01	link-05	Razer Silver	https://www.razer.com/razer-silver
+column-link	column-02	link-01	Technology	https://www.razer.com/technology
+column-link	column-02	link-02	Chroma RGB	https://www.razer.com/chroma
+column-link	column-02	link-03	Concepts	https://www.razer.com/concepts
+column-link	column-02	link-04	Esports	https://www.razer.com/esports
+column-link	column-02	link-05	Collabs	https://www.razer.com/collabs
+column-link	column-03	link-01	Get Help	https://support.razer.com/
+column-link	column-03	link-02	Registration & Warranty	https://www.razer.com/product-registration
+column-link	column-03	link-03	RazerStore Support	https://www.razer.com/store-faq
+column-link	column-03	link-04	RazerCare	https://www.razer.com/razercare
+column-link	column-03	link-05	Manage Razer ID	https://razerid.razer.com/
+column-link	column-03	link-06	Accessibility Statement	https://www.razer.com/accessibility
+column-link	column-04	link-01	About Us	https://www.razer.com/about-razer
+column-link	column-04	link-02	Careers	https://careers.razer.com/
+column-link	column-04	link-03	Newsroom	https://press.razer.com/
+column-link	column-04	link-04	Contact Us	https://www.razer.com/contact-us
+legal-link	legal-01	Legal Terms	https://www.razer.com/legal
+legal-link	legal-02	Privacy Policy	https://www.razer.com/legal/privacy-policy
+legal-link	legal-03	Cookie Policy	https://www.razer.com/cookie-policy

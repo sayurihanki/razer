@@ -1,0 +1,19 @@
+<svg id="icon-basilisk" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="23.079" height="33.181" viewBox="0 0 23.079 33.181">
+  <defs>
+    <clipPath id="clip-path">
+      <path id="Union_57" data-name="Union 57" d="M-5962.167-3418.344c-3-1.166-7.707-7.705-7.707-7.705a43.172,43.172,0,0,1,0-6.215c.283-1.884,3.7-3.626,3.7-3.626v-7.6l8.805-6.513,8.386,3.379a80.414,80.414,0,0,1,2.056,18.338c-.1,9.863-6.479,11.464-10.442,11.464A7.754,7.754,0,0,1-5962.167-3418.344Z" transform="translate(6788 3549.936)" fill="#eee"/>
+    </clipPath>
+  </defs>
+  <g id="Razer_Basilisk_icon_default" data-name="Razer Basilisk icon default" transform="translate(-793 -100)">
+    <path id="Subtraction_185" data-name="Subtraction 185" d="M-5957.367-3413.922h0a7.8,7.8,0,0,1-4.8-1.525c-2.974-1.156-7.66-7.64-7.708-7.706a43.548,43.548,0,0,1,0-6.213c.281-1.87,3.668-3.609,3.7-3.626v-7.6l6.445-4.768V-3432a2,2,0,0,0,2,2h1a2,2,0,0,0,2-2v-14.038l5.746,2.314a80.78,80.78,0,0,1,2.056,18.339c-.042,4.347-1.311,7.52-3.771,9.43A10.908,10.908,0,0,1-5957.367-3413.922Z" transform="translate(6763 3547.039)" fill="#eee"/>
+    <path id="Subtraction_186" data-name="Subtraction 186" d="M-5966.5-3432h-1a1,1,0,0,1-1-1v-3h3v3A1,1,0,0,1-5966.5-3432Zm-1-3a.5.5,0,0,0-.5.5v1a.5.5,0,0,0,.5.5h1a.5.5,0,0,0,.5-.5v-1a.5.5,0,0,0-.5-.5Zm2-2h-3v-.625h3v.624Zm0-1.217h-3v-.986h3v.985Zm0-1.58h-3v-.987h3v.986Zm0-1.579h-3V-3442h3v.624Zm0-1.625h-3v-1a1,1,0,0,1,1-1h1a1,1,0,0,1,1,1v1Z" transform="translate(6772.76 3548)" fill="#eee"/>
+    <g id="Mask_Group_6" data-name="Mask Group 6" transform="translate(-24.999 0.064)" clip-path="url(#clip-path)">
+      <path id="Path_8010" data-name="Path 8010" d="M6791.1,3562s1.558,9,2.546,11.308,0,7.3,0,7.3" transform="translate(-5970 -3450)" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+      <g id="Path_8011" data-name="Path 8011" transform="translate(822.594 122.634) rotate(-30)" fill="#fff">
+        <path d="M 0.867640495300293 1.497199654579163 L 1.443922996520996 0.4990569353103638 L 19.15797805786133 0.5210895538330078 L 17.0662956237793 1.445064187049866 L 0.867640495300293 1.497199654579163 Z" stroke="none"/>
+        <path d="M 1.155458450317383 -0.001302599906921387 L 21.5206184387207 0.02402746677398682 L 17.17255973815918 1.944727420806885 L 0 1.999997496604919 L 1.155458450317383 -0.001302599906921387 Z" stroke="none" fill="#1a1a1a"/>
+      </g>
+      <path id="Path_8012" data-name="Path 8012" d="M838.274,114.81a34.325,34.325,0,0,1-.559,7.74,9.793,9.793,0,0,0,1.589,7.327" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+    </g>
+  </g>
+</svg>

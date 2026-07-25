@@ -1,0 +1,45 @@
+razer-product-explorer
+setting	sort-default	featured
+setting	show-results-label	Show {count} results
+setting	empty-title	No mice match those filters
+setting	empty-body	Clear a filter or use the guided finder to match a family to your playstyle.
+setting	service-note	RazerStore support available
+filter-group	family	Product family
+filter-option	family	viper	Viper	Viper
+filter-option	family	deathadder	DeathAdder	DeathAdder
+filter-option	family	basilisk	Basilisk	Basilisk
+filter-option	family	cobra	Cobra	Cobra
+filter-option	family	naga	Naga	Naga
+filter-group	connectivity	Connectivity
+filter-option	connectivity	wireless	Wireless	Wireless
+filter-option	connectivity	wired	Wired	Wired
+filter-option	connectivity	multi-mode	Multi-mode	Multi-mode
+filter-group	playstyle	Playstyle
+filter-option	playstyle	esports	Esports	Esports
+filter-option	playstyle	immersive	Immersive	Immersive
+filter-option	playstyle	portable	Portable	Portable
+filter-option	playstyle	mmo	MMO	MMO
+sort-option	featured	Featured
+sort-option	price-low	Price: Low to high
+sort-option	price-high	Price: High to low
+sort-option	name	Name
+product	product-01	true	/images/razer-mice/products/viper-v3-pro.webp	Razer Viper V3 Pro	Viper	Esports	Wireless	Esports	US$159.99	159.99	https://www.razer.com/gaming-mice/Razer-Viper-V3-Pro/RZ01-05120100-R3U1
+product-detail	product-01	Ultra-lightweight symmetrical wireless esports gaming mouse with HyperPolling 8000 Hz	Wireless | Claw / Fingertip | 54 g	Available in selected configurations				https://www.razer.com/gaming-mice/Razer-Viper-V3-Pro/RZ01-05120100-R3U1#buy
+product	product-02	true	/images/razer-mice/products/viper-v3-hyperspeed.webp	Razer Viper V3 HyperSpeed	Viper	Esports	Wireless		US$69.99	69.99	https://www.razer.com/gaming-mice/razer-viper-v3-hyperspeed
+product-detail	product-02	Wireless symmetrical esports gaming mouse	Wireless | Claw / Fingertip	Check current availability				https://www.razer.com/gaming-mice/razer-viper-v3-hyperspeed#buy
+product	product-03	true	/images/razer-mice/products/deathadder-v4-pro.webp	Razer DeathAdder V4 Pro	DeathAdder	Esports	Wireless	New	US$169.99	169.99	https://www.razer.com/gaming-mice/razer-deathadder-v4-pro/RZ01-05330100-R3U1
+product-detail	product-03	Ultra-lightweight ergonomic wireless esports gaming mouse with Razer Optical Scroll Wheel	Wireless | Palm / Claw | 56 g · Black	Available in selected configurations				https://www.razer.com/gaming-mice/razer-deathadder-v4-pro/RZ01-05330100-R3U1#buy
+product	product-04	true	/images/razer-mice/products/deathadder-v3-hyperspeed.webp	Razer DeathAdder V3 HyperSpeed	DeathAdder	Esports	Wireless		US$99.99	99.99	https://www.razer.com/gaming-mice/razer-deathadder-v3-hyperspeed
+product-detail	product-04	Ultra-lightweight wireless ergonomic esports mouse	Wireless | Palm / Claw	Check current availability				https://www.razer.com/gaming-mice/razer-deathadder-v3-hyperspeed#buy
+product	product-05	true	/images/razer-mice/products/basilisk-mobile.webp	Razer Basilisk Mobile	Basilisk	Portable	Wireless	Mobile	US$89.99	89.99	https://www.razer.com/gaming-mice/razer-basilisk-mobile
+product-detail	product-05	Portable ergonomic wireless gaming mouse	Wireless | Ergonomic	Check current availability				https://www.razer.com/gaming-mice/razer-basilisk-mobile#buy
+product	product-06	true	/images/razer-mice/products/basilisk-v3-pro-35k.webp	Razer Basilisk V3 Pro 35K	Basilisk	Immersive	Multi-mode	Featured	US$159.99 · Black	159.99	/gaming-mice/razer-basilisk-v3-pro-35k/RZ01-05240100-R3U1
+product-detail	product-06	Fully customizable wireless ergonomic RGB gaming mouse	Multi-mode | Right-handed ergonomic | 112 g	Available in multiple finishes				/gaming-mice/razer-basilisk-v3-pro-35k/RZ01-05240100-R3U1#configure
+product	product-07	true	/images/razer-mice/products/basilisk-v3-35k.webp	Razer Basilisk V3 35K	Basilisk	Immersive	Wired		US$79.99	79.99	https://www.razer.com/gaming-mice/razer-basilisk-v3-35k
+product-detail	product-07	Fully customizable ergonomic RGB gaming mouse	Wired | Right-handed ergonomic	Check current availability				https://www.razer.com/gaming-mice/razer-basilisk-v3-35k#buy
+product	product-08	true	/images/razer-mice/products/cobra-pro.webp	Razer Cobra Pro	Cobra	Immersive	Multi-mode	Chroma	US$129.99	129.99	https://www.razer.com/gaming-mice/razer-cobra-pro
+product-detail	product-08	Customizable wireless gaming mouse with Razer Chroma RGB	Multi-mode | Claw / Fingertip	Check current availability				https://www.razer.com/gaming-mice/razer-cobra-pro#buy
+product	product-09	true	/images/razer-mice/products/cobra.webp	Razer Cobra	Cobra	Esports	Wired		From US$39.99	39.99	https://www.razer.com/gaming-mice/razer-cobra
+product-detail	product-09	Lightweight wired gaming mouse with Razer Chroma RGB	Wired | Claw / Fingertip | 58 g	Availability varies by edition				https://www.razer.com/gaming-mice/razer-cobra#buy
+product	product-10	true	/images/razer-mice/products/naga-v2-pro.webp	Razer Naga V2 Pro	Naga	MMO	Multi-mode	MMO	US$179.99	179.99	https://www.razer.com/gaming-mice/razer-naga-v2-pro
+product-detail	product-10	Ergonomic wireless MMO gaming mouse	Multi-mode | Palm / Claw	Check current availability				https://www.razer.com/gaming-mice/razer-naga-v2-pro#buy

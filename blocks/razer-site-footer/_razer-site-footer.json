@@ -1,0 +1,23 @@
+{
+  "definitions": [
+    {
+      "title": "Razer Site Footer",
+      "id": "razer-site-footer",
+      "model": "razer-site-footer",
+      "plugins": {
+        "da": {
+          "name": "razer-site-footer",
+          "rows": 1,
+          "columns": 6
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "razer-site-footer",
+      "fields": []
+    }
+  ],
+  "filters": []
+}

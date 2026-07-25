@@ -1,0 +1,23 @@
+{
+  "definitions": [
+    {
+      "title": "Razer Proof Banner",
+      "id": "razer-proof-banner",
+      "model": "razer-proof-banner",
+      "plugins": {
+        "da": {
+          "name": "razer-proof-banner",
+          "rows": 1,
+          "columns": 3
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "razer-proof-banner",
+      "fields": []
+    }
+  ],
+  "filters": []
+}

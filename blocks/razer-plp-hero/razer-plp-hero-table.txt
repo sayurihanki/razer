@@ -1,0 +1,5 @@
+razer-plp-hero
+setting	heading	Gaming Mice
+setting	body	Whether you’re looking for a wired or wireless mouse, one specialized for FPS or MOBA, or a design that suits your mouse grip, our extensive arsenal of high-performance mice has something for every gamer.
+setting	video	/images/razer-mice/mice-hero.mp4
+setting	video-label	A cinematic lineup of Razer gaming mice

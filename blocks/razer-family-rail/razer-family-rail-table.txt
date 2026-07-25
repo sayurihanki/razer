@@ -1,0 +1,13 @@
+razer-family-rail
+setting	aria-label	Gaming mouse families			
+family	family-01	Cobra	#products	/images/razer-mice/nav/cobra.svg	NEW
+family	family-02	Signature Edition	https://www.razer.com/gaming-mice/razer-signature-edition	/images/razer-mice/nav/signature-edition.svg	
+family	family-03	DeathAdder	#products	/images/razer-mice/nav/deathadder.svg	
+family	family-04	Viper	#products	/images/razer-mice/nav/viper.svg	NEW
+family	family-05	Naga	#products	/images/razer-mice/nav/naga.svg	
+family	family-06	Basilisk	#products	/images/razer-mice/nav/basilisk.svg	NEW
+family	family-07	Orochi	https://www.razer.com/gaming-mice/razer-orochi-v2	/images/razer-mice/nav/orochi.svg	
+family	family-08	Pro Click	https://www.razer.com/productivity/razer-pro-click-v2	/images/razer-mice/nav/pro-click.svg	NEW
+family	family-09	Compare	https://www.razer.com/shop/mice/gaming-mice	/images/razer-mice/nav/compare.svg	
+family	family-10	Accessories	https://www.razer.com/shop/mice/gaming-mice-accessories	/images/razer-mice/nav/accessories.svg	
+family	family-11	Customs	https://www.razer.com/customs	/images/razer-mice/nav/customs.svg	

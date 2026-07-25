@@ -1,0 +1,6 @@
+razer-plp-intro
+setting	anchor-id	products
+setting	eyebrow	Choose your control
+setting	heading	Find your next mouse
+setting	body	Filter by family, connection, and playstyle. Every result links to a complete product page or Razer.com purchase experience.
+cta	Use the gear finder	/gear-finder
