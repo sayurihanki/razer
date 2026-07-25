@@ -183,6 +183,22 @@ function loadRazerChromaStyles(doc) {
 }
 
 /**
+ * Collapses the boilerplate <header> on pages that author the razer site
+ * chrome. Those pages bring their own fixed header, so the space styles.css
+ * reserves for the boilerplate nav paints as an empty band above the first
+ * section -- and whatever /nav holds (a leftover commerce nav, or a 404)
+ * must not surface next to the razer chrome. Runs in the eager phase so the
+ * band never reaches first paint; the header block adds the same class when
+ * the nav fragment is missing, which covers every other page.
+ *
+ * @param {Element} doc The container element
+ */
+function collapseBoilerplateHeader(doc) {
+  if (!doc.querySelector('main .razer-site-header')) return;
+  doc.querySelector('body > header')?.classList.add('nav-missing');
+}
+
+/**
  * Loads everything needed to get to LCP.
  * @param {Element} doc The container element
  */
@@ -196,6 +212,7 @@ async function loadEager(doc) {
       await initializeCommerce();
       decorateMain(main);
       loadRazerChromaStyles(doc);
+      collapseBoilerplateHeader(doc);
       applyTemplates(doc);
       await loadCommerceEager();
     } catch (e) {

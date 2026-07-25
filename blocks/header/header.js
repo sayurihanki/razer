@@ -181,6 +181,9 @@ export default async function decorate(block) {
   if (!fragment) {
     // eslint-disable-next-line no-console
     console.warn(`header: no nav fragment at ${navPath}; skipping nav decoration`);
+    // With no nav to render, the space styles.css reserves for it would show
+    // as an empty band above the first section.
+    block.closest('header')?.classList.add('nav-missing');
     return;
   }
 

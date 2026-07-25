@@ -166,6 +166,15 @@ header {
   height: var(--nav-height);
 }
 
+/* The reserved nav space would paint as an empty band on pages that don't
+   use the boilerplate nav (razer site chrome pages, or a missing nav
+   fragment). scripts.js and the header block tag such pages with this class.
+   display: none (not height: 0) so a nav that still loads cannot overflow
+   into the page or take keyboard focus. */
+header.nav-missing {
+  display: none;
+}
+
 main {
   grid-row: 2;
 }
