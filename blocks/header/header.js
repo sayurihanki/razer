@@ -6,6 +6,7 @@ import { getConfigValue } from '@dropins/tools/lib/aem/configs.js';
 import { getMetadata } from '../../scripts/aem.js';
 import { loadFragment } from '../fragment/fragment.js';
 import { fetchPlaceholders, getProductLink, rootLink } from '../../scripts/commerce.js';
+import { pageUsesOwnChrome } from '../../scripts/scripts.js';
 
 import renderAuthCombine from './renderAuthCombine.js';
 import { renderAuthDropdown } from './renderAuthDropdown.js';
@@ -182,9 +183,27 @@ export default async function decorate(block) {
     // eslint-disable-next-line no-console
     console.warn(`header: no nav fragment at ${navPath}; skipping nav decoration`);
     // With no nav to render, the space styles.css reserves for it would show
-    // as an empty band above the first section.
+    // as an empty band above the first section. Remember the outcome so
+    // scripts.js can hide the header before first paint on later pages.
     block.closest('header')?.classList.add('nav-missing');
+    try {
+      sessionStorage.setItem('nav-missing', 'true');
+    } catch (e) {
+      // do nothing
+    }
     return;
+  }
+
+  // The nav exists: clear a stale echo from earlier in the session so the
+  // header is not left hidden. Pages carrying their own chrome stay
+  // collapsed no matter what the fragment held.
+  try {
+    sessionStorage.removeItem('nav-missing');
+  } catch (e) {
+    // do nothing
+  }
+  if (!pageUsesOwnChrome()) {
+    block.closest('header')?.classList.remove('nav-missing');
   }
 
   // decorate nav DOM

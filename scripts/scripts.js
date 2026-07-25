@@ -183,18 +183,42 @@ function loadRazerChromaStyles(doc) {
 }
 
 /**
- * Collapses the boilerplate <header> on pages that author the razer site
- * chrome. Those pages bring their own fixed header, so the space styles.css
- * reserves for the boilerplate nav paints as an empty band above the first
- * section -- and whatever /nav holds (a leftover commerce nav, or a 404)
- * must not surface next to the razer chrome. Runs in the eager phase so the
- * band never reaches first paint; the header block adds the same class when
- * the nav fragment is missing, which covers every other page.
+ * True when the page authors its own site chrome (razer-site-header) and
+ * therefore never renders the boilerplate nav.
+ *
+ * @param {Document} doc The container document
+ * @returns {boolean}
+ */
+export function pageUsesOwnChrome(doc = document) {
+  return !!doc.querySelector('main .razer-site-header');
+}
+
+/**
+ * Collapses the boilerplate <header> on pages that don't use the boilerplate
+ * nav, in the eager phase so the reserved --nav-height space never paints as
+ * an empty band above the first section (and never jumps away later).
+ *
+ * Two signals, both known before first paint:
+ * - the page authors the razer site chrome: it brings its own fixed header,
+ *   and whatever /nav holds (a leftover commerce nav, or a 404) must not
+ *   surface next to it;
+ * - the header block observed a missing nav fragment earlier this session
+ *   (sessionStorage echo, same pattern as fonts-loaded): the first such page
+ *   can only collapse once its fetch 404s, but every following page hides
+ *   the header up front. The header block un-hides it if the nav comes back.
  *
  * @param {Element} doc The container element
  */
 function collapseBoilerplateHeader(doc) {
-  if (!doc.querySelector('main .razer-site-header')) return;
+  let collapse = pageUsesOwnChrome(doc);
+  if (!collapse) {
+    try {
+      collapse = !!sessionStorage.getItem('nav-missing');
+    } catch (e) {
+      // do nothing
+    }
+  }
+  if (!collapse) return;
   doc.querySelector('body > header')?.classList.add('nav-missing');
 }
 
