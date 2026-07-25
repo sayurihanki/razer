@@ -1,0 +1,23 @@
+{
+  "definitions": [
+    {
+      "title": "Razer Site Header",
+      "id": "razer-site-header",
+      "model": "razer-site-header",
+      "plugins": {
+        "da": {
+          "name": "razer-site-header",
+          "rows": 1,
+          "columns": 6
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "razer-site-header",
+      "fields": []
+    }
+  ],
+  "filters": []
+}

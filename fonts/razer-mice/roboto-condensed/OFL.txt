@@ -1,0 +1,4 @@
+Roboto Condensed is licensed under the SIL Open Font License, Version 1.1.
+Variable font (weight axis 300-700), latin subset, vendored from the project's
+own demo-site build for the razer-mice blocks.
+https://openfontlicense.org

@@ -1,0 +1,821 @@
+/**
+ * razer-site-header.css — Razer site chrome (global nav, mega menu,
+ * category nav, mobile/cart panels, search dialog).
+ *
+ * All selectors are scoped to `.razer-site-header` / its EDS container.
+ * The rzrm token preamble below is duplicated across all razer-mice
+ * blocks and guarded by tests/razer-mice/tokens.test.mjs.
+ * The header is position: fixed (EDS sections cap sticky) with a
+ * JS-measured spacer. Breakpoints mirror the source page
+ * (680/1100/1260px), not the repo default ladder.
+ */
+
+/* rzrm:tokens:start */
+
+/*
+ * Shared Razer-mice design tokens. Duplicated verbatim in every
+ * razer-mice block stylesheet so each block stays copy-paste
+ * independent. tests/razer-mice/tokens.test.mjs asserts the copies
+ * never drift. Values mirror the final (--rzr-*) token layer of the
+ * source page, with RazerF5 (proprietary) removed from font stacks.
+ */
+
+@font-face {
+  font-family: "Titillium Web";
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url("/fonts/razer-mice/titillium-web/titillium-web-300-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Titillium Web";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/razer-mice/titillium-web/titillium-web-400-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Titillium Web";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("/fonts/razer-mice/titillium-web/titillium-web-600-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Titillium Web";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/fonts/razer-mice/titillium-web/titillium-web-700-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Roboto Condensed";
+  font-style: normal;
+  font-weight: 300 700;
+  font-display: swap;
+  src: url("/fonts/razer-mice/roboto-condensed/roboto-condensed-var-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+.razer-site-header,
+.razer-site-header-container {
+  --rzrm-green: #44d62c;
+  --rzrm-green-glow: #4f4;
+  --rzrm-green-deep: #00754e;
+  --rzrm-surface-base: #000;
+  --rzrm-surface-raised: #111;
+  --rzrm-surface-card: #212121;
+  --rzrm-surface-card-alt: #222;
+  --rzrm-surface-line: #333;
+  --rzrm-light-base: #fff;
+  --rzrm-light-raised: #efefef;
+  --rzrm-light-sunken: #eee;
+  --rzrm-text-primary: #fff;
+  --rzrm-text-secondary: #bbb;
+  --rzrm-text-tertiary: #999;
+  --rzrm-text-muted: #888;
+  --rzrm-text-on-accent: #000;
+  --rzrm-info: #28aadc;
+  --rzrm-scrim-medium: rgb(0 0 0 / 50%);
+  --rzrm-scrim-heavy: rgb(0 0 0 / 80%);
+  --rzrm-font-display: "Titillium Web", "Roboto Condensed", system-ui, sans-serif;
+  --rzrm-font-body: roboto, "Helvetica Neue", arial, "Noto Sans", sans-serif;
+  --rzrm-font-condensed: "Roboto Condensed", sans-serif;
+  --rzrm-display-1-size: 32px;
+  --rzrm-display-1-weight: 700;
+  --rzrm-display-1-lh: 35px;
+  --rzrm-display-2-size: 25px;
+  --rzrm-display-2-weight: 500;
+  --rzrm-display-2-lh: 28px;
+  --rzrm-display-3-size: 20px;
+  --rzrm-display-3-weight: 400;
+  --rzrm-display-3-lh: 24px;
+  --rzrm-body-lg-size: 18px;
+  --rzrm-body-lg-lh: 24px;
+  --rzrm-body-size: 16px;
+  --rzrm-body-lh: 24px;
+  --rzrm-body-sm-size: 14px;
+  --rzrm-body-sm-lh: 24px;
+  --rzrm-body-xs-size: 12px;
+  --rzrm-body-xs-lh: 18px;
+  --rzrm-radius-xs: 2px;
+  --rzrm-radius-sm: 3px;
+  --rzrm-radius-md: 4px;
+  --rzrm-radius-lg: 6px;
+  --rzrm-radius-xl: 10px;
+  --rzrm-radius-2xl: 12px;
+  --rzrm-focus-ring: inset 0 0 0 1.5px #fff, 0 0 8px 2px rgb(68 255 68 / 60%);
+  --rzrm-shadow-sm: 0 -1px 10px rgb(172 171 171 / 30%);
+  --rzrm-shadow-md: 0 6px 14px rgb(25 28 33 / 30%);
+  --rzrm-shadow-lg: 0 32px 68px rgb(0 0 0 / 30%);
+  --rzrm-ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --rzrm-ease-slow: cubic-bezier(0.4, 0, 0.6, 1);
+  --rzrm-duration-fast: 0.24s;
+  --rzrm-duration-base: 0.3s;
+  --rzrm-duration-slow: 0.5s;
+  --rzrm-duration-xslow: 0.8s;
+  --rzrm-scroll-offset: 104px;
+  --rzrm-shell: calc(100vw - 24px);
+}
+
+@media (min-width: 681px) {
+  .razer-site-header,
+  .razer-site-header-container {
+    --rzrm-display-1-size: 40px;
+    --rzrm-display-1-lh: 44px;
+    --rzrm-display-2-size: 28px;
+    --rzrm-display-2-lh: 31px;
+    --rzrm-shell: min(960px, calc(100vw - 32px));
+  }
+}
+
+@media (min-width: 1101px) {
+  .razer-site-header,
+  .razer-site-header-container {
+    --rzrm-shell: min(1200px, calc(100vw - 48px));
+  }
+}
+
+/* Container reset: paint the dark theme edge-to-edge inside the EDS section.
+   The main > .section qualifier out-ranks the styles.css section margin. */
+main > .section.razer-site-header-container,
+.razer-site-header-container {
+  margin: 0;
+  padding: 0;
+  background: var(--rzrm-surface-base, #000);
+}
+
+.razer-site-header-container > div,
+.razer-site-header-container .razer-site-header-wrapper {
+  max-width: unset;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+main > .section.appear > div > .razer-site-header-wrapper {
+  animation: none;
+}
+
+.razer-site-header {
+  background: var(--rzrm-surface-base, #000);
+  color: var(--rzrm-text-primary, #fff);
+  font-family: var(--rzrm-font-body, roboto, "Helvetica Neue", arial, sans-serif);
+  font-size: var(--rzrm-body-size, 16px);
+  line-height: var(--rzrm-body-lh, 24px);
+}
+
+.razer-site-header .rzrm-shell {
+  width: var(--rzrm-shell, min(1200px, calc(100vw - 48px)));
+  margin: 0 auto;
+}
+
+.razer-site-header h1,
+.razer-site-header h2,
+.razer-site-header h3 {
+  font-family: var(--rzrm-font-display, "Titillium Web", system-ui, sans-serif);
+}
+
+.razer-site-header img {
+  max-width: 100%;
+  display: block;
+}
+
+.razer-site-header a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.razer-site-header button {
+  font: inherit;
+  color: inherit;
+}
+
+.razer-site-header :focus-visible {
+  outline: 2px solid var(--rzrm-green, #44d62c);
+  outline-offset: 3px;
+}
+
+/* rzrm:tokens:end */
+
+/* ── Shared button primitive (for panel CTAs) ───────────────────── */
+.razer-site-header .button {
+  border-radius: var(--rzrm-radius-sm, 3px);
+  min-height: 40px;
+  font-family: var(--rzrm-font-body, roboto, sans-serif);
+  letter-spacing: normal;
+  text-transform: none;
+  transition:
+    color var(--rzrm-duration-slow, 0.5s) ease,
+    background var(--rzrm-duration-base, 0.3s) ease,
+    border-color var(--rzrm-duration-base, 0.3s) ease,
+    box-shadow var(--rzrm-duration-base, 0.3s) ease,
+    transform var(--rzrm-duration-fast, 0.24s) var(--rzrm-ease-standard, ease);
+  border: 0;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  padding: 0 16px;
+  font-size: var(--rzrm-body-size, 16px);
+  font-weight: 500;
+  line-height: 20px;
+  display: inline-flex;
+  cursor: pointer;
+}
+
+.razer-site-header .button-primary {
+  background: var(--rzrm-green, #44d62c);
+  color: var(--rzrm-text-on-accent, #000);
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.razer-site-header .button-primary:hover {
+  color: #000;
+  background: #5ce843;
+}
+
+/* ── Skip link ──────────────────────────────────────────────────── */
+.razer-site-header .skip-link {
+  z-index: 999;
+  background: var(--rzrm-green, #44d62c);
+  color: #000;
+  padding: 10px 16px;
+  font-weight: 800;
+  position: fixed;
+  top: 10px;
+  left: 12px;
+  transform: translateY(-150%);
+}
+
+.razer-site-header .skip-link:focus {
+  transform: translateY(0);
+}
+
+/* ── Fixed header shell ─────────────────────────────────────────── */
+
+/*
+ * The source header is `position: sticky` on <body>. EDS wraps every
+ * block in its own section, which would cap sticky at the section's own
+ * height, so the header is fixed and the block renders a spacer whose
+ * height is kept in sync from JS.
+ */
+.razer-site-header .site-header {
+  z-index: 100;
+  height: auto; /* styles.css caps bare <header> at --nav-height */
+  backdrop-filter: blur(14px);
+  background: rgb(0 0 0 / 96%);
+  border-bottom: 1px solid var(--rzrm-green, #44d62c);
+  box-shadow: var(--rzrm-shadow-sm, 0 -1px 10px rgb(172 171 171 / 30%));
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+.razer-site-header .global-nav {
+  align-items: center;
+  gap: 28px;
+  height: 60px;
+  display: flex;
+}
+
+.razer-site-header .brand-mark {
+  flex: none;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  display: grid;
+}
+
+.razer-site-header .brand-mark img {
+  width: 35px;
+  height: 35px;
+}
+
+.razer-site-header .desktop-nav {
+  flex: 1;
+  justify-content: space-between;
+  align-items: stretch;
+  min-width: 0;
+  height: 100%;
+  display: flex;
+}
+
+.razer-site-header .nav-link {
+  color: var(--rzrm-text-secondary, #bbb);
+  white-space: nowrap;
+  cursor: pointer;
+  background: none;
+  border: 0;
+  align-items: center;
+  padding: 0;
+  font-size: var(--rzrm-body-sm-size, 14px);
+  font-weight: 400;
+  line-height: var(--rzrm-body-lh, 24px);
+  display: flex;
+  position: relative;
+}
+
+.razer-site-header .nav-link::after {
+  content: "";
+  background: var(--rzrm-green, #44d62c);
+  transform-origin: 50%;
+  height: 1px;
+  transition: transform var(--rzrm-duration-slow, 0.5s) ease;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  transform: scaleX(0);
+}
+
+.razer-site-header .nav-link:hover,
+.razer-site-header .nav-link[aria-expanded="true"] {
+  color: var(--rzrm-text-primary, #fff);
+}
+
+.razer-site-header .nav-link:hover::after,
+.razer-site-header .nav-link[aria-expanded="true"]::after {
+  transform: scaleX(1);
+}
+
+.razer-site-header .nav-actions {
+  align-items: center;
+  gap: 6px;
+  display: flex;
+}
+
+.razer-site-header .icon-button {
+  cursor: pointer;
+  background: none;
+  border: 0;
+  border-radius: var(--rzrm-radius-md, 4px);
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  transition: background var(--rzrm-duration-base, 0.3s) ease;
+  display: grid;
+}
+
+.razer-site-header .icon-button:hover {
+  background: var(--rzrm-surface-raised, #111);
+}
+
+/* CSS-drawn icons (search / cart / hamburger), as in the source */
+.razer-site-header .search-icon span {
+  border: 1.5px solid #ddd;
+  border-radius: 50%;
+  width: 17px;
+  height: 17px;
+  position: relative;
+}
+
+.razer-site-header .search-icon span::after {
+  content: "";
+  background: #ddd;
+  width: 7px;
+  height: 1.5px;
+  position: absolute;
+  bottom: -3px;
+  right: -5px;
+  rotate: 45deg;
+}
+
+.razer-site-header .cart-icon span {
+  border: 1.5px solid #ddd;
+  border-top: 0;
+  width: 19px;
+  height: 13px;
+  position: relative;
+  transform: skew(-8deg);
+}
+
+.razer-site-header .cart-icon span::before,
+.razer-site-header .cart-icon span::after {
+  content: "";
+  border: 1px solid #ddd;
+  border-radius: 50%;
+  width: 3px;
+  height: 3px;
+  position: absolute;
+  bottom: -7px;
+}
+
+.razer-site-header .cart-icon span::before {
+  left: 2px;
+}
+
+.razer-site-header .cart-icon span::after {
+  right: 2px;
+}
+
+.razer-site-header .menu-icon {
+  display: none;
+}
+
+.razer-site-header .menu-icon span,
+.razer-site-header .menu-icon span::before,
+.razer-site-header .menu-icon span::after {
+  background: #ddd;
+  width: 20px;
+  height: 1.5px;
+  display: block;
+  position: relative;
+}
+
+.razer-site-header .menu-icon span::before,
+.razer-site-header .menu-icon span::after {
+  content: "";
+  position: absolute;
+  left: 0;
+}
+
+.razer-site-header .menu-icon span::before {
+  top: -6px;
+}
+
+.razer-site-header .menu-icon span::after {
+  top: 6px;
+}
+
+/* ── Mega menu ──────────────────────────────────────────────────── */
+.razer-site-header .mega-menu {
+  z-index: 20;
+  opacity: 0;
+  border-bottom: 1px solid var(--rzrm-green, #44d62c);
+  width: 100%;
+  max-height: 0;
+  box-shadow: var(--rzrm-shadow-lg, 0 32px 68px rgb(0 0 0 / 30%));
+  pointer-events: none;
+  background: var(--rzrm-surface-card, #212121);
+  transition:
+    opacity var(--rzrm-duration-base, 0.3s) ease,
+    max-height var(--rzrm-duration-slow, 0.5s) ease;
+  position: absolute;
+  top: 60px;
+  left: 0;
+  overflow: hidden;
+}
+
+.razer-site-header .mega-menu.is-open {
+  opacity: 1;
+  pointer-events: auto;
+  max-height: 560px;
+}
+
+.razer-site-header .mega-grid {
+  grid-template-columns: 1.35fr repeat(3, 1fr);
+  padding: 28px 0 40px;
+  display: grid;
+}
+
+.razer-site-header .mega-grid > div {
+  border-left: 1px solid var(--rzrm-surface-line, #333);
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 0 30px;
+  display: flex;
+}
+
+.razer-site-header .mega-grid > div:first-child {
+  border: 0;
+  padding-left: 0;
+}
+
+.razer-site-header .menu-label {
+  color: var(--rzrm-text-tertiary, #999);
+  letter-spacing: normal;
+  text-transform: none;
+  margin: 0 0 5px;
+  font-size: var(--rzrm-body-xs-size, 12px);
+  font-weight: 400;
+}
+
+.razer-site-header .mega-grid a {
+  color: var(--rzrm-text-primary, #fff);
+  transition: color var(--rzrm-duration-slow, 0.5s) ease;
+  font-size: var(--rzrm-body-sm-size, 14px);
+  font-weight: 500;
+  line-height: var(--rzrm-body-lh, 24px);
+}
+
+.razer-site-header .mega-grid .mega-feature {
+  border-bottom: 1px solid rgb(255 255 255 / 8%);
+  justify-content: space-between;
+  width: 100%;
+  padding-bottom: 14px;
+  font-size: var(--rzrm-body-lg-size, 18px);
+  display: flex;
+}
+
+/* ── Category nav ───────────────────────────────────────────────── */
+.razer-site-header .category-nav {
+  background: var(--rzrm-surface-raised, #111);
+  border-top: 0;
+}
+
+.razer-site-header .category-scroll {
+  scrollbar-width: none;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  min-height: 42px;
+  display: flex;
+  overflow-x: auto;
+}
+
+.razer-site-header .category-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.razer-site-header .category-scroll a {
+  color: var(--rzrm-text-secondary, #bbb);
+  letter-spacing: normal;
+  white-space: nowrap;
+  transition: color var(--rzrm-duration-slow, 0.5s) ease;
+  padding: 9px 0;
+  font-size: var(--rzrm-body-xs-size, 12px);
+  font-weight: 400;
+  line-height: var(--rzrm-body-lh, 24px);
+}
+
+/* ── Backdrop ───────────────────────────────────────────────────── */
+.razer-site-header .backdrop {
+  z-index: 190;
+  opacity: 0;
+  pointer-events: none;
+  background: var(--rzrm-scrim-heavy, rgb(0 0 0 / 80%));
+  transition: opacity 0.25s;
+  position: fixed;
+  inset: 0;
+}
+
+.razer-site-header .backdrop.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ── Side panels (mobile nav + cart) ────────────────────────────── */
+.razer-site-header .side-panel {
+  z-index: 200;
+  border-left: 1px solid var(--rzrm-surface-line, #333);
+  width: min(430px, 92vw);
+  height: 100dvh;
+  box-shadow: var(--rzrm-shadow-lg, 0 32px 68px rgb(0 0 0 / 30%));
+  background: var(--rzrm-surface-raised, #111);
+  transition: transform var(--rzrm-duration-slow, 0.5s) var(--rzrm-ease-standard, ease);
+  position: fixed;
+  top: 0;
+  right: 0;
+  transform: translate(105%);
+}
+
+.razer-site-header .side-panel.is-open {
+  transform: translate(0);
+}
+
+.razer-site-header .panel-head {
+  border-bottom: 1px solid var(--rzrm-surface-line, #333);
+  justify-content: space-between;
+  align-items: center;
+  min-height: 70px;
+  padding: 0 24px;
+  display: flex;
+}
+
+.razer-site-header .panel-head strong {
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 21px;
+}
+
+.razer-site-header .panel-head button {
+  cursor: pointer;
+  background: none;
+  border: 0;
+  width: 40px;
+  height: 40px;
+  font-size: 30px;
+}
+
+.razer-site-header .mobile-links {
+  flex-direction: column;
+  padding: 12px 24px;
+  display: flex;
+}
+
+.razer-site-header .mobile-links a {
+  border-bottom: 1px solid var(--rzrm-surface-line, #333);
+  justify-content: space-between;
+  align-items: center;
+  min-height: 52px;
+  font-size: var(--rzrm-body-lg-size, 18px);
+  font-weight: 700;
+  display: flex;
+}
+
+.razer-site-header .panel-cta {
+  margin: 22px 24px;
+}
+
+.razer-site-header .empty-cart {
+  text-align: center;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: calc(100% - 70px);
+  padding: 44px;
+  display: flex;
+}
+
+.razer-site-header .empty-cart-icon {
+  border: 2px solid var(--rzrm-green, #44d62c);
+  border-top: 0;
+  width: 54px;
+  height: 40px;
+  transform: skew(-8deg);
+}
+
+.razer-site-header .empty-cart h2 {
+  text-transform: uppercase;
+  margin: 28px 0 6px;
+  font-size: 30px;
+}
+
+.razer-site-header .empty-cart p {
+  color: var(--rzrm-text-secondary, #bbb);
+  margin: 0 0 26px;
+}
+
+/* ── Search dialog ──────────────────────────────────────────────── */
+.razer-site-header .search-dialog {
+  z-index: 210;
+  opacity: 0;
+  pointer-events: none;
+  border: 1px solid var(--rzrm-surface-line, #333);
+  border-radius: var(--rzrm-radius-xl, 10px);
+  width: min(760px, 100vw - 32px);
+  max-height: 78vh;
+  box-shadow: var(--rzrm-shadow-lg, 0 32px 68px rgb(0 0 0 / 30%));
+  background: var(--rzrm-surface-raised, #111);
+  transition: opacity 0.2s, transform 0.2s;
+  position: fixed;
+  top: 11vh;
+  left: 50%;
+  overflow-y: auto;
+  transform: translate(-50%, -20px);
+}
+
+.razer-site-header .search-dialog.is-open {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translate(-50%);
+}
+
+.razer-site-header .search-form {
+  border-bottom: 1px solid var(--rzrm-surface-line, #333);
+  padding: 28px;
+}
+
+.razer-site-header .search-form label {
+  color: var(--rzrm-text-secondary, #bbb);
+  margin-bottom: 10px;
+  font-weight: 700;
+  display: block;
+}
+
+.razer-site-header .search-input-wrap {
+  display: flex;
+}
+
+.razer-site-header .search-input-wrap input {
+  color: var(--rzrm-text-primary, #fff);
+  background: #050706;
+  border: 1px solid #525752;
+  flex: 1;
+  min-width: 0;
+  height: 54px;
+  padding: 0 16px;
+  font-size: var(--rzrm-body-lg-size, 18px);
+}
+
+.razer-site-header .search-input-wrap button {
+  background: var(--rzrm-green, #44d62c);
+  color: #000;
+  text-transform: uppercase;
+  cursor: pointer;
+  border: 0;
+  width: 110px;
+  font-weight: 800;
+}
+
+.razer-site-header .search-results {
+  padding: 24px 28px 30px;
+}
+
+.razer-site-header .search-results a {
+  border-bottom: 1px solid var(--rzrm-surface-line, #333);
+  justify-content: space-between;
+  align-items: center;
+  min-height: 48px;
+  font-size: 17px;
+  font-weight: 700;
+  display: flex;
+}
+
+.razer-site-header .search-empty {
+  color: var(--rzrm-text-secondary, #bbb);
+  margin: 0;
+}
+
+/* ── Hover states (kept last for specificity ordering) ─────────── */
+.razer-site-header .mega-grid a:hover {
+  color: var(--rzrm-green, #44d62c);
+}
+
+.razer-site-header .category-scroll a:hover {
+  color: var(--rzrm-green, #44d62c);
+}
+
+.razer-site-header .search-results a:hover {
+  color: var(--rzrm-green, #44d62c);
+}
+
+/* Cart panel is light-themed in the source's final layer */
+.razer-site-header .cart-panel {
+  background: var(--rzrm-light-base, #fff);
+  color: #111;
+}
+
+.razer-site-header .cart-panel .panel-head {
+  border-color: #ddd;
+}
+
+.razer-site-header .cart-panel .panel-head strong,
+.razer-site-header .cart-panel .panel-head button,
+.razer-site-header .cart-panel .empty-cart h2 {
+  color: #111;
+}
+
+.razer-site-header .cart-panel .empty-cart p {
+  color: #666;
+}
+
+/* ── Responsive ─────────────────────────────────────────────────── */
+@media (max-width: 1260px) {
+  .razer-site-header .desktop-nav .nav-link:nth-last-child(-n+3) {
+    display: none;
+  }
+}
+
+@media (max-width: 1100px) {
+  .razer-site-header .desktop-nav {
+    display: none;
+  }
+
+  .razer-site-header .global-nav {
+    justify-content: space-between;
+  }
+
+  .razer-site-header .nav-actions {
+    margin-left: auto;
+  }
+
+  .razer-site-header .menu-icon {
+    display: grid;
+  }
+
+  .razer-site-header .category-scroll {
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 680px) {
+  .razer-site-header .global-nav {
+    height: 54px;
+  }
+
+  .razer-site-header .brand-mark img {
+    width: 31px;
+    height: 31px;
+  }
+
+  .razer-site-header .category-scroll {
+    gap: 24px;
+    min-height: 40px;
+  }
+
+  .razer-site-header .category-scroll a {
+    font-size: var(--rzrm-body-xs-size, 12px);
+  }
+}
