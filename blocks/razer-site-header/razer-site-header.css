@@ -738,6 +738,64 @@ main > .section.appear > div > .razer-site-header-wrapper {
   margin: 0;
 }
 
+/* Live search result groups (products with thumbnails + quick links) */
+.razer-site-header .search-results .search-group + .search-group {
+  margin-top: 22px;
+}
+
+.razer-site-header .search-results mark {
+  background: none;
+  color: var(--rzrm-green, #44d62c);
+}
+
+.razer-site-header .search-products a {
+  justify-content: flex-start;
+  gap: 16px;
+  min-height: 0;
+  padding: 10px 0;
+}
+
+.razer-site-header .search-thumb {
+  flex: none;
+  background: var(--rzrm-light-base, #fff);
+  border-radius: var(--rzrm-radius-sm, 3px);
+  width: 84px;
+  height: 56px;
+  overflow: hidden;
+}
+
+.razer-site-header .search-thumb img {
+  object-fit: contain;
+  width: 100%;
+  height: 100%;
+}
+
+.razer-site-header .search-product-info {
+  flex: 1;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  display: flex;
+}
+
+.razer-site-header .search-product-title {
+  font-size: var(--rzrm-body-size, 16px);
+  line-height: 1.35;
+}
+
+.razer-site-header .search-product-meta {
+  color: var(--rzrm-text-tertiary, #999);
+  font-size: var(--rzrm-body-xs-size, 12px);
+  font-weight: 400;
+  line-height: 1.4;
+}
+
+.razer-site-header .search-product-price {
+  color: var(--rzrm-text-secondary, #bbb);
+  white-space: nowrap;
+  font-size: var(--rzrm-body-sm-size, 14px);
+}
+
 /* ── Hover states (kept last for specificity ordering) ─────────── */
 .razer-site-header .mega-grid a:hover {
   color: var(--rzrm-green, #44d62c);
@@ -747,7 +805,8 @@ main > .section.appear > div > .razer-site-header-wrapper {
   color: var(--rzrm-green, #44d62c);
 }
 
-.razer-site-header .search-results a:hover {
+.razer-site-header .search-results a:hover,
+.razer-site-header .search-results a.is-active {
   color: var(--rzrm-green, #44d62c);
 }
 
@@ -817,5 +876,14 @@ main > .section.appear > div > .razer-site-header-wrapper {
 
   .razer-site-header .category-scroll a {
     font-size: var(--rzrm-body-xs-size, 12px);
+  }
+
+  .razer-site-header .search-thumb {
+    width: 64px;
+    height: 44px;
+  }
+
+  .razer-site-header .search-product-title {
+    font-size: var(--rzrm-body-sm-size, 14px);
   }
 }

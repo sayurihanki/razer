@@ -6,9 +6,8 @@
 gaming-mice demo page: skip link, black global nav with green underline
 hover states, the Store mega menu, the category nav strip, a shared
 backdrop, the mobile navigation panel, the light-themed cart panel, and
-the search dialog with its small client-side index. All content is baked
-in, so a table containing only the block name renders the exact source
-header.
+the live-search dialog. All content is baked in, so a table containing
+only the block name renders the exact source header.
 
 ## DA.live Authoring Model
 
@@ -34,7 +33,9 @@ Setting keys: `content-mode`, `logo`, `logo-alt`, `home-href`,
 `cart-aria-label`, `cart-empty-title`, `cart-empty-body`,
 `search-heading`, `search-close-label`, `search-label`,
 `search-placeholder`, `search-submit-label`, `search-popular-label`,
-`search-empty-message`.
+`search-empty-message`, `search-products-label`, `search-links-label`,
+`search-max-products` (1–10, default 6), `search-max-links` (1–8,
+default 4).
 
 Keys are stable and zero-padded; authored rows override preset fields by
 key, new keys append; `__empty__` clears a value; clearing a label
@@ -55,9 +56,18 @@ Copy-paste artifacts (regenerate with
 - Store toggles the mega menu; the search/cart/menu icon buttons open
   their panels; backdrop click and Escape close everything; only one
   panel is open at a time.
-- Search filters a small client-side index as you type: "Popular" shows
-  the top 3 when empty, otherwise "N result(s)" with an empty-state
-  message; submit is prevented (parity with the source).
+- **Live search:** the dialog ranks the real product catalog — imported
+  from `razer-product-explorer` (`DEFAULT_PRODUCTS`), so both blocks
+  share one source of truth — plus the `search-popular` quick-link
+  index as you type. Product hits render as rows with the product
+  image, family · playstyle meta, and price; matched text is
+  highlighted with `<mark>`. Tokens AND together; title matches
+  outrank keyword matches. "Popular" shows the top 3 quick links when
+  the input is empty; no matches shows `search-empty-message`.
+- Search keyboard support: Arrow Up/Down move the active option
+  (combobox/listbox semantics, `aria-activedescendant`), Enter opens
+  the active option (or the top result while typing), Escape closes.
+  The result-count line is a polite live region.
 - Icons are CSS pseudo-element drawings — no icon assets.
 - Breakpoints at 680/1100/1260px (source parity): desktop nav hides at
   ≤1100px (hamburger appears), the last 3 nav links hide at ≤1260px,

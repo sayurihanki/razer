@@ -4,9 +4,13 @@
  * Reproduces the full site chrome from the Razer gaming-mice demo page:
  * skip link, global nav with Store mega menu, category nav, backdrop,
  * mobile navigation panel, cart panel (light-themed), and the search
- * dialog with its small client-side index. All content is baked in, so
- * a table containing only the block name renders the exact source
- * header. Authored rows override or extend entries by stable key.
+ * dialog. The dialog is a live search: it ranks the baked-in product
+ * catalog (imported from razer-product-explorer so both blocks share
+ * one source of truth) plus the quick-link index as you type, and
+ * renders product rows with image, family and price. All content is
+ * baked in, so a table containing only the block name renders the
+ * exact source header. Authored rows override or extend entries by
+ * stable key.
  *
  * Table contract (6 columns, typed rows; column 1 is the row type):
  * setting:        setting | <key> | <value>
@@ -27,6 +31,8 @@
  * The literal `__empty__` clears a preset value; `enabled` is expressed
  * by clearing the label.
  */
+
+import { DEFAULT_PRODUCTS } from '../razer-product-explorer/razer-product-explorer.js';
 
 const CLEAR_TOKEN = '__empty__';
 
@@ -57,6 +63,10 @@ export const DEFAULT_SETTINGS = {
   'search-submit-label': 'Search',
   'search-popular-label': 'Popular',
   'search-empty-message': 'No matches. Try a product family or “gear finder.”',
+  'search-products-label': 'Products',
+  'search-links-label': 'Quick links',
+  'search-max-products': '6',
+  'search-max-links': '4',
 };
 
 export const DEFAULT_NAV = [
@@ -185,6 +195,104 @@ export const DEFAULT_SEARCH_INDEX = [
     key: 'search-04', label: 'Razer Blade laptops', href: 'https://www.razer.com/gaming-laptops', terms: 'blade laptop pc',
   },
 ];
+
+/* ── Live search (pure helpers, exported for tests) ────────────── */
+
+export function tokenizeQuery(query) {
+  return `${query || ''}`.toLowerCase().split(/\s+/).filter(Boolean);
+}
+
+export function buildProductEntries(products) {
+  return products.map((product) => ({
+    kind: 'product',
+    title: product.title,
+    href: product.url,
+    image: product.image,
+    priceText: product.priceText,
+    meta: [product.family, product.playstyle].filter(Boolean).join(' · '),
+    keywords: [
+      product.family,
+      product.playstyle,
+      product.connectivity,
+      product.badge,
+      product.description,
+      ...(product.attributes || []),
+    ].filter(Boolean).join(' ').toLowerCase(),
+  }));
+}
+
+export function buildLinkEntries(index) {
+  return index.map((entry) => ({
+    kind: 'link',
+    title: entry.label,
+    href: entry.href,
+    keywords: `${entry.terms || ''}`.toLowerCase(),
+  }));
+}
+
+function scoreToken(entry, token) {
+  const title = entry.title.toLowerCase();
+  if (title.startsWith(token)) return 6;
+  if (title.includes(` ${token}`)) return 4;
+  if (title.includes(token)) return 3;
+  const keywords = entry.keywords || '';
+  if (keywords.startsWith(token) || keywords.includes(` ${token}`)) return 2;
+  if (keywords.includes(token)) return 1;
+  return 0;
+}
+
+/**
+ * Ranks entries against a free-text query. Tokens AND together; each
+ * token scores highest on title prefix, then title word-start, title
+ * substring, keyword word-start, keyword substring. Ties keep the
+ * catalog order.
+ */
+export function searchCatalog(query, entries, limit) {
+  const tokens = tokenizeQuery(query);
+  if (!tokens.length) return [];
+  const scored = [];
+  entries.forEach((entry, index) => {
+    let score = 0;
+    const everyTokenMatches = tokens.every((token) => {
+      const tokenScore = scoreToken(entry, token);
+      score += tokenScore;
+      return tokenScore > 0;
+    });
+    if (everyTokenMatches) scored.push({ entry, score, index });
+  });
+  scored.sort((a, b) => b.score - a.score || a.index - b.index);
+  return scored.slice(0, limit).map((item) => item.entry);
+}
+
+/**
+ * Returns merged [start, end) ranges of every token occurrence in the
+ * label, for <mark> highlighting.
+ */
+export function highlightRanges(label, tokens) {
+  const lower = label.toLowerCase();
+  const ranges = [];
+  tokens.forEach((token) => {
+    if (!token) return;
+    let from = 0;
+    let at = lower.indexOf(token, from);
+    while (at !== -1) {
+      ranges.push([at, at + token.length]);
+      from = at + token.length;
+      at = lower.indexOf(token, from);
+    }
+  });
+  ranges.sort((a, b) => a[0] - b[0] || a[1] - b[1]);
+  const merged = [];
+  ranges.forEach(([start, end]) => {
+    const last = merged[merged.length - 1];
+    if (last && start <= last[1]) {
+      last[1] = Math.max(last[1], end);
+    } else {
+      merged.push([start, end]);
+    }
+  });
+  return merged;
+}
 
 /* ── Authoring helpers ─────────────────────────────────────────── */
 
@@ -521,6 +629,11 @@ export default function decorate(block) {
   searchInput.id = 'site-search';
   searchInput.placeholder = config['search-placeholder'];
   searchInput.autocomplete = 'off';
+  searchInput.setAttribute('role', 'combobox');
+  searchInput.setAttribute('aria-autocomplete', 'list');
+  searchInput.setAttribute('aria-expanded', 'false');
+  searchInput.setAttribute('aria-controls', 'site-search-results');
+  searchInput.setAttribute('spellcheck', 'false');
   const searchSubmit = el('button', '', [text(config['search-submit-label'])]);
   searchSubmit.type = 'submit';
   const searchLabel = el('label', '', [text(config['search-label'])]);
@@ -531,7 +644,11 @@ export default function decorate(block) {
   ]);
   searchForm.noValidate = true;
   const searchResultsLabel = el('p', 'menu-label', [text(config['search-popular-label'])]);
+  searchResultsLabel.setAttribute('role', 'status');
   const searchResultsList = el('div');
+  searchResultsList.id = 'site-search-results';
+  searchResultsList.setAttribute('role', 'listbox');
+  searchResultsList.setAttribute('aria-label', config['search-heading']);
   const searchResults = el('div', 'search-results', [searchResultsLabel, searchResultsList]);
   const searchDialog = el('div', 'search-dialog', [searchHead.head, searchForm, searchResults]);
   searchDialog.setAttribute('role', 'dialog');
@@ -558,6 +675,7 @@ export default function decorate(block) {
       node.setAttribute('aria-hidden', 'true');
     });
     if (megaButton) megaButton.setAttribute('aria-expanded', 'false');
+    searchInput.setAttribute('aria-expanded', 'false');
     backdrop.classList.remove('is-open');
   };
 
@@ -581,6 +699,7 @@ export default function decorate(block) {
   }
   searchButton.addEventListener('click', () => {
     openPanel(searchDialog);
+    searchInput.setAttribute('aria-expanded', 'true');
     searchInput.focus();
   });
   cartButton.addEventListener('click', () => openPanel(cartPanel));
@@ -593,36 +712,161 @@ export default function decorate(block) {
     if (event.key === 'Escape' && anyOpen()) closeAll();
   });
 
-  /* Search: tiny client-side index, same behavior as the source */
+  /* Search: live search over the baked-in product catalog + quick links */
+  const parseLimit = (value, fallback, max) => {
+    const numeric = Number.parseInt(value, 10);
+    if (!Number.isFinite(numeric)) return fallback;
+    return Math.min(max, Math.max(1, numeric));
+  };
+  const maxProducts = parseLimit(config['search-max-products'], 6, 10);
+  const maxLinks = parseLimit(config['search-max-links'], 4, 8);
+  const productEntries = buildProductEntries(DEFAULT_PRODUCTS);
+  const linkEntries = buildLinkEntries(searchIndex);
+
+  let resultAnchors = [];
+  let activeResult = -1;
+
+  const setActiveResult = (index) => {
+    const previous = resultAnchors[activeResult];
+    if (previous) {
+      previous.classList.remove('is-active');
+      previous.setAttribute('aria-selected', 'false');
+    }
+    activeResult = index;
+    const next = resultAnchors[index];
+    if (next) {
+      next.classList.add('is-active');
+      next.setAttribute('aria-selected', 'true');
+      searchInput.setAttribute('aria-activedescendant', next.id);
+      next.scrollIntoView({ block: 'nearest' });
+    } else {
+      activeResult = -1;
+      searchInput.removeAttribute('aria-activedescendant');
+    }
+  };
+
+  const collectResultAnchors = () => {
+    resultAnchors = [...searchResultsList.querySelectorAll('a')];
+    resultAnchors.forEach((anchor, index) => {
+      anchor.id = `site-search-option-${index}`;
+      anchor.setAttribute('role', 'option');
+      anchor.setAttribute('aria-selected', 'false');
+    });
+  };
+
+  const appendHighlighted = (node, label, tokens) => {
+    let cursor = 0;
+    highlightRanges(label, tokens).forEach(([start, end]) => {
+      if (start > cursor) node.append(text(label.slice(cursor, start)));
+      node.append(el('mark', '', [text(label.slice(start, end))]));
+      cursor = end;
+    });
+    if (cursor < label.length) node.append(text(label.slice(cursor)));
+  };
+
+  const buildQuickLink = (entry, tokens) => {
+    const label = el('span', 'search-link-label');
+    appendHighlighted(label, entry.title, tokens);
+    const link = el('a', '', [label, el('span', '', [text('›')])]);
+    if (entry.href) link.href = entry.href;
+    link.addEventListener('click', closeAll);
+    return link;
+  };
+
+  const buildProductRow = (entry, tokens) => {
+    const image = el('img');
+    image.src = entry.image;
+    image.alt = '';
+    image.loading = 'lazy';
+    image.width = 900;
+    image.height = 600;
+    const title = el('span', 'search-product-title');
+    appendHighlighted(title, entry.title, tokens);
+    const row = el('a', 'search-product', [
+      el('span', 'search-thumb', [image]),
+      el('span', 'search-product-info', [
+        title,
+        el('span', 'search-product-meta', [text(entry.meta)]),
+      ]),
+      el('span', 'search-product-price', [text(entry.priceText)]),
+    ]);
+    if (entry.href) row.href = entry.href;
+    row.addEventListener('click', closeAll);
+    return row;
+  };
+
+  const buildResultGroup = (labelText, groupKey, nodes) => {
+    const label = el('p', 'menu-label', [text(labelText)]);
+    label.id = `site-search-group-${groupKey}`;
+    const group = el('div', `search-group search-${groupKey}`, [label, ...nodes]);
+    group.setAttribute('role', 'group');
+    group.setAttribute('aria-labelledby', label.id);
+    return group;
+  };
+
   const renderSearchResults = () => {
-    const query = searchInput.value.trim().toLowerCase();
-    const results = query
-      ? searchIndex.filter(
-        (entry) => `${entry.label} ${entry.terms}`.toLowerCase().includes(query),
-      )
-      : searchIndex.slice(0, 3);
-
-    searchResultsLabel.textContent = query
-      ? `${results.length} result${results.length === 1 ? '' : 's'}`
-      : config['search-popular-label'];
-
+    const query = searchInput.value.trim();
+    const tokens = tokenizeQuery(query);
     searchResultsList.textContent = '';
-    if (!results.length) {
+    setActiveResult(-1);
+
+    if (!tokens.length) {
+      searchResultsLabel.textContent = config['search-popular-label'];
+      searchResultsList.append(el(
+        'div',
+        'search-group search-links',
+        linkEntries.slice(0, 3).map((entry) => buildQuickLink(entry, [])),
+      ));
+      collectResultAnchors();
+      return;
+    }
+
+    const products = searchCatalog(query, productEntries, maxProducts);
+    const links = searchCatalog(query, linkEntries, maxLinks);
+    const total = products.length + links.length;
+    searchResultsLabel.textContent = `${total} result${total === 1 ? '' : 's'} for “${query}”`;
+
+    if (!total) {
       searchResultsList.append(
         el('p', 'search-empty', [text(config['search-empty-message'])]),
       );
+      collectResultAnchors();
       return;
     }
-    results.forEach((entry) => {
-      const link = el('a', '', [text(entry.label), el('span', '', [text('›')])]);
-      if (entry.href) link.href = entry.href;
-      link.addEventListener('click', closeAll);
-      searchResultsList.append(link);
-    });
+    if (products.length) {
+      searchResultsList.append(buildResultGroup(
+        config['search-products-label'],
+        'products',
+        products.map((entry) => buildProductRow(entry, tokens)),
+      ));
+    }
+    if (links.length) {
+      searchResultsList.append(buildResultGroup(
+        config['search-links-label'],
+        'links',
+        links.map((entry) => buildQuickLink(entry, tokens)),
+      ));
+    }
+    collectResultAnchors();
   };
+
   renderSearchResults();
   searchInput.addEventListener('input', renderSearchResults);
-  searchForm.addEventListener('submit', (event) => event.preventDefault());
+  searchInput.addEventListener('keydown', (event) => {
+    if (event.key !== 'ArrowDown' && event.key !== 'ArrowUp') return;
+    if (!resultAnchors.length) return;
+    event.preventDefault();
+    let next = activeResult + (event.key === 'ArrowDown' ? 1 : -1);
+    if (next < 0) next = resultAnchors.length - 1;
+    if (next >= resultAnchors.length) next = 0;
+    setActiveResult(next);
+  });
+  searchForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const target = resultAnchors[activeResult]
+      || (searchInput.value.trim() ? resultAnchors[0] : null);
+    if (target?.href) target.click();
+  });
 
   /* Fixed-header spacer, measured so authored changes stay in sync */
   const syncSpacer = () => {
