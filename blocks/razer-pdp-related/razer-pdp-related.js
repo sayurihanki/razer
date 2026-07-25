@@ -3,10 +3,11 @@
  *
  * The "More ways to play." related-products rail of the Basilisk V3
  * Pro 35K product page: section heading with the view-all link and
- * three product cards with hover lift, image zoom, and staggered
- * reveal. All content is baked in, so a table containing only the
- * block name renders the complete section. Authored rows override or
- * extend entries by stable key.
+ * three product cards with a conventional hover lift and image zoom.
+ * Motion is limited to a single fade-up for the grid. All content is
+ * baked in, so a table containing only the block name renders the
+ * complete section. Authored rows override or extend entries by
+ * stable key.
  *
  * Table contract (8 columns, typed rows; column 1 is the row type):
  * setting: setting | <key> | <value>
@@ -207,10 +208,9 @@ export default function decorate(block) {
 
   if (products.length) {
     const grid = el('div', 'related-grid');
-    products.forEach((product, index) => {
+    grid.dataset.reveal = '';
+    products.forEach((product) => {
       const card = el('article', 'related-card');
-      card.dataset.reveal = '';
-      card.style.setProperty('--reveal-i', String(index));
 
       if (product.image) {
         const media = el('a', 'related-media');

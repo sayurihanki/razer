@@ -2,13 +2,14 @@
  * Razer PDP Hero block for EDS document authoring.
  *
  * The commerce heart of the Basilisk V3 Pro 35K product detail page:
- * breadcrumbs, product masthead, a cinematic four-shot gallery with
- * crossfade transitions, Chroma ambient glow, pointer tilt and swipe,
- * and the three-step guided configurator (finish, model, RazerCare)
- * with an animated running total, followed by the RazerStore services
- * strip. All content is baked in, so a table containing only the block
- * name renders the complete experience. Authored rows override or
- * extend entries by stable key.
+ * breadcrumbs, product masthead, a four-shot gallery with crossfade,
+ * swipe, and keyboard navigation, and the three-step guided
+ * configurator (finish, model, RazerCare) with a live running total,
+ * followed by the RazerStore services strip. Styling stays close to
+ * razer.com: flat dark surfaces, green accents, and motion limited to
+ * the crossfade and the price roll. All content is baked in, so a
+ * table containing only the block name renders the complete
+ * experience. Authored rows override or extend entries by stable key.
  *
  * Table contract (6 columns, typed rows; column 1 is the row type):
  * setting: setting | <key> | <value>
@@ -21,8 +22,8 @@
  * care:    care | key | label | note | delta
  * service: service | key | glyph | title | body
  *
- * Motion honors `prefers-reduced-motion`: reveals, crossfades, tilt,
- * glow rotation, and the price tween all collapse to instant states.
+ * Motion honors `prefers-reduced-motion`: the crossfade and the price
+ * tween both collapse to instant states.
  *
  * The literal `__empty__` clears a preset value; an empty label on a
  * keyed row removes the preset entry.
@@ -385,7 +386,6 @@ function buildBreadcrumbs(content) {
 
 function buildMasthead(content) {
   const head = el('header', 'pdp-masthead rzrm-shell');
-  head.dataset.enter = '';
   const h1 = el('h1', '', [text(content.config.title)]);
   h1.id = 'pdp-title';
   head.append(h1);
@@ -406,9 +406,6 @@ function buildGallery(content, refs) {
   const gallery = el('div', 'pdp-gallery');
 
   const stage = el('div', 'gallery-stage');
-  stage.dataset.finish = 'black';
-  const glow = el('div', 'stage-glow');
-  glow.setAttribute('aria-hidden', 'true');
   const frame = el('div', 'stage-frame');
 
   const front = el('img', 'stage-img is-front');
@@ -427,9 +424,7 @@ function buildGallery(content, refs) {
   back.height = IMAGE_SIZE.height;
   back.setAttribute('aria-hidden', 'true');
 
-  const sheen = el('div', 'stage-sheen');
-  sheen.setAttribute('aria-hidden', 'true');
-  frame.append(front, back, sheen);
+  frame.append(front, back);
 
   const arrows = el('div', 'gallery-arrows');
   const prev = el('button', 'stage-arrow', [text('‹')]);
@@ -440,7 +435,7 @@ function buildGallery(content, refs) {
   next.setAttribute('aria-label', content.config['next-label']);
   arrows.append(prev, next);
 
-  stage.append(glow, frame, arrows);
+  stage.append(frame, arrows);
   gallery.append(stage);
 
   const thumbs = el('div', 'gallery-thumbs');
@@ -486,7 +481,7 @@ function buildGallery(content, refs) {
   }
 
   Object.assign(refs, {
-    stage, frame, front, back, sheen, prev, next, thumbButtons, counter, caption,
+    stage, front, back, prev, next, thumbButtons, counter, caption,
   });
   return gallery;
 }
@@ -509,8 +504,6 @@ function buildConfigurator(content, refs) {
   const section = el('section', 'pdp-configurator');
   section.id = 'configure';
   section.setAttribute('aria-labelledby', 'configure-title');
-  section.dataset.enter = '';
-  section.style.setProperty('--reveal-i', '1');
 
   const heading = el('div', 'config-heading');
   if (content.config['config-eyebrow']) {
@@ -611,10 +604,8 @@ function buildServices(content) {
   if (!content.services.length) return null;
   const strip = el('section', 'pdp-services rzrm-shell');
   strip.setAttribute('aria-label', content.config['services-label']);
-  content.services.forEach((service, index) => {
+  content.services.forEach((service) => {
     const item = el('div', 'service-item');
-    item.dataset.reveal = '';
-    item.style.setProperty('--reveal-i', String(index));
     const glyph = el('span', 'service-glyph', [text(service.glyph)]);
     glyph.setAttribute('aria-hidden', 'true');
     const copy = el('p', 'service-copy', [
@@ -637,13 +628,6 @@ function initGallery(content, refs, reduceMotion) {
     const image = content.images[index];
     refs.counter.textContent = `${String(index + 1).padStart(2, '0')} / ${String(total).padStart(2, '0')}`;
     refs.caption.textContent = image.caption || image.alt || '';
-  };
-
-  const playSheen = () => {
-    refs.sheen.classList.remove('is-sweeping');
-    // Force a reflow so the sweep animation can restart.
-    void refs.sheen.offsetWidth; // eslint-disable-line no-void
-    refs.sheen.classList.add('is-sweeping');
   };
 
   // Timer-driven (not rAF) so switches still complete while the
@@ -677,7 +661,6 @@ function initGallery(content, refs, reduceMotion) {
     const raise = () => {
       if (state.tick !== tick) return;
       refs.back.classList.add('is-showing');
-      playSheen();
       window.setTimeout(() => {
         if (state.tick !== tick) return;
         showDirectly();
@@ -721,18 +704,6 @@ function initGallery(content, refs, reduceMotion) {
     if (Math.abs(deltaX) > SWIPE_THRESHOLD && Math.abs(deltaX) > Math.abs(deltaY)) {
       goTo(deltaX < 0 ? state.index + 1 : state.index - 1);
     }
-  });
-
-  const finePointer = window.matchMedia('(pointer: fine)');
-  refs.stage.addEventListener('pointermove', (event) => {
-    if (!finePointer.matches || reduceMotion.matches) return;
-    const bounds = refs.stage.getBoundingClientRect();
-    const ratioX = (event.clientX - bounds.left) / bounds.width - 0.5;
-    const ratioY = (event.clientY - bounds.top) / bounds.height - 0.5;
-    refs.frame.style.transform = `rotateX(${(-ratioY * 5).toFixed(2)}deg) rotateY(${(ratioX * 7).toFixed(2)}deg)`;
-  });
-  refs.stage.addEventListener('pointerleave', () => {
-    refs.frame.style.transform = '';
   });
 
   setCaption(0);
@@ -804,9 +775,6 @@ function initConfigurator(content, refs, reduceMotion) {
       window.cancelAnimationFrame(tween);
       renderPrice(target);
     }, PRICE_TWEEN_MS + 60);
-    refs.priceValue.classList.remove('is-ticking');
-    void refs.priceValue.offsetWidth; // eslint-disable-line no-void
-    refs.priceValue.classList.add('is-ticking');
   };
 
   const sync = () => {
@@ -820,10 +788,7 @@ function initConfigurator(content, refs, reduceMotion) {
     });
     const finish = selected('finish');
     const model = selected('model');
-    if (finish) {
-      refs.summaryFinish.textContent = finish.label;
-      refs.stage.dataset.finish = finish.swatch || 'black';
-    }
+    if (finish) refs.summaryFinish.textContent = finish.label;
     if (model) refs.summaryModel.textContent = model.label;
     animatePrice(computeTotal(basePrice, [selected('finish'), selected('model'), selected('care')]));
   };
@@ -839,23 +804,6 @@ function initConfigurator(content, refs, reduceMotion) {
   });
 
   sync();
-}
-
-function initReveals(block) {
-  const targets = block.querySelectorAll('[data-reveal]');
-  if (!('IntersectionObserver' in window)) {
-    targets.forEach((target) => target.classList.add('is-inview'));
-    return;
-  }
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('is-inview');
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
-  targets.forEach((target) => observer.observe(target));
 }
 
 /* ── Decorate ──────────────────────────────────────────────────── */
@@ -890,15 +838,4 @@ export default function decorate(block) {
 
   if (content.images.length) initGallery(content, refs, reduceMotion);
   initConfigurator(content, refs, reduceMotion);
-  initReveals(block);
-
-  // Above-the-fold entrances fire on load rather than waiting for an
-  // IntersectionObserver callback.
-  window.requestAnimationFrame(() => {
-    window.requestAnimationFrame(() => {
-      block.querySelectorAll('[data-enter]').forEach((target) => {
-        target.classList.add('is-inview');
-      });
-    });
-  });
 }

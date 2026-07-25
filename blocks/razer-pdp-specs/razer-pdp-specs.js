@@ -4,9 +4,10 @@
  * The technical specifications section of the Basilisk V3 Pro 35K
  * product page: section heading, the Synapse platform card with its
  * connectivity tag row and support link, and the ten-row definition
- * table with staggered reveal and row highlight. All content is baked
- * in, so a table containing only the block name renders the complete
- * section. Authored rows override or extend entries by stable key.
+ * table. Motion is limited to a single fade-up per section. All
+ * content is baked in, so a table containing only the block name
+ * renders the complete section. Authored rows override or extend
+ * entries by stable key.
  *
  * Table contract (4 columns, typed rows; column 1 is the row type):
  * setting: setting | <key> | <value>
@@ -220,14 +221,12 @@ export default function decorate(block) {
 
   if (content.specs.length) {
     const table = el('dl', 'spec-table');
-    content.specs.forEach((spec, index) => {
-      const row = el('div', '', [
+    table.dataset.reveal = '';
+    content.specs.forEach((spec) => {
+      table.append(el('div', '', [
         el('dt', '', [text(spec.label)]),
         el('dd', '', [text(spec.value)]),
-      ]);
-      row.dataset.reveal = '';
-      row.style.setProperty('--reveal-i', String(index));
-      table.append(row);
+      ]));
     });
     layout.append(table);
   }

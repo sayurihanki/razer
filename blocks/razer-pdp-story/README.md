@@ -2,47 +2,46 @@
 
 ## Overview
 
-`razer-pdp-story` is the cinematic narrative band of the Basilisk V3
-Pro 35K product detail page: a full-bleed backdrop render with scroll
-parallax and gradient scrim, the "apex of immersion" display heading,
-a count-up stat rail (35,000 DPI · 140 hours · 11 buttons · 90M
-clicks), and four feature cards with animated visuals — HyperScroll
-notch ring, sensor crosshair pulse, wireless radar, and a Chroma
-spectrum ring — plus a pointer-tracked spotlight. All content is baked
-in, so a table containing only the block name renders the complete
-experience.
+`razer-pdp-story` is the feature narrative of the Basilisk V3 Pro 35K
+product detail page, modeled on razer.com's image-led PDP
+storytelling: a full-bleed backdrop band with the "apex of immersion"
+heading, a static stat rail (35,000 DPI · 140 hours · 11 buttons ·
+90M clicks), three alternating media sections that put the product
+photography front and center (HyperScroll wheel, Chroma RGB,
+programmable buttons), and a pair of compact numeral tiles for the
+sensor and wireless specs. All content is baked in, so a table
+containing only the block name renders the complete experience.
 
 ## DA.live Authoring Model
 
-7 columns, typed rows. Column 1 is the row type.
+8 columns, typed rows. Column 1 is the row type.
 
-| Row | Columns 2–7 |
+| Row | Columns 2–8 |
 | --- | --- |
 | `setting` | key, value |
 | `stat` | key, value (numeric), suffix, label |
-| `feature` | key, index-label, glyph, title, body, variant |
+| `feature` | key, index-label, numeral, title, body, image |
 
 Setting keys: `content-mode` (`merge`/`replace`), `kicker`, `heading`,
 `body`, `backdrop` (image/path), `backdrop-alt`, `stats-label`.
 
-Feature variants drive the card visual: `wheel`, `sensor`, `wireless`,
-`chroma`. Rules (shared with the razer-mice family): keys are stable
-and zero-padded; an empty label/title removes a preset entry;
+A feature row with an image renders as an alternating media section; a
+feature without an image renders as a numeral tile (the `numeral`
+column, e.g. `35K` or `140H`, is the tile's display figure). Author
+image cells as pictures to control alt text; plain paths fall back to
+the feature title. Rules (shared with the razer-mice family): keys are
+stable and zero-padded; an empty title removes a preset entry;
 `__empty__` clears a value; an empty cell keeps it.
 
 ## Behavior
 
-- Stats count up from zero when 60% visible (single run, ~1.1s eased);
-  `prefers-reduced-motion` or a missing IntersectionObserver renders
-  final values immediately.
-- The backdrop parallaxes on scroll (fine pointers only, rAF-throttled)
-  and card visuals only animate while `.is-inview`.
-- Feature cards track the pointer via `--mx`/`--my` for the spotlight
-  and lift with a green border glow on hover.
-- Scroll reveals stagger via `--reveal-i`; all motion collapses under
-  `prefers-reduced-motion: reduce`.
+- Motion is limited to one fade-up per section
+  (`prefers-reduced-motion` disables it); stats render their final
+  values with no count-up, and the backdrop is static.
+- Media sections alternate image/copy sides on desktop (≥981px) via
+  `:nth-child(even)` order swap; tiles go two-up at 681px.
 - Breakpoints at 680/980/1260px (source parity; documented deviation
-  from the repo ladder), with the four-up card grid at 1101px.
+  from the repo ladder).
 
 ## Registration
 

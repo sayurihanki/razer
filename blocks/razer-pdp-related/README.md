@@ -5,7 +5,7 @@
 `razer-pdp-related` is the "More ways to play." related-products rail
 of the Basilisk V3 Pro 35K product detail page: a section heading with
 the view-all link and three product cards (Viper V3 Pro, Basilisk V3
-35K, Cobra Pro) with hover lift, image zoom, and staggered reveal. All
+35K, Cobra Pro) with a conventional hover lift and image zoom. All
 content is baked in, so a table containing only the block name renders
 the complete section.
 
@@ -27,10 +27,10 @@ preset entry; `__empty__` clears a value; an empty cell keeps it.
 
 ## Behavior
 
-- Cards lift with a green border glow and a slow image zoom on hover;
-  the card image link carries `tabindex="-1"` so keyboard users hit
-  each destination once (title link and CTA remain tabbable).
-- Scroll reveals stagger via `--reveal-i`; all motion collapses under
+- Cards lift with a green border and a slow image zoom on hover; the
+  card image link carries `tabindex="-1"` so keyboard users hit each
+  destination once (title link and CTA remain tabbable).
+- Motion is limited to one fade-up for the grid, disabled under
   `prefers-reduced-motion: reduce`.
 - Grid is 1-up, 2-up at 681px, 3-up at 981px (source parity;
   documented deviation from the repo ladder).

@@ -7,7 +7,8 @@ stat	stat-01	35000		DPI on Focus Pro 35K Gen-2
 stat	stat-02	140		Hours on HyperSpeed Wireless
 stat	stat-03	11		Programmable buttons
 stat	stat-04	90	M	Clicks on Optical Switches Gen-3
-feature	feature-01	01 · Scroll	∞	Razer HyperScroll Tilt Wheel	Move between tactile cycling and smooth free-spinning modes, with Smart-Reel behavior configurable through Razer Synapse 4.	wheel
-feature	feature-02	02 · Precision	35K	Focus Pro 35K Optical Sensor Gen-2	35,000 DPI sensitivity and 70 G acceleration, paired with deep adjustment options for precise tracking.	sensor
-feature	feature-03	03 · Wireless	140H	Flexible, multi-mode connection	Use Razer HyperSpeed Wireless, Bluetooth, or a wired USB connection. Battery life reaches up to 140 hours on HyperSpeed Wireless.	wireless
-feature	feature-04	04 · Immersion	RGB	Razer Chroma RGB	Scroll wheel, logo, and multi-zone underglow lighting can be configured alongside compatible devices.	chroma
+feature	feature-01	01 · Scroll		Razer HyperScroll Tilt Wheel	Move between tactile cycling and smooth free-spinning modes, with Smart-Reel behavior configurable through Razer Synapse 4.	/images/razer-mice/pdp/basilisk-angle.webp
+feature	feature-02	02 · Immersion		Razer Chroma RGB	Scroll wheel, logo, and multi-zone underglow lighting can be configured alongside compatible devices.	/images/razer-mice/pdp/basilisk-top-chroma.webp
+feature	feature-03	03 · Control		11 programmable buttons	Every command within reach — remap all 11 buttons and double your inputs with Razer HyperShift through Razer Synapse 4.	/images/razer-mice/pdp/basilisk-buttons.webp
+feature	feature-04	04 · Precision	35K	Focus Pro 35K Optical Sensor Gen-2	35,000 DPI sensitivity and 70 G acceleration, paired with deep adjustment options for precise tracking.	
+feature	feature-05	05 · Wireless	140H	Flexible, multi-mode connection	Use Razer HyperSpeed Wireless, Bluetooth, or a wired USB connection. Battery life reaches up to 140 hours on HyperSpeed Wireless.	

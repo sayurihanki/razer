@@ -109,7 +109,7 @@ story.DEFAULT_STATS.forEach((stat) => {
 });
 story.DEFAULT_FEATURES.forEach((feature) => {
   storyRows.push([
-    'feature', feature.key, feature.index, feature.glyph, feature.title, feature.body, feature.variant,
+    'feature', feature.key, feature.index, feature.numeral, feature.title, feature.body, feature.image,
   ]);
 });
 
@@ -142,7 +142,7 @@ const artifacts = [
     block: 'razer-pdp-hero', title: 'Razer PDP Hero', rows: heroRows, columns: 6,
   },
   {
-    block: 'razer-pdp-story', title: 'Razer PDP Story', rows: storyRows, columns: 7,
+    block: 'razer-pdp-story', title: 'Razer PDP Story', rows: storyRows, columns: 8,
   },
   {
     block: 'razer-pdp-specs', title: 'Razer PDP Specs', rows: specsRows, columns: 4,

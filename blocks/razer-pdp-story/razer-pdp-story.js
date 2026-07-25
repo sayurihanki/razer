@@ -1,26 +1,30 @@
 /**
  * Razer PDP Story block for EDS document authoring.
  *
- * The cinematic narrative band of the Basilisk V3 Pro 35K product page:
- * a full-bleed backdrop render with parallax and gradient scrim, the
- * "apex of immersion" display heading, a count-up stat rail, and four
- * feature cards with animated visuals (HyperScroll ring, sensor
- * crosshair, wireless radar, Chroma chip) plus a pointer-tracked
- * spotlight. All content is baked in, so a table containing only the
- * block name renders the complete experience. Authored rows override
- * or extend entries by stable key.
+ * The feature narrative of the Basilisk V3 Pro 35K product page,
+ * modeled on razer.com's image-led PDP storytelling: a full-bleed
+ * backdrop band with the "apex of immersion" heading, a static stat
+ * rail, three alternating media sections (HyperScroll wheel, Chroma
+ * RGB, programmable buttons) that put the product photography front
+ * and center, and a pair of compact numeral tiles for the sensor and
+ * wireless specs. All content is baked in, so a table containing only
+ * the block name renders the complete experience. Authored rows
+ * override or extend entries by stable key.
  *
- * Table contract (7 columns, typed rows; column 1 is the row type):
+ * Table contract (8 columns, typed rows; column 1 is the row type):
  * setting: setting | <key> | <value>
  * stat:    stat | key | value | suffix | label
- * feature: feature | key | index-label | glyph | title | body | variant
- *          (variant: wheel | sensor | wireless | chroma)
+ * feature: feature | key | index-label | numeral | title | body | image
+ *          (a feature with an image renders as a media section; one
+ *          without an image renders as a numeral tile. Author image
+ *          cells as pictures to control alt text; plain paths fall
+ *          back to the title.)
  *
- * Count-ups and all ambient animation honor `prefers-reduced-motion`
- * and only run while the section is in view.
+ * Motion is limited to a single fade-up per section, disabled under
+ * `prefers-reduced-motion`.
  *
- * The literal `__empty__` clears a preset value; an empty label/title
- * on a keyed row removes the preset entry.
+ * The literal `__empty__` clears a preset value; an empty title on a
+ * keyed row removes the preset entry.
  */
 
 const CLEAR_TOKEN = '__empty__';
@@ -53,38 +57,51 @@ export const DEFAULT_FEATURES = [
   {
     key: 'feature-01',
     index: '01 · Scroll',
-    glyph: '∞',
+    numeral: '',
     title: 'Razer HyperScroll Tilt Wheel',
     body: 'Move between tactile cycling and smooth free-spinning modes, with Smart-Reel behavior configurable through Razer Synapse 4.',
-    variant: 'wheel',
+    image: '/images/razer-mice/pdp/basilisk-angle.webp',
+    imageAlt: 'Razer Basilisk V3 Pro 35K seen low across a desk, its scroll wheel and underglow lit',
   },
   {
     key: 'feature-02',
-    index: '02 · Precision',
-    glyph: '35K',
-    title: 'Focus Pro 35K Optical Sensor Gen-2',
-    body: '35,000 DPI sensitivity and 70 G acceleration, paired with deep adjustment options for precise tracking.',
-    variant: 'sensor',
+    index: '02 · Immersion',
+    numeral: '',
+    title: 'Razer Chroma RGB',
+    body: 'Scroll wheel, logo, and multi-zone underglow lighting can be configured alongside compatible devices.',
+    image: '/images/razer-mice/pdp/basilisk-top-chroma.webp',
+    imageAlt: 'Top view of the Razer Basilisk V3 Pro 35K with its full 13-zone underglow active beside a keyboard',
   },
   {
     key: 'feature-03',
-    index: '03 · Wireless',
-    glyph: '140H',
-    title: 'Flexible, multi-mode connection',
-    body: 'Use Razer HyperSpeed Wireless, Bluetooth, or a wired USB connection. Battery life reaches up to 140 hours on HyperSpeed Wireless.',
-    variant: 'wireless',
+    index: '03 · Control',
+    numeral: '',
+    title: '11 programmable buttons',
+    body: 'Every command within reach — remap all 11 buttons and double your inputs with Razer HyperShift through Razer Synapse 4.',
+    image: '/images/razer-mice/pdp/basilisk-buttons.webp',
+    imageAlt: 'Razer Basilisk V3 Pro 35K surrounded by eleven mapped game commands',
   },
   {
     key: 'feature-04',
-    index: '04 · Immersion',
-    glyph: 'RGB',
-    title: 'Razer Chroma RGB',
-    body: 'Scroll wheel, logo, and multi-zone underglow lighting can be configured alongside compatible devices.',
-    variant: 'chroma',
+    index: '04 · Precision',
+    numeral: '35K',
+    title: 'Focus Pro 35K Optical Sensor Gen-2',
+    body: '35,000 DPI sensitivity and 70 G acceleration, paired with deep adjustment options for precise tracking.',
+    image: '',
+    imageAlt: '',
+  },
+  {
+    key: 'feature-05',
+    index: '05 · Wireless',
+    numeral: '140H',
+    title: 'Flexible, multi-mode connection',
+    body: 'Use Razer HyperSpeed Wireless, Bluetooth, or a wired USB connection. Battery life reaches up to 140 hours on HyperSpeed Wireless.',
+    image: '',
+    imageAlt: '',
   },
 ];
 
-const COUNT_MS = 1100;
+const MEDIA_SIZE = { width: 1200, height: 800 };
 
 /* ── Authoring helpers ─────────────────────────────────────────── */
 
@@ -93,13 +110,15 @@ function cellText(cell) {
   return cell.innerText.trim();
 }
 
-function readImageSource(cell) {
-  if (!cell) return '';
+function readImage(cell) {
+  if (!cell) return { src: '', alt: '' };
   const image = cell.querySelector('img');
-  if (image) return image.getAttribute('src') || '';
+  if (image) {
+    return { src: image.getAttribute('src') || '', alt: image.getAttribute('alt') || '' };
+  }
   const anchor = cell.querySelector('a[href]');
-  if (anchor) return anchor.getAttribute('href') || '';
-  return cellText(cell);
+  if (anchor) return { src: anchor.getAttribute('href') || '', alt: '' };
+  return { src: cellText(cell), alt: '' };
 }
 
 function applyValue(authored, preset) {
@@ -157,7 +176,7 @@ function mergeContent(parsed) {
   if (replace) Object.keys(config).forEach((key) => { config[key] = ''; });
   Object.keys(DEFAULT_SETTINGS).forEach((key) => {
     const authored = key === 'backdrop'
-      ? readImageSource(parsed.settingCells.get(key))
+      ? readImage(parsed.settingCells.get(key)).src
       : parsed.settings.get(key) || '';
     config[key] = applyValue(authored, config[key]);
   });
@@ -186,13 +205,15 @@ function mergeContent(parsed) {
   if (!replace) DEFAULT_FEATURES.forEach((entry) => features.set(entry.key, { ...entry }));
   parsed.features.forEach((cells, key) => {
     const preset = features.get(key) || {
-      key, index: '', glyph: '', title: '', body: '', variant: '',
+      key, index: '', numeral: '', title: '', body: '', image: '', imageAlt: '',
     };
     preset.index = applyValue(cellText(cells[2]), preset.index);
-    preset.glyph = applyValue(cellText(cells[3]), preset.glyph);
+    preset.numeral = applyValue(cellText(cells[3]), preset.numeral);
     preset.title = applyValue(cellText(cells[4]), preset.title);
     preset.body = applyValue(cellText(cells[5]), preset.body);
-    preset.variant = applyValue(cellText(cells[6]).toLowerCase(), preset.variant);
+    const image = readImage(cells[6]);
+    preset.image = applyValue(image.src, preset.image);
+    if (image.alt) preset.imageAlt = image.alt;
     if (!preset.title) {
       features.delete(key);
       return;
@@ -209,155 +230,97 @@ function mergeContent(parsed) {
 
 /* ── Render ────────────────────────────────────────────────────── */
 
-function buildBand(config, refs) {
+function buildBand(config) {
   const band = el('div', 'story-band');
   if (config.backdrop) {
     const backdrop = el('img', 'band-backdrop');
     backdrop.src = config.backdrop;
     backdrop.alt = config['backdrop-alt'];
     backdrop.loading = 'lazy';
+    backdrop.decoding = 'async';
     backdrop.width = 1600;
     backdrop.height = 1067;
     if (!config['backdrop-alt']) backdrop.setAttribute('role', 'presentation');
     band.append(backdrop);
-    refs.backdrop = backdrop;
   }
   const scrim = el('div', 'band-scrim');
   scrim.setAttribute('aria-hidden', 'true');
   band.append(scrim);
 
   const inner = el('div', 'band-inner rzrm-shell');
-  if (config.kicker) {
-    const kicker = el('p', 'story-kicker', [text(config.kicker)]);
-    kicker.dataset.reveal = '';
-    inner.append(kicker);
-  }
-  if (config.heading) {
-    const heading = el('h2', 'story-heading', [text(config.heading)]);
-    heading.dataset.reveal = '';
-    heading.style.setProperty('--reveal-i', '1');
-    inner.append(heading);
-  }
-  if (config.body) {
-    const body = el('p', 'story-body', [text(config.body)]);
-    body.dataset.reveal = '';
-    body.style.setProperty('--reveal-i', '2');
-    inner.append(body);
-  }
+  if (config.kicker) inner.append(el('p', 'story-kicker', [text(config.kicker)]));
+  if (config.heading) inner.append(el('h2', 'story-heading', [text(config.heading)]));
+  if (config.body) inner.append(el('p', 'story-body', [text(config.body)]));
   band.append(inner);
   return band;
 }
 
 function formatStat(value, suffix) {
-  const rounded = Math.round(value);
-  return `${rounded.toLocaleString('en-US')}${suffix}`;
+  return `${Math.round(value).toLocaleString('en-US')}${suffix}`;
 }
 
-function buildStats(config, stats, refs) {
+function buildStats(config, stats) {
   if (!stats.length) return null;
   const list = el('ul', 'story-stats rzrm-shell');
   list.setAttribute('aria-label', config['stats-label']);
-  refs.counters = stats.map((stat, index) => {
-    const value = el('strong', '', [text(formatStat(0, stat.suffix))]);
-    const item = el('li', '', [value, el('span', '', [text(stat.label)])]);
-    item.dataset.reveal = '';
-    item.style.setProperty('--reveal-i', String(index));
-    list.append(item);
-    return { stat, node: value };
+  stats.forEach((stat) => {
+    list.append(el('li', '', [
+      el('strong', '', [text(formatStat(stat.value, stat.suffix))]),
+      el('span', '', [text(stat.label)]),
+    ]));
   });
   return list;
 }
 
-function buildFeatureVisual(entry) {
-  const visual = el('div', 'feature-visual');
-  visual.setAttribute('aria-hidden', 'true');
-  const ring = el('span', 'visual-ring');
-  const glyph = el('strong', 'feature-glyph', [text(entry.glyph)]);
-  visual.append(ring, glyph);
-  return visual;
+function buildMediaFeature(entry) {
+  const section = el('article', 'feature-media');
+  section.dataset.reveal = '';
+
+  const media = el('div', 'feature-media-frame');
+  const img = el('img');
+  img.src = entry.image;
+  img.alt = entry.imageAlt || entry.title;
+  img.loading = 'lazy';
+  img.decoding = 'async';
+  img.width = MEDIA_SIZE.width;
+  img.height = MEDIA_SIZE.height;
+  media.append(img);
+
+  const copy = el('div', 'feature-copy');
+  if (entry.index) copy.append(el('p', 'card-index', [text(entry.index)]));
+  copy.append(el('h3', '', [text(entry.title)]));
+  if (entry.body) copy.append(el('p', 'feature-body', [text(entry.body)]));
+
+  section.append(media, copy);
+  return section;
+}
+
+function buildTileFeature(entry) {
+  const tile = el('article', 'feature-tile');
+  if (entry.index) tile.append(el('p', 'card-index', [text(entry.index)]));
+  if (entry.numeral) tile.append(el('strong', 'tile-numeral', [text(entry.numeral)]));
+  tile.append(el('h3', '', [text(entry.title)]));
+  if (entry.body) tile.append(el('p', 'feature-body', [text(entry.body)]));
+  return tile;
 }
 
 function buildFeatures(features) {
   if (!features.length) return null;
-  const grid = el('div', 'story-features rzrm-shell');
-  features.forEach((entry, index) => {
-    const card = el('article', 'feature-card');
-    if (entry.variant) card.dataset.variant = entry.variant;
-    card.dataset.reveal = '';
-    card.style.setProperty('--reveal-i', String(index));
-    if (entry.index) card.append(el('span', 'card-index', [text(entry.index)]));
-    if (entry.glyph) card.append(buildFeatureVisual(entry));
-    card.append(el('h3', '', [text(entry.title)]));
-    if (entry.body) card.append(el('p', '', [text(entry.body)]));
-    grid.append(card);
+  const wrap = el('div', 'story-features rzrm-shell');
+  const tiles = el('div', 'feature-tiles');
+  tiles.dataset.reveal = '';
+  features.forEach((entry) => {
+    if (entry.image) {
+      wrap.append(buildMediaFeature(entry));
+    } else {
+      tiles.append(buildTileFeature(entry));
+    }
   });
-  return grid;
+  if (tiles.children.length) wrap.append(tiles);
+  return wrap;
 }
 
 /* ── Behavior ──────────────────────────────────────────────────── */
-
-function initCounters(refs, reduceMotion) {
-  if (!refs.counters || !refs.counters.length) return;
-  const finish = ({ stat, node }) => {
-    node.textContent = formatStat(stat.value, stat.suffix);
-  };
-  if (reduceMotion.matches || !('IntersectionObserver' in window)) {
-    refs.counters.forEach(finish);
-    return;
-  }
-  const run = (entry) => {
-    const start = performance.now();
-    const step = (now) => {
-      const progress = Math.min(1, (now - start) / COUNT_MS);
-      const eased = 1 - (1 - progress) ** 3;
-      entry.node.textContent = formatStat(entry.stat.value * eased, entry.stat.suffix);
-      if (progress < 1) window.requestAnimationFrame(step);
-    };
-    window.requestAnimationFrame(step);
-  };
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((observed) => {
-      if (!observed.isIntersecting) return;
-      const counter = refs.counters.find(({ node }) => node === observed.target);
-      if (counter) run(counter);
-      observer.unobserve(observed.target);
-    });
-  }, { threshold: 0.6 });
-  refs.counters.forEach(({ node }) => observer.observe(node));
-}
-
-function initParallax(block, refs, reduceMotion) {
-  if (!refs.backdrop) return;
-  const finePointer = window.matchMedia('(pointer: fine)');
-  if (reduceMotion.matches || !finePointer.matches) return;
-  let ticking = false;
-  const update = () => {
-    ticking = false;
-    const bounds = refs.backdrop.parentElement.getBoundingClientRect();
-    const viewport = window.innerHeight || 1;
-    if (bounds.bottom < 0 || bounds.top > viewport) return;
-    const progress = (bounds.top + bounds.height / 2 - viewport / 2) / viewport;
-    refs.backdrop.style.transform = `translateY(${(progress * -36).toFixed(1)}px) scale(1.12)`;
-  };
-  const onScroll = () => {
-    if (ticking) return;
-    ticking = true;
-    window.requestAnimationFrame(update);
-  };
-  window.addEventListener('scroll', onScroll, { passive: true });
-  update();
-}
-
-function initSpotlight(block) {
-  const cards = block.querySelectorAll('.feature-card');
-  cards.forEach((card) => {
-    card.addEventListener('pointermove', (event) => {
-      const bounds = card.getBoundingClientRect();
-      card.style.setProperty('--mx', `${(((event.clientX - bounds.left) / bounds.width) * 100).toFixed(1)}%`);
-      card.style.setProperty('--my', `${(((event.clientY - bounds.top) / bounds.height) * 100).toFixed(1)}%`);
-    });
-  });
-}
 
 function initReveals(block) {
   const targets = block.querySelectorAll('[data-reveal]');
@@ -372,7 +335,7 @@ function initReveals(block) {
         observer.unobserve(entry.target);
       }
     });
-  }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
+  }, { threshold: 0.12 });
   targets.forEach((target) => observer.observe(target));
 }
 
@@ -384,21 +347,16 @@ function initReveals(block) {
  */
 export default function decorate(block) {
   const content = mergeContent(parseRows(block));
-  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-  const refs = {};
 
   block.textContent = '';
 
   const story = el('section', 'pdp-story');
-  story.append(buildBand(content.config, refs));
-  const stats = buildStats(content.config, content.stats, refs);
+  story.append(buildBand(content.config));
+  const stats = buildStats(content.config, content.stats);
   if (stats) story.append(stats);
   const features = buildFeatures(content.features);
   if (features) story.append(features);
   block.append(story);
 
-  initCounters(refs, reduceMotion);
-  initParallax(block, refs, reduceMotion);
-  initSpotlight(block);
   initReveals(block);
 }
