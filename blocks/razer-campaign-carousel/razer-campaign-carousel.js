@@ -25,7 +25,7 @@ const DEFAULTS = {
       title: 'Razer Basilisk V3 Pro 35K',
       copy: 'The apex of immersion and customization.',
       learn: { href: '/gaming-mice/razer-basilisk-v3-pro-35k', label: 'Learn more' },
-      buy: { href: '/gaming-mice/razer-basilisk-v3-pro-35k/RZ01-05240100-R3U1', label: 'Buy now' },
+      buy: { href: '/gaming-mice/razer-basilisk-v3-pro-35k/rz01-05240100-r3u1', label: 'Buy now' },
       image: { src: '/images/basilisk-family.webp', alt: 'Razer Basilisk V3 Pro 35K gaming mouse' },
     },
     {

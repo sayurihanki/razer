@@ -33,8 +33,8 @@ product	product-04	true	/images/razer-mice/products/deathadder-v3-hyperspeed.web
 product-detail	product-04	Ultra-lightweight wireless ergonomic esports mouse	Wireless | Palm / Claw	Check current availability				https://www.razer.com/gaming-mice/razer-deathadder-v3-hyperspeed#buy
 product	product-05	true	/images/razer-mice/products/basilisk-mobile.webp	Razer Basilisk Mobile	Basilisk	Portable	Wireless	Mobile	US$89.99	89.99	https://www.razer.com/gaming-mice/razer-basilisk-mobile
 product-detail	product-05	Portable ergonomic wireless gaming mouse	Wireless | Ergonomic	Check current availability				https://www.razer.com/gaming-mice/razer-basilisk-mobile#buy
-product	product-06	true	/images/razer-mice/products/basilisk-v3-pro-35k.webp	Razer Basilisk V3 Pro 35K	Basilisk	Immersive	Multi-mode	Featured	US$159.99 · Black	159.99	/gaming-mice/razer-basilisk-v3-pro-35k/RZ01-05240100-R3U1
-product-detail	product-06	Fully customizable wireless ergonomic RGB gaming mouse	Multi-mode | Right-handed ergonomic | 112 g	Available in multiple finishes				/gaming-mice/razer-basilisk-v3-pro-35k/RZ01-05240100-R3U1#configure
+product	product-06	true	/images/razer-mice/products/basilisk-v3-pro-35k.webp	Razer Basilisk V3 Pro 35K	Basilisk	Immersive	Multi-mode	Featured	US$159.99 · Black	159.99	/gaming-mice/razer-basilisk-v3-pro-35k/rz01-05240100-r3u1
+product-detail	product-06	Fully customizable wireless ergonomic RGB gaming mouse	Multi-mode | Right-handed ergonomic | 112 g	Available in multiple finishes				/gaming-mice/razer-basilisk-v3-pro-35k/rz01-05240100-r3u1#configure
 product	product-07	true	/images/razer-mice/products/basilisk-v3-35k.webp	Razer Basilisk V3 35K	Basilisk	Immersive	Wired		US$79.99	79.99	https://www.razer.com/gaming-mice/razer-basilisk-v3-35k
 product-detail	product-07	Fully customizable ergonomic RGB gaming mouse	Wired | Right-handed ergonomic	Check current availability				https://www.razer.com/gaming-mice/razer-basilisk-v3-35k#buy
 product	product-08	true	/images/razer-mice/products/cobra-pro.webp	Razer Cobra Pro	Cobra	Immersive	Multi-mode	Chroma	US$129.99	129.99	https://www.razer.com/gaming-mice/razer-cobra-pro

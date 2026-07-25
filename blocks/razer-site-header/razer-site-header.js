@@ -129,7 +129,7 @@ export const DEFAULT_MEGA_LINKS = [
     columnKey: 'categories', key: 'link-04', label: 'Keyboards', href: 'https://www.razer.com/pc/gaming-keyboards-and-keypads', feature: false,
   },
   {
-    columnKey: 'featured', key: 'link-01', label: 'Razer Basilisk V3 Pro 35K', href: '/gaming-mice/razer-basilisk-v3-pro-35k/RZ01-05240100-R3U1', feature: false,
+    columnKey: 'featured', key: 'link-01', label: 'Razer Basilisk V3 Pro 35K', href: '/gaming-mice/razer-basilisk-v3-pro-35k/rz01-05240100-r3u1', feature: false,
   },
   {
     columnKey: 'featured', key: 'link-02', label: 'Razer Viper V3 Pro', href: 'https://www.razer.com/gaming-mice/Razer-Viper-V3-Pro/RZ01-05120100-R3U1', feature: false,
@@ -186,7 +186,7 @@ export const DEFAULT_SEARCH_INDEX = [
     key: 'search-01', label: 'Gaming mice', href: '/pc/gaming-mice', terms: 'mouse mice basilisk viper cobra naga deathadder',
   },
   {
-    key: 'search-02', label: 'Razer Basilisk V3 Pro 35K', href: '/gaming-mice/razer-basilisk-v3-pro-35k/RZ01-05240100-R3U1', terms: 'basilisk ergonomic wireless 35k',
+    key: 'search-02', label: 'Razer Basilisk V3 Pro 35K', href: '/gaming-mice/razer-basilisk-v3-pro-35k/rz01-05240100-r3u1', terms: 'basilisk ergonomic wireless 35k',
   },
   {
     key: 'search-03', label: 'Find your gear', href: '/gear-finder', terms: 'quiz configurator compare guide finder',

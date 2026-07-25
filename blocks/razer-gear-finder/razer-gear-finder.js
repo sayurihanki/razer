@@ -76,7 +76,7 @@ const DEFAULTS = {
       family: 'Basilisk',
       name: 'Razer Basilisk V3 Pro 35K',
       copy: 'Ergonomic, multi-mode control with deep customization and Chroma RGB.',
-      href: '/gaming-mice/razer-basilisk-v3-pro-35k/RZ01-05240100-R3U1',
+      href: '/gaming-mice/razer-basilisk-v3-pro-35k/rz01-05240100-r3u1',
     },
     naga: {
       family: 'Naga',

@@ -20,7 +20,7 @@ mega-link	categories	link-01	Laptops & Accessories	https://www.razer.com/gaming-
 mega-link	categories	link-02	Mice	/pc/gaming-mice	false
 mega-link	categories	link-03	Mats	https://www.razer.com/pc/gaming-mouse-mats	false
 mega-link	categories	link-04	Keyboards	https://www.razer.com/pc/gaming-keyboards-and-keypads	false
-mega-link	featured	link-01	Razer Basilisk V3 Pro 35K	/gaming-mice/razer-basilisk-v3-pro-35k/RZ01-05240100-R3U1	false
+mega-link	featured	link-01	Razer Basilisk V3 Pro 35K	/gaming-mice/razer-basilisk-v3-pro-35k/rz01-05240100-r3u1	false
 mega-link	featured	link-02	Razer Viper V3 Pro	https://www.razer.com/gaming-mice/Razer-Viper-V3-Pro/RZ01-05120100-R3U1	false
 mega-link	featured	link-03	Razer Blade 18	https://www.razer.com/gaming-laptops/razer-blade-18	false
 mega-link	more	link-01	RazerStores	https://www.razer.com/razerstores	false
@@ -51,6 +51,6 @@ mobile-link	mobile-09	Support	https://support.razer.com/
 panel-cta	Find your gear	/gear-finder
 cart-cta	Browse gaming mice	/pc/gaming-mice
 search-popular	search-01	Gaming mice	/pc/gaming-mice	mouse mice basilisk viper cobra naga deathadder
-search-popular	search-02	Razer Basilisk V3 Pro 35K	/gaming-mice/razer-basilisk-v3-pro-35k/RZ01-05240100-R3U1	basilisk ergonomic wireless 35k
+search-popular	search-02	Razer Basilisk V3 Pro 35K	/gaming-mice/razer-basilisk-v3-pro-35k/rz01-05240100-r3u1	basilisk ergonomic wireless 35k
 search-popular	search-03	Find your gear	/gear-finder	quiz configurator compare guide finder
 search-popular	search-04	Razer Blade laptops	https://www.razer.com/gaming-laptops	blade laptop pc

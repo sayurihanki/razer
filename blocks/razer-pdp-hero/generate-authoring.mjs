@@ -4,7 +4,7 @@
  * razer-pdp-specs, razer-pdp-related) from the blocks' own baked-in
  * presets, so the pasteable tables and the runtime defaults can never
  * disagree. Also emits the full-page handoff for
- * /gaming-mice/razer-basilisk-v3-pro-35k/RZ01-05240100-R3U1 at the
+ * /gaming-mice/razer-basilisk-v3-pro-35k/rz01-05240100-r3u1 at the
  * repo root (razer-basilisk-pdp-da-live.html), which authors the page
  * as empty block tables (defaults render the complete experience)
  * plus the promo-bar override and the Metadata table.
@@ -27,7 +27,7 @@ const here = path.dirname(fileURLToPath(import.meta.url));
 const blocksRoot = path.dirname(here);
 const repoRoot = path.dirname(blocksRoot);
 
-const PAGE_PATH = '/gaming-mice/razer-basilisk-v3-pro-35k/RZ01-05240100-R3U1';
+const PAGE_PATH = '/gaming-mice/razer-basilisk-v3-pro-35k/rz01-05240100-r3u1';
 
 const escapeHtml = (value) => String(value)
   .replaceAll('&', '&amp;')
