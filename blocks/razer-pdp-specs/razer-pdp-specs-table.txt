@@ -1,0 +1,20 @@
+razer-pdp-specs
+setting	eyebrow	Verified performance information
+setting	heading	Technical specifications.
+setting	body	Core specifications are sourced from Razer’s product and support documentation for model RZ01-0524.
+setting	platform-title	PC · Razer Synapse 4
+setting	support-href	https://mysupport.razer.com/app/answers/detail/a_id/14675/
+tag	tag-01	HyperSpeed 2.4 GHz
+tag	tag-02	Bluetooth
+tag	tag-03	Wired USB
+tag	tag-04	Chroma RGB
+spec	spec-01	Sensor	Razer Focus Pro 35K Optical Sensor Gen-2
+spec	spec-02	Sensitivity	35,000 DPI
+spec	spec-03	Acceleration	70 G
+spec	spec-04	Connectivity	Razer HyperSpeed Wireless · Bluetooth · Wired
+spec	spec-05	Programmable buttons	11
+spec	spec-06	Profiles	On-board memory · 5 profiles
+spec	spec-07	Switches	Razer Optical Mouse Switches Gen-3 · rated for 90 million clicks
+spec	spec-08	Weight	112 g / 3.95 oz · excluding dongle and cable
+spec	spec-09	Dimensions	130 × 75.4 × 42.5 mm
+spec	spec-10	Software	Razer Synapse 4-enabled

@@ -2918,6 +2918,54 @@
           }
         },
         {
+          "title": "Razer PDP Hero",
+          "id": "razer-pdp-hero",
+          "model": "razer-pdp-hero",
+          "plugins": {
+            "da": {
+              "name": "razer-pdp-hero",
+              "rows": 1,
+              "columns": 6
+            }
+          }
+        },
+        {
+          "title": "Razer PDP Related",
+          "id": "razer-pdp-related",
+          "model": "razer-pdp-related",
+          "plugins": {
+            "da": {
+              "name": "razer-pdp-related",
+              "rows": 1,
+              "columns": 8
+            }
+          }
+        },
+        {
+          "title": "Razer PDP Specs",
+          "id": "razer-pdp-specs",
+          "model": "razer-pdp-specs",
+          "plugins": {
+            "da": {
+              "name": "razer-pdp-specs",
+              "rows": 1,
+              "columns": 4
+            }
+          }
+        },
+        {
+          "title": "Razer PDP Story",
+          "id": "razer-pdp-story",
+          "model": "razer-pdp-story",
+          "plugins": {
+            "da": {
+              "name": "razer-pdp-story",
+              "rows": 1,
+              "columns": 7
+            }
+          }
+        },
+        {
           "title": "Razer PLP Hero",
           "id": "razer-plp-hero",
           "model": "razer-plp-hero",
