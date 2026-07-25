@@ -870,7 +870,13 @@ export default function decorate(block) {
 
   /* Fixed-header spacer, measured so authored changes stay in sync */
   const syncSpacer = () => {
-    spacer.style.height = `${header.getBoundingClientRect().height}px`;
+    const { height } = header.getBoundingClientRect();
+    // Zero means the block's section is still display: none (decorate runs
+    // before the section is revealed). Writing it would override the CSS
+    // placeholder height and the late ResizeObserver correction shifts the
+    // whole page (CLS); keep the placeholder until a real measurement.
+    if (!height) return;
+    spacer.style.height = `${height}px`;
   };
   syncSpacer();
   window.addEventListener('resize', syncSpacer);
