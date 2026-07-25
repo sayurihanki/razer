@@ -281,6 +281,24 @@ main > .section.appear > div > .razer-site-header-wrapper {
   right: 0;
 }
 
+/*
+ * Placeholder for the JS-measured spacer height (default chrome:
+ * global nav + category nav). Decoration happens while the section is
+ * still hidden, so without this the page below the fixed header first
+ * paints 119/125px too high and shifts down once the ResizeObserver
+ * fires -- the dominant CLS on chrome pages. The measured inline height
+ * overrides this as soon as the header is visible.
+ */
+.razer-site-header .site-header-spacer {
+  height: 119px;
+}
+
+@media (min-width: 681px) {
+  .razer-site-header .site-header-spacer {
+    height: 125px;
+  }
+}
+
 .razer-site-header .global-nav {
   align-items: center;
   gap: 28px;

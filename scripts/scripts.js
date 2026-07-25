@@ -183,6 +183,46 @@ function loadRazerChromaStyles(doc) {
 }
 
 /**
+ * True when the page authors its own site chrome (razer-site-header) and
+ * therefore never renders the boilerplate nav.
+ *
+ * @param {Document} doc The container document
+ * @returns {boolean}
+ */
+export function pageUsesOwnChrome(doc = document) {
+  return !!doc.querySelector('main .razer-site-header');
+}
+
+/**
+ * Collapses the boilerplate <header> on pages that don't use the boilerplate
+ * nav, in the eager phase so the reserved --nav-height space never paints as
+ * an empty band above the first section (and never jumps away later).
+ *
+ * Two signals, both known before first paint:
+ * - the page authors the razer site chrome: it brings its own fixed header,
+ *   and whatever /nav holds (a leftover commerce nav, or a 404) must not
+ *   surface next to it;
+ * - the header block observed a missing nav fragment earlier this session
+ *   (sessionStorage echo, same pattern as fonts-loaded): the first such page
+ *   can only collapse once its fetch 404s, but every following page hides
+ *   the header up front. The header block un-hides it if the nav comes back.
+ *
+ * @param {Element} doc The container element
+ */
+function collapseBoilerplateHeader(doc) {
+  let collapse = pageUsesOwnChrome(doc);
+  if (!collapse) {
+    try {
+      collapse = !!sessionStorage.getItem('nav-missing');
+    } catch (e) {
+      // do nothing
+    }
+  }
+  if (!collapse) return;
+  doc.querySelector('body > header')?.classList.add('nav-missing');
+}
+
+/**
  * Loads everything needed to get to LCP.
  * @param {Element} doc The container element
  */
@@ -196,6 +236,7 @@ async function loadEager(doc) {
       await initializeCommerce();
       decorateMain(main);
       loadRazerChromaStyles(doc);
+      collapseBoilerplateHeader(doc);
       applyTemplates(doc);
       await loadCommerceEager();
     } catch (e) {
