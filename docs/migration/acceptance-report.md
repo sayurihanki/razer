@@ -84,17 +84,31 @@ migration's scope.
   was written to match the existing `cypress/` convention and takes effect on
   `.aem.live` / `.aem.page`.
 
-## Known gaps carried forward
+## Known gaps
 
-1. **B2B runtime regression is unverified** (test 9) — highest-priority follow-up.
+### Still open
+
+1. **B2B runtime regression is unverified** (test 9) — highest-priority follow-up, and
+   blocked until razer has authored content.
 2. **`search-bar` runs unpersonalized by customer group.** The customer-group *writer*
    chain was deliberately not ported; `getSearchContext()` resolves to the guest group
-   `MA==`.
-3. **`accordion.full-details` renders an unstyled table.** The JS was ported, the
-   glassmorphic CSS deliberately was not.
-4. **`razer-minipage` fetches Google Fonts at runtime** while its sibling
-   `razer-minipage-block4` ships the identical families and weights locally. Removable.
-5. **22 tokens remain undefined** for some imported blocks — undefined in the source
+   `MA==`. Adopting it needs validation against razer's B2B pricing.
+3. **22 tokens remain undefined** for some imported blocks — undefined in the source
    repo too, so pre-existing upstream debt. No values were invented.
-6. **Three razer blocks** (`accordion`, `carousel`, `commerce-account-nav`) reference
-   undefined tokens on `main`. Pre-existing, untouched.
+4. **Two razer blocks** (`carousel`, `commerce-account-nav`) reference undefined tokens
+   on `main`. Pre-existing, untouched.
+
+### Closed after the report was first written
+
+- **`accordion.full-details` unstyled table** — now styled with razer's
+  `--color-neutral-*` and shape tokens, scoped under `.accordion.full-details` so
+  default accordions are unaffected. Verified in-browser at 1280 px (40% label column,
+  `table-cell`, 1px separators) and 375 px (stacked, separators between pairs only).
+- **`razer-minipage` Google Fonts request** — Rajdhani and Titillium Web are now
+  self-hosted in the block. Verified in-browser: zero `googleapis`/`gstatic` requests,
+  all seven local woff2 fetched, all seven `@font-face` entries `loaded`. This removed
+  the last third-party request any imported block made.
+- **`header.js:182` / `footer.js:169` uncaught TypeErrors** — both blocks now guard the
+  null fragment and warn instead of throwing. The configurator demo went from four
+  uncaught `TypeError`s to **zero console errors**. razer's own pre-existing bug, fixed
+  because the empty content mount makes it fire on every page.
