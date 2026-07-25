@@ -8,6 +8,7 @@ import {
   readdirSync,
   rmSync,
   statSync,
+  utimesSync,
   writeFileSync,
 } from 'node:fs';
 import { createHash } from 'node:crypto';
@@ -20,6 +21,33 @@ const repoRoot = resolve(scriptDir, '..');
 const outputDir = join(repoRoot, 'ui-ux-portability-package');
 const archivePath = join(repoRoot, 'ui-ux-portability-package.tar.gz');
 const checksumPath = join(repoRoot, 'ui-ux-portability-package.sha256');
+
+/**
+ * A stable build timestamp, so two runs over an unchanged tree produce an
+ * identical package. Using `new Date()` made every run emit a different
+ * archive and checksum, which defeats the point of publishing a checksum.
+ *
+ * Resolution order: SOURCE_DATE_EPOCH (the reproducible-builds convention),
+ * then the HEAD commit date, then the current time as a last resort.
+ */
+function resolveBuildTimestamp() {
+  const epoch = process.env.SOURCE_DATE_EPOCH;
+  if (epoch && /^\d+$/.test(epoch)) {
+    return new Date(Number(epoch) * 1000).toISOString();
+  }
+  try {
+    return new Date(
+      execFileSync('git', ['log', '-1', '--format=%cI'], {
+        cwd: repoRoot,
+        encoding: 'utf-8',
+      }).trim(),
+    ).toISOString();
+  } catch {
+    return new Date().toISOString();
+  }
+}
+
+const buildTimestamp = resolveBuildTimestamp();
 
 const sourcePackageJson = JSON.parse(
   readFileSync(join(repoRoot, 'package.json'), 'utf-8'),
@@ -226,7 +254,7 @@ function buildBlockInventory() {
   });
 
   return {
-    generatedAt: new Date().toISOString(),
+    generatedAt: buildTimestamp,
     summary: {
       totalBlocks: blocks.length,
       withStyles: blocks.filter((block) => block.hasStyles).length,
@@ -309,7 +337,7 @@ function buildDesignTokenManifest() {
   });
 
   return {
-    generatedAt: new Date().toISOString(),
+    generatedAt: buildTimestamp,
     summary: {
       totalTokens: tokens.length,
       definedTokens: tokens.filter((token) => token.status === 'defined').length,
@@ -422,7 +450,7 @@ function buildDependencyManifest() {
     .sort((a, b) => a.package.localeCompare(b.package));
 
   return {
-    generatedAt: new Date().toISOString(),
+    generatedAt: buildTimestamp,
     summary: {
       totalPackages: packages.length,
       undeclaredPackages: packages.filter((pkg) => pkg.source === 'undeclared').map((pkg) => pkg.package),
@@ -452,7 +480,7 @@ function buildSectionConventionManifest() {
   };
 
   return {
-    generatedAt: new Date().toISOString(),
+    generatedAt: buildTimestamp,
     sectionStyleVariants: collectUnique(sectionVariantRegex, stylesContent),
     sectionDataPaddingValues: collectUnique(paddingRegex, stylesContent),
     sectionDataMarginValues: collectUnique(marginRegex, stylesContent),
@@ -468,7 +496,7 @@ function buildAssetManifest() {
   const iconFiles = walkFiles(join(repoRoot, 'icons'));
 
   return {
-    generatedAt: new Date().toISOString(),
+    generatedAt: buildTimestamp,
     fonts: {
       count: fontFiles.length,
       files: fontFiles.map((file) => relFromRepo(file)),
@@ -489,7 +517,7 @@ function writePackageFiles(manifests) {
   const portabilityPackageJson = {
     name: '@jenhanki/ui-ux-portability-package',
     version: '1.0.0',
-    description: 'Portable UI/UX package extracted from jenhankib2bbodea',
+    description: 'Portable UI/UX package extracted from razer',
     type: 'module',
     sideEffects: ['**/*.css'],
     files: [
@@ -569,7 +597,7 @@ function writeDocs(manifests) {
 
   const readme = `# UI/UX Portability Package
 
-This package is a portable extraction of the site UI/UX layer from \`jenhankib2bbodea\`.
+This package is a portable extraction of the site UI/UX layer from \`razer\`.
 
 ## What This Contains
 
@@ -927,7 +955,32 @@ main();
 }
 
 function createArchive() {
-  execFileSync('tar', ['-czf', archivePath, '-C', repoRoot, 'ui-ux-portability-package']);
+  // `tar -czf` alone is not reproducible: it records each file's mtime, and
+  // gzip stamps its own header with the current time, so two runs over an
+  // identical tree produced different archives and different checksums.
+  //
+  // Three things make it stable: normalize every entry's mtime to the build
+  // timestamp, feed tar an explicitly sorted file list rather than relying on
+  // directory traversal order, and pass -n to gzip so it omits its timestamp.
+  const epochSeconds = Math.floor(new Date(buildTimestamp).getTime() / 1000);
+
+  const entries = walkFiles(outputDir).sort((a, b) => a.localeCompare(b));
+  entries.forEach((absFile) => utimesSync(absFile, epochSeconds, epochSeconds));
+
+  const listPath = join(repoRoot, '.ui-ux-package-filelist');
+  writeFileSync(listPath, `${entries.map(relFromRepo).join('\n')}\n`, 'utf-8');
+
+  const shellQuote = (value) => `'${value.split("'").join("'\\''")}'`;
+  try {
+    execFileSync('sh', [
+      '-c',
+      `tar -cf - -C ${shellQuote(repoRoot)} -T ${shellQuote(listPath)} `
+      + `| gzip -n > ${shellQuote(archivePath)}`,
+    ]);
+  } finally {
+    rmSync(listPath, { force: true });
+  }
+
   const archiveBuffer = readFileSync(archivePath);
   const checksum = createHash('sha256').update(archiveBuffer).digest('hex');
   writeFileSync(checksumPath, `${checksum}  ui-ux-portability-package.tar.gz\n`, 'utf-8');

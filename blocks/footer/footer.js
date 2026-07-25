@@ -34,6 +34,15 @@ export default async function decorate(block) {
   const footerPath = footerMeta ? new URL(footerMeta, window.location).pathname : '/footer';
   const fragment = await loadFragment(footerPath);
 
+  // loadFragment resolves to null when the footer document is missing (a 404 on
+  // <footerPath>.plain.html). Without this guard the block throws on
+  // fragment.firstElementChild and the whole footer fails to decorate.
+  if (!fragment) {
+    // eslint-disable-next-line no-console
+    console.warn(`footer: no footer fragment at ${footerPath}; skipping footer decoration`);
+    return;
+  }
+
   // decorate footer DOM
   block.textContent = '';
   const footer = document.createElement('div');

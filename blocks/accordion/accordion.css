@@ -59,3 +59,57 @@
     border-top: 1px solid #dadada;
     background-color: var(--background-color);
 }
+
+/*
+ * Full-details variant.
+ *
+ * The `full-details` class makes accordion.js parse "Label: value" lines in an
+ * item body into a two-column table (see parseFullDetailsRows). These rules
+ * give that table a presentation in razer's own design language.
+ *
+ * The source repository styled this variant with its glassmorphic system,
+ * which the migration deliberately did not import -- adopting it would have
+ * restyled every existing razer accordion. These rules use razer's neutral and
+ * shape tokens instead, and apply only under `.accordion.full-details`, so
+ * default accordions are untouched.
+ */
+.accordion.full-details .accordion-item-body table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0;
+}
+
+.accordion.full-details .accordion-item-body td:first-child {
+    width: 40%;
+    padding: 10px 12px 10px 0;
+    border-bottom: 1px solid var(--color-neutral-300);
+    color: var(--color-neutral-700);
+    vertical-align: top;
+}
+
+.accordion.full-details .accordion-item-body td:last-child {
+    padding: 10px 0 10px 12px;
+    border-bottom: 1px solid var(--color-neutral-300);
+    color: var(--color-neutral-900);
+    font-weight: 600;
+    vertical-align: top;
+}
+
+.accordion.full-details .accordion-item-body tr:last-child td {
+    border-bottom: 0;
+}
+
+@media (max-width: 600px) {
+    .accordion.full-details .accordion-item-body td:first-child {
+        display: block;
+        width: 100%;
+        padding: 10px 0 0;
+        border-bottom: 0;
+    }
+
+    .accordion.full-details .accordion-item-body td:last-child {
+        display: block;
+        width: 100%;
+        padding: 2px 0 10px;
+    }
+}

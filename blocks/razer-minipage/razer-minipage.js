@@ -1,7 +1,6 @@
 import CONTENT from './razer-minipage-content.js';
 
 const DEFAULT_PRODUCT_URL = CONTENT.product.url;
-const FONT_STYLESHEET = 'https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Titillium+Web:wght@300;400;600;700&display=swap';
 const TRUTHY_VALUES = new Set(['1', 'on', 'true', 'yes']);
 const FALSY_VALUES = new Set(['0', 'off', 'false', 'no']);
 const SAFE_LENGTH = /^(?:0|(?:\d+(?:\.\d+)?)(?:px|em|rem|vh)|var\(--[\w-]+(?:,\s*[^)]+)?\)|calc\([^;{}]+\))$/;
@@ -78,30 +77,27 @@ export function readConfig(block) {
   };
 }
 
-function loadFonts() {
+/*
+ * Preconnects to the Razer image CDNs this block pulls product photography
+ * from. Fonts are no longer fetched here: Rajdhani and Titillium Web are
+ * self-hosted alongside the block and declared in razer-minipage.css, so this
+ * block makes no third-party font request.
+ */
+function preconnectImageHosts() {
   if (document.head.querySelector('[data-razer-minipage-fonts]')) return;
 
   [
-    ['preconnect', 'https://fonts.googleapis.com'],
-    ['preconnect', 'https://fonts.gstatic.com'],
-    ['preconnect', 'https://assets2.razerzone.com'],
-    ['preconnect', 'https://assets3.razerzone.com'],
-    ['preconnect', 'https://medias-p1.phoenix.razer.com'],
-  ].forEach(([rel, href]) => {
-    if (document.head.querySelector(`link[rel="${rel}"][href="${href}"]`)) return;
+    'https://assets2.razerzone.com',
+    'https://assets3.razerzone.com',
+    'https://medias-p1.phoenix.razer.com',
+  ].forEach((href) => {
+    if (document.head.querySelector(`link[rel="preconnect"][href="${href}"]`)) return;
     const link = document.createElement('link');
-    link.rel = rel;
+    link.rel = 'preconnect';
     link.href = href;
-    if (href === 'https://fonts.gstatic.com') link.crossOrigin = '';
     link.dataset.razerMinipageFonts = '';
     document.head.append(link);
   });
-
-  const stylesheet = document.createElement('link');
-  stylesheet.rel = 'stylesheet';
-  stylesheet.href = FONT_STYLESHEET;
-  stylesheet.dataset.razerMinipageFonts = '';
-  document.head.append(stylesheet);
 }
 
 function renderImage(image, options = {}) {
@@ -867,7 +863,7 @@ export function decorateRazerExperience(block, {
   block.classList.add('razer-minipage');
   block.classList.toggle('rm-auto-sticky-offset', runtimeConfig.automaticStickyOffset);
   block.style.setProperty('--rm-sticky-offset', runtimeConfig.stickyOffset);
-  loadFonts();
+  preconnectImageHosts();
 
   const ids = createIds(instancePrefix);
   block.innerHTML = renderExperience(runtimeConfig, ids, content);

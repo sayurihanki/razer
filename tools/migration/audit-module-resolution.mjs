@@ -27,7 +27,9 @@
 import { readFileSync, existsSync, readdirSync, statSync } from 'node:fs';
 import { join, dirname, normalize, extname } from 'node:path';
 
-const ROOTS = ['blocks', 'scripts'];
+// tests/ is included deliberately: the imported accordion test failed on a
+// missing named export that blocks/ and scripts/ scanning alone did not reach.
+const ROOTS = ['blocks', 'scripts', 'tests', 'tools'];
 const DROPINS_ROOT = 'scripts/__dropins__';
 const SKIP_DIRS = new Set(['__dropins__', 'node_modules']);
 
@@ -88,8 +90,12 @@ const exportCache = new Map();
 for (const file of ROOTS.flatMap((r) => walk(r))) {
   const src = readFileSync(file, 'utf8');
 
-  // relative imports must resolve to a real file
-  for (const m of src.matchAll(/(?:from|import)\s*\(?\s*['"](\.[^'"]+)['"]/g)) {
+  // Relative imports must resolve to a real file.
+  // The lookbehind keeps CSS `@import` rules and quoted import strings out of
+  // the results: tools/build-ui-ux-portability-package.mjs emits stylesheet
+  // templates containing `@import './styles.css'`, which are generator output,
+  // not module imports of this file.
+  for (const m of src.matchAll(/(?<![@'"\w])(?:from|import)\s*\(?\s*['"](\.[^'"]+)['"]/g)) {
     relChecked += 1;
     const target = normalize(join(dirname(file), m[1]));
     if (!existsSync(target)) {

@@ -175,6 +175,15 @@ export default async function decorate(block) {
   const navPath = navMeta ? new URL(navMeta, window.location).pathname : '/nav';
   const fragment = await loadFragment(navPath);
 
+  // loadFragment resolves to null when the nav document is missing (a 404 on
+  // <navPath>.plain.html). Without this guard the block throws on
+  // fragment.firstElementChild and the whole header fails to decorate.
+  if (!fragment) {
+    // eslint-disable-next-line no-console
+    console.warn(`header: no nav fragment at ${navPath}; skipping nav decoration`);
+    return;
+  }
+
   // decorate nav DOM
   block.textContent = '';
   const nav = document.createElement('nav');
@@ -351,7 +360,7 @@ export default async function decorate(block) {
     <button type="button" class="nav-search-button">Search</button>
     <div class="nav-search-input nav-search-panel nav-tools-panel">
       <form id="search-bar-form"></form>
-      <div class="search-bar-result" style="display: none;"></div>
+      <div class="search-bar-result" style="display: none;" aria-hidden="true"></div>
     </div>
   </div>
   `);
@@ -389,7 +398,11 @@ export default async function decorate(block) {
           scope: 'popover',
           routeProduct: ({ urlKey, sku }) => getProductLink(urlKey, sku),
           onSearchResult: (results) => {
-            searchResult.style.display = results.length > 0 ? 'block' : 'none';
+            const hasResults = results.length > 0;
+            searchResult.style.display = hasResults ? 'block' : 'none';
+            // Keep the accessible state in step with the visual one, so screen
+            // readers are not offered an empty results container.
+            searchResult.setAttribute('aria-hidden', hasResults ? 'false' : 'true');
           },
           slots: {
             ProductImage: (ctx) => {

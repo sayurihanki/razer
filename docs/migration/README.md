@@ -196,8 +196,8 @@ Deferred as a standalone improvement.
   cannot be byte-pinned; validate them by **ID preservation** instead. Verified after the
   import: `+5 / +87 / +16` entries, **0 lost**. `preserved-paths.sha256` still lists these
   three — treat those three lines as informational, not as a breach.
-- `.eslintignore` differs: source has `*.min.js`, razer does not. Pending in the root-config
-  wave.
+- `.eslintignore` differs by one line, and in razer's favour: **razer** has `*.min.js`, the
+  source does not. Nothing to port.
 - `scripts/aem.js` is marked **NEVER MODIFY** in `AGENTS.md`. It is shared-different; any
   source behavior it carries must be reached another way.
 
