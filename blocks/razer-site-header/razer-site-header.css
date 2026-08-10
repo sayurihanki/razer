@@ -1135,13 +1135,11 @@ main > .section.appear > div > .razer-site-header-wrapper {
 
 /*
  * Catalog placeholders are a pale logo on white: left alone they read as
- * a lit panel where the product shot should be. Sunk into the tile they
- * read as "no shot yet".
+ * a lit panel where the product shot should be. Dropping the bitmap
+ * leaves the lit tile, which reads as "no shot yet" rather than broken.
  */
 .razer-site-header .cart-panel .dropin-cart-item__image img[src*="placeholder"] {
-  opacity: 0.3;
-  filter: grayscale(100%) invert(100%);
-  padding: 22px;
+  opacity: 0;
 }
 
 .razer-site-header .cart-panel .cart-item-edit-container {
@@ -1237,11 +1235,16 @@ main > .section.appear > div > .razer-site-header-wrapper {
   font-weight: 400;
 }
 
+/* Unit price and line total share the last row, on one baseline. */
 .razer-site-header .cart-panel .dropin-cart-item__price,
 .razer-site-header .cart-panel .dropin-cart-item__total {
   grid-row: 14;
-  align-self: end;
+  align-self: baseline;
   margin-top: 12px;
+}
+
+.razer-site-header .cart-panel .dropin-cart-item__row-total-footer:empty {
+  display: none;
 }
 
 .razer-site-header .cart-panel .dropin-cart-item__price {

@@ -37,6 +37,15 @@ test('formatCount treats missing or nonsense counts as an empty cart', () => {
   assert.equal(formatCount('', 5), '');
 });
 
+test('the header ships an account entry point', () => {
+  // buildRazerChrome (scripts.js) puts this header on the commerce pages
+  // in place of the boilerplate nav, which was the only route to sign-in
+  // and the account pages. Both halves have to be present for the icon to
+  // render, so a default that loses either one strands those pages.
+  assert.equal(DEFAULT_SETTINGS['account-button-label'], 'Account');
+  assert.equal(DEFAULT_SETTINGS['account-href'], '/customer/account');
+});
+
 test('the cart labels ship as templates, not frozen zero-counts', () => {
   assert.match(DEFAULT_SETTINGS['cart-button-label'], /\{count\}/);
   assert.match(DEFAULT_SETTINGS['cart-heading'], /\{count\}/);

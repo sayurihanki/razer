@@ -9,6 +9,14 @@ backdrop, the mobile navigation panel, the light-themed cart panel, and
 the live-search dialog. All content is baked in, so a table containing
 only the block name renders the exact source header.
 
+This is the site-wide header. Authored pages place the block themselves;
+every other page — the storefront pages inherited from the boilerplate
+(cart, checkout, the customer account pages, order status) and anything
+authored without it — has it built in by `buildRazerChrome` in
+`scripts/scripts.js`, which also collapses the boilerplate `<header>`
+and `<footer>`. A page opts out with `chrome: none` in its metadata and
+gets the boilerplate nav back.
+
 The cart panel is wired to Adobe Commerce: the icon shows a live item
 count and the panel mounts the real `/mini-cart` dropin. See "Live
 cart" under Behavior.
@@ -31,7 +39,8 @@ cart" under Behavior.
 
 Setting keys: `content-mode`, `logo`, `logo-alt`, `home-href`,
 `home-label`, `skip-label`, `skip-href`, `nav-aria-label`,
-`category-aria-label`, `search-button-label`, `cart-button-label`,
+`category-aria-label`, `search-button-label`, `account-button-label`,
+`account-href`, `cart-button-label`,
 `menu-button-label`, `menu-heading`, `menu-close-label`,
 `mobile-aria-label`, `cart-heading`, `cart-close-label`,
 `cart-aria-label`, `cart-empty-title`, `cart-empty-body`,
@@ -61,6 +70,12 @@ Copy-paste artifacts (regenerate with
 - Store toggles the mega menu; the search/cart/menu icon buttons open
   their panels; backdrop click and Escape close everything; only one
   panel is open at a time.
+- **Account:** the one icon in the row that navigates rather than
+  opening a panel — a plain link to `account-href`. Because this header
+  replaced the boilerplate nav site-wide it is the only route to
+  sign-in, and the commerce account pages redirect a signed-out visitor
+  to the login form, so a single link covers both states. Clearing
+  `account-button-label` or `account-href` removes it.
 - **Live cart:** the cart icon carries a badge driven by the dropin
   `cart/data` event, and `cart-button-label` / `cart-heading` are
   templates — `{count}` is substituted, with `-one` variants for the
