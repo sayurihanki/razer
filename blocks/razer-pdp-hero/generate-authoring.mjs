@@ -86,14 +86,15 @@ hero.DEFAULT_IMAGES.forEach((image) => {
 hero.DEFAULT_KEYSPECS.forEach((spec) => {
   heroRows.push(['keyspec', spec.key, spec.text]);
 });
+// Column 6 carries the Commerce option-value UID that add-to-cart needs.
 hero.DEFAULT_FINISHES.forEach((finish) => {
-  heroRows.push(['finish', finish.key, finish.label, finish.delta ? String(finish.delta) : '', finish.swatch]);
+  heroRows.push(['finish', finish.key, finish.label, finish.delta ? String(finish.delta) : '', finish.swatch, finish.optionUid]);
 });
 hero.DEFAULT_MODELS.forEach((model) => {
-  heroRows.push(['model', model.key, model.label, model.note, model.delta ? String(model.delta) : '']);
+  heroRows.push(['model', model.key, model.label, model.note, model.delta ? String(model.delta) : '', model.optionUid]);
 });
 hero.DEFAULT_CARES.forEach((care) => {
-  heroRows.push(['care', care.key, care.label, care.note, care.delta ? String(care.delta) : '']);
+  heroRows.push(['care', care.key, care.label, care.note, care.delta ? String(care.delta) : '', care.optionUid]);
 });
 hero.DEFAULT_SERVICES.forEach((service) => {
   heroRows.push(['service', service.key, service.glyph, service.title, service.body]);
@@ -182,6 +183,10 @@ const pageTables = [
       ['title', 'Razer Basilisk V3 Pro 35K | Razer'],
       ['description', 'Explore the Razer Basilisk V3 Pro 35K, a fully customizable wireless ergonomic RGB gaming mouse with Focus Pro 35K sensor and HyperScroll Tilt Wheel.'],
       ['image', '/images/razer-mice/pdp/basilisk-top-chroma.webp'],
+      // detectPageType() only treats this page as a Product when the sku row is
+      // present, and initializers/pdp.js reads it via getProductSku(). Must
+      // match the Commerce parent SKU exactly, spaces and all.
+      ['sku', hero.DEFAULT_SETTINGS.sku],
     ],
     columns: 2,
   },

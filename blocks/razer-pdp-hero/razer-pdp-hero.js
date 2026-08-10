@@ -16,11 +16,14 @@
  * crumb:   crumb | key | label | href (empty href marks current page)
  * image:   image | key | src | alt | caption
  * keyspec: keyspec | key | text
- * finish:  finish | key | label | delta | swatch
+ * finish:  finish | key | label | delta | swatch | option-uid
  *          (swatch: black | white | phantom-green | phantom-white)
- * model:   model | key | label | note | delta
- * care:    care | key | label | note | delta
+ * model:   model | key | label | note | delta | option-uid
+ * care:    care | key | label | note | delta | option-uid
  * service: service | key | glyph | title | body
+ *
+ * `option-uid` is the Adobe Commerce option-value UID add-to-cart sends;
+ * see razer-pdp-hero.commerce.js.
  *
  * Motion honors `prefers-reduced-motion`: the crossfade and the price
  * tween both collapse to instant states.
@@ -35,8 +38,8 @@ export const DEFAULT_SETTINGS = {
   'breadcrumb-label': 'Breadcrumb',
   title: 'Razer Basilisk V3 Pro 35K',
   subtitle: 'Fully Customizable Wireless Ergonomic RGB Gaming Mouse',
-  'subtitle-link-label': 'Learn more >',
-  'subtitle-link-href': 'https://www.razer.com/gaming-mice/razer-basilisk-v3-pro-35k',
+  'subtitle-link-label': 'Full tech specs >',
+  'subtitle-link-href': '#tech-specs',
   'gallery-label': 'Product gallery and configuration',
   'prev-label': 'Previous product image',
   'next-label': 'Next product image',
@@ -46,6 +49,7 @@ export const DEFAULT_SETTINGS = {
   'config-eyebrow': 'Guided configuration',
   'config-title': 'Configure yours',
   'config-body': 'Choose a finish, model, and protection option. The price below reflects the selections shown; Razer.com confirms live availability and checkout.',
+  'config-body-live': 'Choose a finish, model, and protection option. Availability and pricing come straight from the store, and your configuration is priced in full at checkout.',
   'finish-legend': 'Color / Design',
   'model-legend': 'Model',
   'care-legend': 'Add RazerCare protection',
@@ -56,16 +60,38 @@ export const DEFAULT_SETTINGS = {
   'price-note': 'Before shipping and tax',
   'currency-prefix': 'US$',
   'base-price': '159.99',
+  // Offline fallback only. When the catalog answers, razer-pdp-hero.commerce.js
+  // swaps this anchor for a real Add to Cart button.
   'cta-label': 'Continue on Razer.com',
   'cta-href': 'https://www.razer.com/gaming-mice/razer-basilisk-v3-pro-35k/RZ01-05240100-R3U1',
   'availability-note': 'Live inventory, regional pricing, pickup, and purchasing are confirmed on Razer.com.',
   'services-label': 'RazerStore services',
+  // Commerce. `sku` is the configurable parent; a `sku` document metadata row
+  // overrides it. `catalog+deltas` adds the authored model and care deltas to
+  // the variant price, because Catalog Service cannot price custom options and
+  // the Admin does carry those surcharges — verified against the cart by
+  // `npm run verify:razer-pdp-contract`. Drop to `catalog` to show only what
+  // Catalog Service can prove.
+  sku: 'Razer Basilisk V3 Pro 35K',
+  'price-source': 'catalog+deltas',
+  'add-to-cart-label': 'Add to Cart',
+  'adding-label': 'Adding…',
+  'added-label': 'Added to cart',
+  'out-of-stock-label': 'Out of stock',
+  'unavailable-config-label': 'This configuration is not available online',
+  'cart-error-label': 'We could not add that to your cart. Please try again.',
+  'qty-label': 'Quantity',
+  'qty-decrease-label': 'Decrease quantity',
+  'qty-increase-label': 'Increase quantity',
+  'price-options-note': 'Option pricing is confirmed in your cart',
+  'in-stock-note': 'In stock. Taxes and shipping are calculated at checkout.',
+  'out-of-stock-note': 'This configuration is currently unavailable.',
 };
 
 export const DEFAULT_CRUMBS = [
   { key: 'crumb-01', label: 'Home', href: '/' },
   { key: 'crumb-02', label: 'Gaming Mice', href: '/pc/gaming-mice' },
-  { key: 'crumb-03', label: 'Basilisk V3 Pro 35K', href: 'https://www.razer.com/gaming-mice/razer-basilisk-v3-pro-35k' },
+  { key: 'crumb-03', label: 'Basilisk V3 Pro 35K', href: '/gaming-mice/razer-basilisk-v3-pro-35k/rz01-05240100-r3u1' },
   { key: 'crumb-04', label: 'Black', href: '' },
 ];
 
@@ -102,39 +128,86 @@ export const DEFAULT_KEYSPECS = [
   { key: 'keyspec-03', text: 'Up to 140 Hours on Razer™ HyperSpeed Wireless' },
 ];
 
+/*
+ * `optionUid` is the Adobe Commerce option-value UID that `selected_options`
+ * requires. Finishes decode to `configurable/199/*` (the color_design attribute
+ * values, each backing a child SKU); models and cares decode to
+ * `custom-option/27/*` and `custom-option/28/*`.
+ *
+ * The UID is authoritative rather than the label because labels are marketing
+ * copy that authors edit, and three of these nine already disagree with the
+ * catalog title (`Basilisk V3 Pro 35K` vs `Standard Razer Basilisk V3 Pro 35K`,
+ * the charging puck pair, and `No, thank you` vs `No, Thank You`).
+ */
 export const DEFAULT_FINISHES = [
   {
-    key: 'finish-01', label: 'Black', delta: 0, swatch: 'black',
+    key: 'finish-01',
+    label: 'Black',
+    delta: 0,
+    swatch: 'black',
+    optionUid: 'Y29uZmlndXJhYmxlLzE5OS85Mw==',
   },
   {
-    key: 'finish-02', label: 'White', delta: 0, swatch: 'white',
+    key: 'finish-02',
+    label: 'White',
+    delta: 0,
+    swatch: 'white',
+    optionUid: 'Y29uZmlndXJhYmxlLzE5OS85NA==',
   },
   {
-    key: 'finish-03', label: 'Phantom Green Edition', delta: 10, swatch: 'phantom-green',
+    key: 'finish-03',
+    label: 'Phantom Green Edition',
+    delta: 0,
+    swatch: 'phantom-green',
+    optionUid: 'Y29uZmlndXJhYmxlLzE5OS85NQ==',
   },
   {
-    key: 'finish-04', label: 'Phantom White Edition', delta: 10, swatch: 'phantom-white',
+    key: 'finish-04',
+    label: 'Phantom White Edition',
+    delta: 0,
+    swatch: 'phantom-white',
+    optionUid: 'Y29uZmlndXJhYmxlLzE5OS85Ng==',
   },
 ];
 
 export const DEFAULT_MODELS = [
   {
-    key: 'model-01', label: 'Basilisk V3 Pro 35K + Mouse Dock Pro', note: '', delta: 40,
+    key: 'model-01',
+    label: 'Basilisk V3 Pro 35K + Mouse Dock Pro',
+    note: '',
+    delta: 40,
+    optionUid: 'Y3VzdG9tLW9wdGlvbi8yNy8xOTg=',
   },
   {
-    key: 'model-02', label: 'Basilisk V3 Pro 35K + Wireless Charging Puck', note: '', delta: 20,
+    key: 'model-02',
+    label: 'Basilisk V3 Pro 35K + Wireless Charging Puck',
+    note: '',
+    delta: 20,
+    optionUid: 'Y3VzdG9tLW9wdGlvbi8yNy8xOTk=',
   },
   {
-    key: 'model-03', label: 'Basilisk V3 Pro 35K', note: 'Mouse only', delta: 0,
+    key: 'model-03',
+    label: 'Basilisk V3 Pro 35K',
+    note: 'Mouse only',
+    delta: 0,
+    optionUid: 'Y3VzdG9tLW9wdGlvbi8yNy8yMDA=',
   },
 ];
 
 export const DEFAULT_CARES = [
   {
-    key: 'care-01', label: 'RazerCare Elite for Mice', note: '', delta: 29.99,
+    key: 'care-01',
+    label: 'RazerCare Elite for Mice',
+    note: '',
+    delta: 29.99,
+    optionUid: 'Y3VzdG9tLW9wdGlvbi8yOC8yMDE=',
   },
   {
-    key: 'care-02', label: 'No, thank you', note: 'No added cost', delta: 0,
+    key: 'care-02',
+    label: 'No, thank you',
+    note: 'No added cost',
+    delta: 0,
+    optionUid: 'Y3VzdG9tLW9wdGlvbi8yOC8yMDI=',
   },
 ];
 
@@ -331,6 +404,7 @@ function mergeContent(parsed) {
       label: applyValue(cellText(cells[2]), preset ? preset.label : ''),
       delta: applyNumber(cellText(cells[3]), preset ? preset.delta : 0),
       swatch: applyValue(cellText(cells[4]).toLowerCase(), preset ? preset.swatch : 'black'),
+      optionUid: applyValue(cellText(cells[5]), preset ? preset.optionUid : ''),
     }),
   );
 
@@ -339,6 +413,7 @@ function mergeContent(parsed) {
     label: applyValue(cellText(cells[2]), preset ? preset.label : ''),
     note: applyValue(cellText(cells[3]), preset ? preset.note : ''),
     delta: applyNumber(cellText(cells[4]), preset ? preset.delta : 0),
+    optionUid: applyValue(cellText(cells[5]), preset ? preset.optionUid : ''),
   });
   const models = mergeKeyed(DEFAULT_MODELS, parsed.lists.model, replace, buildOption);
   const cares = mergeKeyed(DEFAULT_CARES, parsed.lists.care, replace, buildOption);
@@ -362,7 +437,7 @@ function mergeContent(parsed) {
 
 /* ── Render helpers ────────────────────────────────────────────── */
 
-function buildBreadcrumbs(content) {
+function buildBreadcrumbs(content, refs) {
   const nav = el('nav', 'pdp-breadcrumbs rzrm-shell');
   nav.setAttribute('aria-label', content.config['breadcrumb-label']);
   content.crumbs.forEach((crumb, index) => {
@@ -378,6 +453,8 @@ function buildBreadcrumbs(content) {
     } else {
       const here = el('span', 'crumb-current', [text(crumb.label)]);
       here.setAttribute('aria-current', 'page');
+      // The trailing crumb names the selected finish, so sync() keeps it honest.
+      refs.crumbCurrent = here;
       nav.append(here);
     }
   });
@@ -517,6 +594,7 @@ function buildConfigurator(content, refs) {
   }
   const note = heading.querySelector('p:not(.eyebrow)');
   if (note) note.classList.add('config-note');
+  refs.configNote = note;
   section.append(heading);
 
   const steps = [
@@ -557,6 +635,7 @@ function buildConfigurator(content, refs) {
         el('span', '', [text('↗')]),
       ]);
       help.href = content.config['care-help-href'];
+      if (/^https?:/i.test(help.href)) help.rel = 'noopener';
       fieldset.append(help);
     }
     const options = el('div', step.optionsClass);
@@ -572,30 +651,41 @@ function buildConfigurator(content, refs) {
     section.append(fieldset);
   });
 
+  // Deliberately not a live region: the price tween would re-announce the whole
+  // summary on every frame. A single status node carries the announcement.
   const summary = el('div', 'config-summary');
-  summary.setAttribute('aria-live', 'polite');
   const chosen = el('div', 'config-chosen');
   chosen.append(el('span', 'summary-eyebrow', [text(content.config['summary-label'])]));
   refs.summaryFinish = el('strong', 'summary-finish');
   refs.summaryModel = el('small', 'summary-model');
   chosen.append(refs.summaryFinish, refs.summaryModel);
+  refs.summaryChosen = chosen;
   const price = el('div', 'config-price');
   price.append(el('span', 'summary-eyebrow', [text(content.config['price-label'])]));
   refs.priceValue = el('strong', 'price-value');
   price.append(refs.priceValue);
   if (content.config['price-note']) {
-    price.append(el('small', 'price-note', [text(content.config['price-note'])]));
+    refs.priceNote = el('small', 'price-note', [text(content.config['price-note'])]);
+    price.append(refs.priceNote);
   }
   summary.append(chosen, price);
   if (content.config['cta-label']) {
     const cta = el('a', 'button button-primary config-cta', [text(content.config['cta-label'])]);
     cta.href = content.config['cta-href'];
+    refs.cta = cta;
     summary.append(cta);
   }
+  refs.configStatus = el('span', 'config-live-status');
+  refs.configStatus.setAttribute('role', 'status');
+  refs.configStatus.setAttribute('aria-live', 'polite');
+  summary.append(refs.configStatus);
   section.append(summary);
 
   if (content.config['availability-note']) {
-    section.append(el('p', 'availability-note', [text(content.config['availability-note'])]));
+    refs.availabilityNote = el('p', 'availability-note', [
+      text(content.config['availability-note']),
+    ]);
+    section.append(refs.availabilityNote);
   }
   return section;
 }
@@ -777,6 +867,15 @@ function initConfigurator(content, refs, reduceMotion) {
     }, PRICE_TWEEN_MS + 60);
   };
 
+  // Offline, the authored deltas are the only price story we have. Once the
+  // catalog answers, hydrate() swaps in a renderer backed by real variant
+  // prices — see razer-pdp-hero.commerce.js.
+  let priceRenderer = () => computeTotal(
+    basePrice,
+    [selected('finish'), selected('model'), selected('care')],
+  );
+  const syncListeners = [];
+
   const sync = () => {
     Object.keys(groups).forEach((group) => {
       const buttons = refs.optionButtons.get(group) || [];
@@ -790,7 +889,14 @@ function initConfigurator(content, refs, reduceMotion) {
     const model = selected('model');
     if (finish) refs.summaryFinish.textContent = finish.label;
     if (model) refs.summaryModel.textContent = model.label;
-    animatePrice(computeTotal(basePrice, [selected('finish'), selected('model'), selected('care')]));
+    if (finish && refs.crumbCurrent) refs.crumbCurrent.textContent = finish.label;
+    const total = priceRenderer(selection);
+    if (Number.isFinite(total)) animatePrice(total);
+    if (refs.configStatus) {
+      const label = [finish && finish.label, model && model.label].filter(Boolean).join(', ');
+      refs.configStatus.textContent = `${label} ${refs.priceValue.textContent}`.trim();
+    }
+    syncListeners.forEach((listener) => listener(selection));
   };
 
   refs.optionButtons.forEach((buttons, group) => {
@@ -804,6 +910,13 @@ function initConfigurator(content, refs, reduceMotion) {
   });
 
   sync();
+
+  return {
+    selection,
+    sync,
+    setPriceRenderer: (renderer) => { priceRenderer = renderer; },
+    onSync: (listener) => { syncListeners.push(listener); },
+  };
 }
 
 /* ── Decorate ──────────────────────────────────────────────────── */
@@ -819,9 +932,21 @@ export default function decorate(block) {
 
   block.textContent = '';
 
+  // Start the catalog round-trip before the DOM work so it overlaps with layout.
+  // Never awaited: decorate() stays synchronous so the gallery image — the LCP
+  // element — paints on the static render, exactly as it does with the tenant
+  // unreachable. Commerce can only ever add to the page from here.
+  const hydration = import('./razer-pdp-hero.commerce.js')
+    .then((module) => module.hydrate(block, content, refs))
+    .catch((error) => {
+      block.dataset.commerce = 'offline';
+      console.warn('razer-pdp-hero: commerce layer unavailable', error);
+      return null;
+    });
+
   const hero = el('section', 'pdp-hero');
   hero.setAttribute('aria-labelledby', 'pdp-title');
-  if (content.crumbs.length) hero.append(buildBreadcrumbs(content));
+  if (content.crumbs.length) hero.append(buildBreadcrumbs(content, refs));
   hero.append(buildMasthead(content));
 
   const commerce = el('div', 'pdp-commerce rzrm-shell');
@@ -837,5 +962,6 @@ export default function decorate(block) {
   block.append(hero);
 
   if (content.images.length) initGallery(content, refs, reduceMotion);
-  initConfigurator(content, refs, reduceMotion);
+  const configurator = initConfigurator(content, refs, reduceMotion);
+  hydration.then((api) => api && api.attach(configurator));
 }

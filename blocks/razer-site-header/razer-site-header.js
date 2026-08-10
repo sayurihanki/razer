@@ -32,6 +32,10 @@
  * by clearing the label.
  */
 
+// The event bus is the one dropin entry point that imports cleanly under Node,
+// so the block stays testable. loadFragment/getMetadata/@dropins/storefront-*
+// all need `window` and are imported dynamically inside the cart path.
+import { events } from '@dropins/tools/event-bus.js';
 import { DEFAULT_PRODUCTS } from '../razer-product-explorer/razer-product-explorer.js';
 
 const CLEAR_TOKEN = '__empty__';
@@ -46,16 +50,21 @@ export const DEFAULT_SETTINGS = {
   'nav-aria-label': 'Global navigation',
   'category-aria-label': 'Product categories',
   'search-button-label': 'Search',
-  'cart-button-label': 'Open cart, 0 items',
+  // `{count}` is substituted with the live cart quantity.
+  'cart-button-label': 'Open cart, {count} items',
+  'cart-button-label-one': 'Open cart, 1 item',
   'menu-button-label': 'Open menu',
   'menu-heading': 'Menu',
   'menu-close-label': 'Close menu',
   'mobile-aria-label': 'Mobile navigation',
-  'cart-heading': 'Cart (0)',
+  'cart-heading': 'Cart ({count})',
+  'cart-heading-one': 'Cart (1)',
   'cart-close-label': 'Close cart',
   'cart-aria-label': 'Shopping cart',
   'cart-empty-title': 'Your cart is empty',
   'cart-empty-body': 'Build a loadout around the way you play.',
+  // Set to `false` to stop the panel opening itself after an add to cart.
+  'cart-autoopen': 'true',
   'search-heading': 'Search razer.com',
   'search-close-label': 'Close search',
   'search-label': 'What are you looking for?',
@@ -180,6 +189,20 @@ export const DEFAULT_MOBILE_LINKS = [
 
 export const DEFAULT_PANEL_CTA = { label: 'Find your gear', href: '/gear-finder' };
 export const DEFAULT_CART_CTA = { label: 'Browse gaming mice', href: '/pc/gaming-mice' };
+
+/**
+ * Substitutes the live cart quantity into a count template, preferring the
+ * singular variant at one item so the label reads naturally.
+ * @param {string} template template containing `{count}`
+ * @param {number} count cart quantity
+ * @param {string} [singular] optional template used when count is 1
+ * @returns {string} the resolved label
+ */
+export function formatCount(template, count, singular = '') {
+  const total = Number.isFinite(count) && count > 0 ? Math.floor(count) : 0;
+  if (total === 1 && singular) return singular;
+  return String(template || '').replace(/\{count\}/g, String(total));
+}
 
 export const DEFAULT_SEARCH_INDEX = [
   {
@@ -543,7 +566,7 @@ export default function decorate(block) {
   });
 
   const searchButton = buildIconButton('search-icon', config['search-button-label']);
-  const cartButton = buildIconButton('cart-icon', config['cart-button-label']);
+  const cartButton = buildIconButton('cart-icon', formatCount(config['cart-button-label'], 0));
   const menuButton = buildIconButton('menu-icon', config['menu-button-label']);
   const actions = el('div', 'nav-actions', [searchButton, cartButton, menuButton]);
 
@@ -607,7 +630,10 @@ export default function decorate(block) {
   }
 
   /* Cart panel */
-  const cartHead = buildPanelHead(config['cart-heading'], config['cart-close-label']);
+  const cartHead = buildPanelHead(
+    formatCount(config['cart-heading'], 0),
+    config['cart-close-label'],
+  );
   const cartIcon = el('span', 'empty-cart-icon');
   cartIcon.setAttribute('aria-hidden', 'true');
   const emptyCart = el('div', 'empty-cart', [
@@ -620,8 +646,12 @@ export default function decorate(block) {
     if (cartCta.href) cta.href = cartCta.href;
     emptyCart.append(cta);
   }
-  const cartPanel = el('aside', 'side-panel cart-panel', [cartHead.head, emptyCart]);
+  // The baked-in empty state is the pre-hydration and offline view; the real
+  // mini-cart dropin replaces it inside this wrapper on first open.
+  const cartBody = el('div', 'cart-panel-body', [emptyCart]);
+  const cartPanel = el('aside', 'side-panel cart-panel', [cartHead.head, cartBody]);
   cartPanel.setAttribute('aria-label', config['cart-aria-label']);
+  const cartHeading = cartHead.head.querySelector('strong');
 
   /* Search dialog */
   const searchHead = buildPanelHead(config['search-heading'], config['search-close-label']);
@@ -702,7 +732,64 @@ export default function decorate(block) {
     searchInput.setAttribute('aria-expanded', 'true');
     searchInput.focus();
   });
-  cartButton.addEventListener('click', () => openPanel(cartPanel));
+  /* Cart: badge and panel driven by the commerce cart dropin */
+
+  // Single-flight: a rapid double-click would otherwise append the fragment twice.
+  let cartFragment = null;
+  const loadCartFragment = () => {
+    if (cartFragment) return cartFragment;
+    cartFragment = (async () => {
+      const [{ loadFragment }, { getMetadata }] = await Promise.all([
+        import('../fragment/fragment.js'),
+        import('../../scripts/aem.js'),
+      ]);
+      const meta = getMetadata('mini-cart');
+      const path = meta ? new URL(meta, window.location).pathname : '/mini-cart';
+      const fragment = await loadFragment(path);
+      const content = fragment && fragment.firstElementChild;
+      if (content) cartBody.replaceChildren(content);
+    })().catch((error) => {
+      console.warn('razer-site-header: mini cart unavailable', error);
+      cartFragment = null; // let the next open retry
+    });
+    return cartFragment;
+  };
+
+  events.on('cart/data', (data) => {
+    const count = data?.totalQuantity ?? 0;
+    if (count) cartButton.dataset.count = String(count);
+    else delete cartButton.dataset.count;
+    cartButton.setAttribute(
+      'aria-label',
+      formatCount(config['cart-button-label'], count, config['cart-button-label-one']),
+    );
+    if (cartHeading) {
+      cartHeading.textContent = formatCount(
+        config['cart-heading'],
+        count,
+        config['cart-heading-one'],
+      );
+    }
+    if (count) loadCartFragment();
+  }, { eager: true });
+
+  // Adds from anywhere — this PDP, a PLP tile, recommendations — surface here.
+  events.on('cart/product/added', () => {
+    if (document.prerendering) return;
+    if (config['cart-autoopen'] === 'false') return;
+    cartButton.click();
+  });
+
+  cartButton.addEventListener('click', async () => {
+    openPanel(cartPanel); // open first: the fragment load must not add latency
+    await loadCartFragment();
+    try {
+      const { publishShoppingCartViewEvent } = await import('@dropins/storefront-cart/api.js');
+      publishShoppingCartViewEvent();
+    } catch (error) {
+      console.warn('razer-site-header: cart view event not published', error);
+    }
+  });
   menuButton.addEventListener('click', () => openPanel(mobilePanel));
   mobileHead.close.addEventListener('click', closeAll);
   cartHead.close.addEventListener('click', closeAll);

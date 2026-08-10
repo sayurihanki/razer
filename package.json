@@ -18,6 +18,7 @@
     "build:json:filters": "merge-json-cli -i \"models/_component-filters.json\" -o \"component-filters.json\"",
     "build:ui-ux-package": "node tools/build-ui-ux-portability-package.mjs",
     "verify:uniform-contract": "node tools/uniform-configurator/verify-commerce-contract.mjs",
+    "verify:razer-pdp-contract": "node tools/razer-pdp/verify-commerce-contract.mjs",
     "audit:modules": "node tools/migration/audit-module-resolution.mjs",
     "test:unit": "node --test tests/**/*.test.mjs",
     "test": "npm run lint && npm run test:unit",

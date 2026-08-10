@@ -182,7 +182,15 @@ function notifyUI(event) {
 export function detectPageType() {
   if (document.body.querySelector('main .product-details')) {
     return 'Product';
-  } if (document.body.querySelector('main .product-list-page')) {
+  }
+  // The Razer PDP renders its own commerce UI instead of the product-details
+  // dropin, but is still a product page for analytics. The sku guard is not
+  // optional: without it, a page missing the metadata row would reach
+  // initializers/pdp.js, fail its sku check, and get redirected to /notfound.
+  if (document.body.querySelector('main .razer-pdp-hero') && getMetadata('sku')) {
+    return 'Product';
+  }
+  if (document.body.querySelector('main .product-list-page')) {
     return 'Category';
   } if (document.body.querySelector('main .commerce-cart')) {
     return 'Cart';

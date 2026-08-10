@@ -9,6 +9,10 @@ backdrop, the mobile navigation panel, the light-themed cart panel, and
 the live-search dialog. All content is baked in, so a table containing
 only the block name renders the exact source header.
 
+The cart panel is wired to Adobe Commerce: the icon shows a live item
+count and the panel mounts the real `/mini-cart` dropin. See "Live
+cart" under Behavior.
+
 ## DA.live Authoring Model
 
 6 columns, typed rows. Column 1 is the row type.
@@ -31,6 +35,7 @@ Setting keys: `content-mode`, `logo`, `logo-alt`, `home-href`,
 `menu-button-label`, `menu-heading`, `menu-close-label`,
 `mobile-aria-label`, `cart-heading`, `cart-close-label`,
 `cart-aria-label`, `cart-empty-title`, `cart-empty-body`,
+`cart-button-label-one`, `cart-heading-one`, `cart-autoopen`,
 `search-heading`, `search-close-label`, `search-label`,
 `search-placeholder`, `search-submit-label`, `search-popular-label`,
 `search-empty-message`, `search-products-label`, `search-links-label`,
@@ -56,6 +61,18 @@ Copy-paste artifacts (regenerate with
 - Store toggles the mega menu; the search/cart/menu icon buttons open
   their panels; backdrop click and Escape close everything; only one
   panel is open at a time.
+- **Live cart:** the cart icon carries a badge driven by the dropin
+  `cart/data` event, and `cart-button-label` / `cart-heading` are
+  templates — `{count}` is substituted, with `-one` variants for the
+  singular. Opening the panel lazily mounts the `/mini-cart` fragment
+  (real line items, quantity edit, remove, totals, View cart /
+  Checkout) into `.cart-panel-body`; the baked-in "Your cart is empty"
+  node is the pre-hydration and offline state. A single-flight promise
+  stops a double-click mounting it twice, and a failed load is
+  retried on the next open. `cart/product/added` opens the panel
+  unless `cart-autoopen` is `false`. This is why
+  `collapseBoilerplateHeader` hiding the boilerplate header on Razer
+  pages is correct: the Razer header now owns a real cart.
 - **Live search:** the dialog ranks the real product catalog — imported
   from `razer-product-explorer` (`DEFAULT_PRODUCTS`), so both blocks
   share one source of truth — plus the `search-popular` quick-link

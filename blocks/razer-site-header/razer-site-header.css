@@ -848,6 +848,50 @@ main > .section.appear > div > .razer-site-header-wrapper {
   color: #666;
 }
 
+/* ── Live cart ──────────────────────────────────────────────────── */
+
+.razer-site-header .cart-icon {
+  position: relative;
+}
+
+/* Badge is driven by data-count, set from the cart/data event. */
+.razer-site-header .cart-icon[data-count]::after {
+  content: attr(data-count);
+  position: absolute;
+  top: 2px;
+  inset-inline-end: 2px;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
+  border-radius: 8px;
+  background: var(--rzrm-green, #44d62c);
+  color: var(--rzrm-text-on-accent, #000);
+  font-family: var(--rzrm-font-condensed, "Roboto Condensed", sans-serif);
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 16px;
+  text-align: center;
+}
+
+.razer-site-header .cart-panel-body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+/* The mini-cart dropin renders into the light-themed panel. */
+.razer-site-header .cart-panel-body .commerce-mini-cart {
+  --color-neutral-900: #111;
+  --color-neutral-700: #444;
+
+  padding: 16px;
+  color: #111;
+}
+
+.razer-site-header .cart-panel-body .commerce-mini-cart a {
+  color: inherit;
+}
+
 /* ── Responsive ─────────────────────────────────────────────────── */
 @media (max-width: 1260px) {
   .razer-site-header .desktop-nav .nav-link:nth-last-child(-n+3) {

@@ -41,15 +41,40 @@ test('the default selection totals the US$159.99 base configuration', () => {
   );
 });
 
-test('deltas stack across finish, model, and care', () => {
+test('deltas stack in the offline fallback total', () => {
+  // computeTotal governs the offline render, but the deltas are the same ones
+  // live mode adds, so both paths now agree with the cart: 159.99 + 40 + 29.99.
   const base = Number.parseFloat(DEFAULT_SETTINGS['base-price']);
   const total = computeTotal(base, [
-    byKey(DEFAULT_FINISHES, 'finish-03'), // Phantom Green +10
+    byKey(DEFAULT_FINISHES, 'finish-03'), // Phantom Green, no surcharge
     byKey(DEFAULT_MODELS, 'model-01'), // + Mouse Dock Pro +40
     byKey(DEFAULT_CARES, 'care-01'), // RazerCare Elite +29.99
   ]);
-  assert.equal(Math.round(total * 100), 23998);
-  assert.equal(formatPrice('US$', total), 'US$239.98');
+  assert.equal(Math.round(total * 100), 22998);
+  assert.equal(formatPrice('US$', total), 'US$229.98');
+});
+
+test('finish deltas stay zero because the variants carry no surcharge', () => {
+  // Every Basilisk child SKU prices at 159.99. A finish delta here would be
+  // double-counted against the variant price in live mode and simply wrong
+  // offline. Verified by `npm run verify:razer-pdp-contract -- --with-cart`.
+  DEFAULT_FINISHES.forEach((finish) => {
+    assert.equal(finish.delta, 0, `${finish.key} must not carry a surcharge`);
+  });
+});
+
+test('the commerce contract the DA handoff and the catalog both depend on', () => {
+  assert.equal(DEFAULT_SETTINGS.sku, 'Razer Basilisk V3 Pro 35K');
+  // The Admin carries the model and care surcharges, so the PDP prices them.
+  // Drop to `catalog` to show only what Catalog Service can prove.
+  assert.equal(DEFAULT_SETTINGS['price-source'], 'catalog+deltas');
+  assert.equal(DEFAULT_SETTINGS['add-to-cart-label'], 'Add to Cart');
+  // The razer.com anchor survives as the offline fallback.
+  assert.ok(DEFAULT_SETTINGS['cta-href'].startsWith('https://www.razer.com/'));
+  // These deltas are a contract with the Admin, not decoration.
+  assert.equal(byKey(DEFAULT_MODELS, 'model-01').delta, 40);
+  assert.equal(byKey(DEFAULT_MODELS, 'model-02').delta, 20);
+  assert.equal(byKey(DEFAULT_CARES, 'care-01').delta, 29.99);
 });
 
 test('missing selections and bad inputs do not break the total', () => {

@@ -26,9 +26,16 @@ export const DEFAULT_SETTINGS = {
   heading: 'More ways to play.',
   'link-label': 'View all gaming mice',
   'link-href': '/pc/gaming-mice',
-  'cta-label': 'View details',
+  'cta-label': 'Browse gaming mice',
 };
 
+/*
+ * None of these three exist in the Commerce catalog — the Basilisk V3 Pro 35K
+ * is the only Razer SKU in it. They are editorial cards, so they carry no
+ * price: an unverifiable figure sitting on the same page as a real, cart-backed
+ * price is worse than no figure at all. Add the SKUs to the catalog and these
+ * can be hydrated the same way razer-pdp-hero is.
+ */
 export const DEFAULT_PRODUCTS = [
   {
     key: 'product-01',
@@ -36,8 +43,8 @@ export const DEFAULT_PRODUCTS = [
     meta: 'Viper · Wireless',
     title: 'Razer Viper V3 Pro',
     description: 'Ultra-lightweight symmetrical wireless esports gaming mouse with HyperPolling 8000 Hz',
-    price: 'US$159.99',
-    href: 'https://www.razer.com/gaming-mice/Razer-Viper-V3-Pro/RZ01-05120100-R3U1',
+    price: '',
+    href: '/pc/gaming-mice',
   },
   {
     key: 'product-02',
@@ -45,8 +52,8 @@ export const DEFAULT_PRODUCTS = [
     meta: 'Basilisk · Wired',
     title: 'Razer Basilisk V3 35K',
     description: 'Fully customizable ergonomic RGB gaming mouse',
-    price: 'US$79.99',
-    href: 'https://www.razer.com/gaming-mice/razer-basilisk-v3-35k',
+    price: '',
+    href: '/pc/gaming-mice',
   },
   {
     key: 'product-03',
@@ -54,8 +61,8 @@ export const DEFAULT_PRODUCTS = [
     meta: 'Cobra · Multi-mode',
     title: 'Razer Cobra Pro',
     description: 'Customizable wireless gaming mouse with Razer Chroma RGB',
-    price: 'US$129.99',
-    href: 'https://www.razer.com/gaming-mice/razer-cobra-pro',
+    price: '',
+    href: '/pc/gaming-mice',
   },
 ];
 

@@ -3,6 +3,6 @@ setting	eyebrow	Related products
 setting	heading	More ways to play.
 setting	link-label	View all gaming mice
 setting	link-href	/pc/gaming-mice
-product	product-01	/images/razer-mice/products/viper-v3-pro.webp	Viper · Wireless	Razer Viper V3 Pro	Ultra-lightweight symmetrical wireless esports gaming mouse with HyperPolling 8000 Hz	US$159.99	https://www.razer.com/gaming-mice/Razer-Viper-V3-Pro/RZ01-05120100-R3U1
-product	product-02	/images/razer-mice/products/basilisk-v3-35k.webp	Basilisk · Wired	Razer Basilisk V3 35K	Fully customizable ergonomic RGB gaming mouse	US$79.99	https://www.razer.com/gaming-mice/razer-basilisk-v3-35k
-product	product-03	/images/razer-mice/products/cobra-pro.webp	Cobra · Multi-mode	Razer Cobra Pro	Customizable wireless gaming mouse with Razer Chroma RGB	US$129.99	https://www.razer.com/gaming-mice/razer-cobra-pro
+product	product-01	/images/razer-mice/products/viper-v3-pro.webp	Viper · Wireless	Razer Viper V3 Pro	Ultra-lightweight symmetrical wireless esports gaming mouse with HyperPolling 8000 Hz		/pc/gaming-mice
+product	product-02	/images/razer-mice/products/basilisk-v3-35k.webp	Basilisk · Wired	Razer Basilisk V3 35K	Fully customizable ergonomic RGB gaming mouse		/pc/gaming-mice
+product	product-03	/images/razer-mice/products/cobra-pro.webp	Cobra · Multi-mode	Razer Cobra Pro	Customizable wireless gaming mouse with Razer Chroma RGB		/pc/gaming-mice

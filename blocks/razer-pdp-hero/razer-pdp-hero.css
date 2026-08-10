@@ -689,6 +689,95 @@ main > .section.appear > div > .razer-pdp-hero-wrapper {
   color: var(--rzrm-text-muted, #888);
 }
 
+/* ── Commerce: quantity, cart button states, status ─────────────── */
+
+/* Nothing to add to a cart until the catalog answers. */
+.razer-pdp-hero:not([data-commerce="live"]) .config-qty {
+  display: none;
+}
+
+.razer-pdp-hero .qty-control {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid rgb(255 255 255 / 18%);
+  border-radius: var(--rzrm-radius-sm, 3px);
+  overflow: hidden;
+}
+
+.razer-pdp-hero .qty-step {
+  width: 40px;
+  min-height: 42px;
+  border: 0;
+  background: transparent;
+  color: var(--rzrm-text-primary, #fff);
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  transition: background var(--rzrm-duration-base, 0.3s) ease;
+}
+
+.razer-pdp-hero .qty-step:hover {
+  background: rgb(255 255 255 / 8%);
+}
+
+.razer-pdp-hero .qty-input {
+  width: 48px;
+  min-height: 42px;
+  border: 0;
+  border-inline: 1px solid rgb(255 255 255 / 18%);
+  background: transparent;
+  color: var(--rzrm-text-primary, #fff);
+  font-family: var(--rzrm-font-body, roboto, sans-serif);
+  font-size: var(--rzrm-body-size, 16px);
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+  appearance: textfield;
+}
+
+.razer-pdp-hero .qty-input::-webkit-outer-spin-button,
+.razer-pdp-hero .qty-input::-webkit-inner-spin-button {
+  appearance: none;
+  margin: 0;
+}
+
+.razer-pdp-hero .config-cta[disabled] {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.razer-pdp-hero .config-cta[data-state="added"] {
+  background: var(--rzrm-green-glow, #4f4);
+}
+
+.razer-pdp-hero .config-cta-status {
+  margin: 0;
+  font-size: var(--rzrm-body-xs-size, 12px);
+  line-height: var(--rzrm-body-xs-lh, 18px);
+  color: var(--rzrm-text-secondary, #bbb);
+}
+
+.razer-pdp-hero .config-cta-status[role="alert"] {
+  color: var(--rzrm-red, #f66);
+}
+
+/* Announced by screen readers only; the visual price lives in .price-value. */
+.razer-pdp-hero .config-live-status {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.razer-pdp-hero .config-step button.is-unavailable {
+  opacity: 0.4;
+  cursor: not-allowed;
+  text-decoration: line-through;
+}
+
 /* ── Services strip ─────────────────────────────────────────────── */
 
 .razer-pdp-hero .pdp-services {
@@ -782,12 +871,23 @@ main > .section.appear > div > .razer-pdp-hero-wrapper {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
+  /* Row 1 pairs the chosen configuration with the price, row 2 pairs the
+     quantity with the buy button. Squeezing quantity into row 1 collapses
+     the configuration text in the narrow sticky column. */
   .razer-pdp-hero .config-summary {
     grid-template-columns: minmax(0, 1fr) auto;
     align-items: center;
   }
 
+  .razer-pdp-hero .config-summary .config-qty {
+    justify-self: start;
+  }
+
   .razer-pdp-hero .config-summary .config-cta {
+    justify-self: stretch;
+  }
+
+  .razer-pdp-hero .config-summary .config-cta-status {
     grid-column: 1 / -1;
   }
 }

@@ -51,17 +51,21 @@ function extractMainImageUrl() {
  * Preloads PDP Dropins assets for optimal performance
  */
 function preloadPDPAssets() {
-  // Preload PDP Dropins assets
-  preloadFile('/scripts/__dropins__/storefront-pdp/api.js', 'script');
-  preloadFile('/scripts/__dropins__/storefront-pdp/render.js', 'script');
-  preloadFile('/scripts/__dropins__/storefront-pdp/containers/ProductHeader.js', 'script');
-  preloadFile('/scripts/__dropins__/storefront-pdp/containers/ProductPrice.js', 'script');
-  preloadFile('/scripts/__dropins__/storefront-pdp/containers/ProductShortDescription.js', 'script');
-  preloadFile('/scripts/__dropins__/storefront-pdp/containers/ProductOptions.js', 'script');
-  preloadFile('/scripts/__dropins__/storefront-pdp/containers/ProductQuantity.js', 'script');
-  preloadFile('/scripts/__dropins__/storefront-pdp/containers/ProductDescription.js', 'script');
-  preloadFile('/scripts/__dropins__/storefront-pdp/containers/ProductAttributes.js', 'script');
-  preloadFile('/scripts/__dropins__/storefront-pdp/containers/ProductGallery.js', 'script');
+  // Only the product-details block renders these containers. A page that is a
+  // Product for analytics but draws its own PDP (razer-pdp-hero) would never
+  // execute them, so preloading would just compete with its own LCP image.
+  if (document.querySelector('main .product-details')) {
+    preloadFile('/scripts/__dropins__/storefront-pdp/api.js', 'script');
+    preloadFile('/scripts/__dropins__/storefront-pdp/render.js', 'script');
+    preloadFile('/scripts/__dropins__/storefront-pdp/containers/ProductHeader.js', 'script');
+    preloadFile('/scripts/__dropins__/storefront-pdp/containers/ProductPrice.js', 'script');
+    preloadFile('/scripts/__dropins__/storefront-pdp/containers/ProductShortDescription.js', 'script');
+    preloadFile('/scripts/__dropins__/storefront-pdp/containers/ProductOptions.js', 'script');
+    preloadFile('/scripts/__dropins__/storefront-pdp/containers/ProductQuantity.js', 'script');
+    preloadFile('/scripts/__dropins__/storefront-pdp/containers/ProductDescription.js', 'script');
+    preloadFile('/scripts/__dropins__/storefront-pdp/containers/ProductAttributes.js', 'script');
+    preloadFile('/scripts/__dropins__/storefront-pdp/containers/ProductGallery.js', 'script');
+  }
 
   // Extract and preload main product image
   const imageUrl = extractMainImageUrl();
