@@ -170,6 +170,28 @@ function markRazerBlocks(main) {
 }
 
 /**
+ * Loads the commerce component layer on pages that render the storefront
+ * dropins. The global design system (razer-design-system.css) already
+ * remaps the dropin design tokens; this layer adds the component-level
+ * styling on top — the account sidebar layout, form and card polish,
+ * heading accents — that a token remap cannot express.
+ *
+ * Matches on `data-block-name` (set by decorateBlock a moment earlier) so
+ * `commerce-` matches block names exactly. The /customer/ path check
+ * covers the account pages whose only eager hint is a fragment link: the
+ * account nav arrives lazily, after this decision is made.
+ *
+ * @param {Element} doc The container element
+ */
+function loadRazerCommerceStyles(doc) {
+  const hasCommerceBlock = doc.querySelector('main div.block[data-block-name^="commerce-"]');
+  const isAccountPath = window.location.pathname.includes('/customer/');
+  if (!hasCommerceBlock && !isAccountPath) return;
+  document.body.classList.add('razer-commerce-page');
+  loadCSS(`${window.hlx.codeBasePath}/styles/razer-commerce.css`);
+}
+
+/**
  * True when the page carries the razer site chrome (razer-site-header) in
  * main and therefore never renders the boilerplate nav — whether the block
  * was authored onto the page or built in by buildRazerChrome.
@@ -266,6 +288,7 @@ async function loadEager(doc) {
       buildRazerChrome(main);
       decorateMain(main);
       markRazerBlocks(main);
+      loadRazerCommerceStyles(doc);
       collapseBoilerplateChrome(doc);
       applyTemplates(doc);
       await loadCommerceEager();

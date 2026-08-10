@@ -634,6 +634,50 @@ body.columns main > .section:empty {
   display: none;
 }
 
+/* Pages carrying the razer site chrome build it into main (see
+   buildRazerChrome in scripts.js), where the columns flex layout would
+   otherwise treat the header and footer sections as columns and scramble
+   the authored 30/70 split. Both shed the gutter padding at every width;
+   the flex-basis overrides live in the desktop query below because in
+   the mobile column direction a percentage basis resolves against
+   main's height. */
+body.columns main > .section.razer-site-header-container,
+body.columns main > .section.razer-site-footer-container {
+  padding: 0;
+}
+
+/* The footer additionally breaks out of main's centered column to run
+   full-bleed, as it does on every non-columns page. 100vw includes the
+   scrollbar gutter, so the body clips the excess below. */
+body.columns main > .section.razer-site-footer-container {
+  width: 100vw;
+  max-width: 100vw;
+  margin-inline: calc(50% - 50vw);
+  margin-block-start: var(--spacing-large);
+}
+
+body.columns:has(main > .razer-site-footer-container) {
+  overflow-x: clip;
+}
+
+/* main's bottom padding would hold the page background open below the
+   full-bleed footer. */
+body.columns main:has(> .razer-site-footer-container) {
+  padding-block-end: 0;
+}
+
+@media (min-width: 900px) {
+  /* In the row-wrap layout each chrome section takes a full row of its
+     own, leaving the authored columns to share the middle rows. */
+  body.columns main > .section.razer-site-header-container {
+    flex-basis: 100%;
+  }
+
+  body.columns main > .section.razer-site-footer-container {
+    flex-basis: 100vw;
+  }
+}
+
 @media (min-width: 600px) {
   body.columns main {
     padding: var(--spacing-large) var(--spacing-big);

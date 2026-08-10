@@ -1,0 +1,25 @@
+{
+  "total": 17,
+  "offset": 0,
+  "limit": 17,
+  "data": [
+    { "Key": "Global.Cancel", "Value": "Cancel" },
+    { "Key": "Global.CartEditButton", "Value": "Edit" },
+    { "Key": "Global.CartMoveToWishlist", "Value": "Move to wishlist" },
+    { "Key": "Global.CartRemoveFromWishlist", "Value": "Remove from wishlist" },
+    { "Key": "Global.CartUpdatedProductMessage", "Value": "{product} has been updated in your cart." },
+    { "Key": "Global.CartUpdatedProductName", "Value": "Your product" },
+    { "Key": "Global.MiniCartAddedMessage", "Value": "Added to your cart." },
+    { "Key": "Global.MiniCartUpdatedMessage", "Value": "Cart updated." },
+    { "Key": "Global.ProductLoadError", "Value": "We couldn't load this product. Please try again." },
+    { "Key": "Global.UpdateProductInCart", "Value": "Update cart" },
+    { "Key": "Global.UpdatingInCart", "Value": "Updating…" },
+    { "Key": "Global.ViewAllDetails", "Value": "View all details" },
+    { "Key": "Global.quantityLabel", "Value": "Quantity" },
+    { "Key": "Global.CommerceOrderHeader.orderHeaderTitle", "Value": "Order details" },
+    { "Key": "Global.CommerceOrderHeader.backToAllOrders", "Value": "Back to all orders" },
+    { "Key": "Global.CommercePOHeader.poHeaderTitle", "Value": "Purchase order" },
+    { "Key": "Global.CommercePOHeader.backToAllPOs", "Value": "Back to all purchase orders" }
+  ],
+  ":type": "sheet"
+}

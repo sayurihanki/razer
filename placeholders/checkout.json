@@ -1,0 +1,13 @@
+{
+  "total": 5,
+  "offset": 0,
+  "limit": 5,
+  "data": [
+    { "Key": "Checkout.Summary.heading", "Value": "In your cart ({count})" },
+    { "Key": "Checkout.Summary.Edit", "Value": "Edit cart" },
+    { "Key": "Checkout.Addresses.shippingAddressTitle", "Value": "Shipping address" },
+    { "Key": "Checkout.Addresses.billingAddressTitle", "Value": "Billing address" },
+    { "Key": "Checkout.Addresses.billToNewAddress", "Value": "Bill to a different address" }
+  ],
+  ":type": "sheet"
+}
