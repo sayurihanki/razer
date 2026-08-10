@@ -950,6 +950,52 @@ main > .section.appear > div > .razer-site-header-wrapper {
   --type-base-font-family: var(--rzrm-font-body, roboto, "Helvetica Neue", arial, sans-serif);
 }
 
+/* Every dropin button in the drawer wears the header's CTA primitive. */
+.razer-site-header .cart-panel .dropin-button {
+  border-radius: var(--rzrm-radius-sm, 3px);
+  font-family: var(--rzrm-font-display, "Titillium Web", system-ui, sans-serif);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  justify-content: center;
+  align-items: center;
+  min-height: 48px;
+  padding: 0 20px;
+  font-size: 15px;
+  font-weight: 700;
+  display: flex;
+  transition:
+    color var(--rzrm-duration-fast, 0.24s) ease,
+    background-color var(--rzrm-duration-fast, 0.24s) ease,
+    border-color var(--rzrm-duration-fast, 0.24s) ease,
+    box-shadow var(--rzrm-duration-base, 0.3s) ease,
+    transform var(--rzrm-duration-fast, 0.24s) var(--rzrm-ease-standard, ease);
+}
+
+.razer-site-header .cart-panel .dropin-button--primary {
+  background: var(--rzrm-green, #44d62c);
+  color: var(--rzrm-text-on-accent, #000);
+}
+
+.razer-site-header .cart-panel .dropin-button--primary:hover {
+  background-color: #5ce843;
+  box-shadow: 0 10px 30px -12px rgb(68 214 44 / 70%);
+}
+
+.razer-site-header .cart-panel .dropin-button--primary:active {
+  transform: translateY(1px);
+}
+
+.razer-site-header .cart-panel .dropin-button--tertiary {
+  border: 1px solid var(--rzrm-surface-line, #333);
+  background: none;
+  color: var(--rzrm-text-secondary, #bbb);
+}
+
+.razer-site-header .cart-panel .dropin-button--tertiary:hover {
+  border-color: rgb(255 255 255 / 55%);
+  color: var(--rzrm-text-primary, #fff);
+}
+
 .razer-site-header .cart-panel .cart-mini-cart__products {
   scrollbar-color: var(--rzrm-surface-line, #333) transparent;
   scrollbar-width: thin;
@@ -1278,68 +1324,30 @@ main > .section.appear > div > .razer-site-header-wrapper {
   padding-top: 2px;
 }
 
-.razer-site-header .cart-panel .cart-mini-cart__footer__ctas .dropin-button {
-  border-radius: var(--rzrm-radius-sm, 3px);
-  font-family: var(--rzrm-font-display, "Titillium Web", system-ui, sans-serif);
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  justify-content: center;
-  align-items: center;
-  min-height: 48px;
-  padding: 0 16px;
-  font-size: 15px;
-  font-weight: 700;
-  display: flex;
-  transition:
-    color var(--rzrm-duration-fast, 0.24s) ease,
-    background-color var(--rzrm-duration-fast, 0.24s) ease,
-    border-color var(--rzrm-duration-fast, 0.24s) ease,
-    box-shadow var(--rzrm-duration-base, 0.3s) ease,
-    transform var(--rzrm-duration-fast, 0.24s) var(--rzrm-ease-standard, ease);
-}
-
-.razer-site-header .cart-panel .cart-mini-cart__footer__ctas .dropin-button--primary {
-  background: var(--rzrm-green, #44d62c);
-  color: var(--rzrm-text-on-accent, #000);
-}
-
-.razer-site-header .cart-panel .cart-mini-cart__footer__ctas .dropin-button--primary:hover {
-  background-color: #5ce843;
-  box-shadow: 0 10px 30px -12px rgb(68 214 44 / 70%);
-}
-
-.razer-site-header .cart-panel .cart-mini-cart__footer__ctas .dropin-button--primary:active {
-  transform: translateY(1px);
-}
-
-.razer-site-header .cart-panel .cart-mini-cart__footer__ctas .dropin-button--tertiary {
-  border: 1px solid var(--rzrm-surface-line, #333);
-  background: none;
-  color: var(--rzrm-text-secondary, #bbb);
-}
-
-.razer-site-header .cart-panel .cart-mini-cart__footer__ctas .dropin-button--tertiary:hover {
-  border-color: rgb(255 255 255 / 55%);
-  color: var(--rzrm-text-primary, #fff);
-}
-
 /* Dropin empty state (the baked-in one above covers first paint). */
 .razer-site-header .cart-panel .cart-empty-cart {
-  text-align: center;
-  color: var(--rzrm-text-secondary, #bbb);
-  align-items: center;
-  gap: 10px;
-  padding: 44px 20px;
-  display: grid;
-  justify-items: center;
+  padding: 40px 4px;
+}
+
+.razer-site-header .cart-panel .cart-empty-cart .dropin-card {
+  background: none;
+  border: 0;
+  padding: 0;
 }
 
 .razer-site-header .cart-panel .cart-empty-cart__icon {
   color: var(--rzrm-green, #44d62c);
+  width: 64px;
+  height: 64px;
 }
 
-.razer-site-header .cart-panel .cart-empty-cart-button {
-  margin-top: 6px;
+.razer-site-header .cart-panel .dropin-illustrated-message__heading {
+  color: var(--rzrm-text-primary, #fff);
+  font-family: var(--rzrm-font-display, "Titillium Web", system-ui, sans-serif);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-size: 24px;
+  font-weight: 700;
 }
 
 @media (prefers-reduced-motion: no-preference) {

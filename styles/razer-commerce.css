@@ -167,14 +167,6 @@ body.razer-commerce-page .dropin-button--secondary {
   text-transform: uppercase;
 }
 
-/* Placeholders inherit the input's colour at reduced opacity, which on
-   white text over near-black lands too close to the entered value. */
-body.razer-commerce-page input::placeholder,
-body.razer-commerce-page textarea::placeholder {
-  color: var(--color-neutral-600);
-  opacity: 1;
-}
-
 /* Boilerplate link styling (styles.css) resolved --color-brand-500 as
    grey; on the dark page the brand green is both the razer accent and
    the only accessible option. */
