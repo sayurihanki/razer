@@ -436,6 +436,31 @@ main > .section.appear > div > .razer-site-header-wrapper {
   right: 2px;
 }
 
+/* Head over shoulders. The span is the head and sits high so the pair
+   reads as centred in the 40px button; ::after is the shoulder arc,
+   open at the bottom. */
+.razer-site-header .account-icon span {
+  border: 1.5px solid #ddd;
+  border-radius: 50%;
+  width: 9px;
+  height: 9px;
+  position: relative;
+  top: -4px;
+}
+
+.razer-site-header .account-icon span::after {
+  content: "";
+  border: 1.5px solid #ddd;
+  border-bottom: 0;
+  border-radius: 9px 9px 0 0;
+  width: 17px;
+  height: 8px;
+  position: absolute;
+  top: 11px;
+  left: 50%;
+  translate: -50% 0;
+}
+
 .razer-site-header .menu-icon {
   display: none;
 }

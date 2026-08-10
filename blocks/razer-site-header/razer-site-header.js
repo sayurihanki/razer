@@ -50,6 +50,11 @@ export const DEFAULT_SETTINGS = {
   'nav-aria-label': 'Global navigation',
   'category-aria-label': 'Product categories',
   'search-button-label': 'Search',
+  // The commerce account pages bounce a signed-out visitor to the login
+  // form, so one link covers both states. Clear the label to drop the
+  // button (a storefront with no customer accounts).
+  'account-button-label': 'Account',
+  'account-href': '/customer/account',
   // `{count}` is substituted with the live cart quantity.
   'cart-button-label': 'Open cart, {count} items',
   'cart-button-label-one': 'Open cart, 1 item',
@@ -470,6 +475,19 @@ function buildIconButton(className, label) {
   return button;
 }
 
+/**
+ * An icon that navigates instead of opening a panel. Same chrome as
+ * buildIconButton so the row of actions stays visually even.
+ */
+function buildIconLink(className, label, href) {
+  const glyph = el('span');
+  glyph.setAttribute('aria-hidden', 'true');
+  const link = el('a', `icon-button ${className}`, [glyph]);
+  link.href = href;
+  link.setAttribute('aria-label', label);
+  return link;
+}
+
 function buildPanelHead(title, closeLabel) {
   const close = el('button', '', [text('×')]);
   close.type = 'button';
@@ -568,7 +586,10 @@ export default function decorate(block) {
   const searchButton = buildIconButton('search-icon', config['search-button-label']);
   const cartButton = buildIconButton('cart-icon', formatCount(config['cart-button-label'], 0));
   const menuButton = buildIconButton('menu-icon', config['menu-button-label']);
-  const actions = el('div', 'nav-actions', [searchButton, cartButton, menuButton]);
+  const accountLink = config['account-button-label'] && config['account-href']
+    ? buildIconLink('account-icon', config['account-button-label'], config['account-href'])
+    : null;
+  const actions = el('div', 'nav-actions', [searchButton, accountLink, cartButton, menuButton]);
 
   const globalNav = el('nav', 'global-nav rzrm-shell', [brand, desktopNav, actions]);
   globalNav.setAttribute('aria-label', config['nav-aria-label']);
