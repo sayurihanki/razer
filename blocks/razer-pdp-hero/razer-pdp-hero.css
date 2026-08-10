@@ -4,207 +4,12 @@
  * strip).
  *
  * All selectors are scoped to `.razer-pdp-hero` / its EDS
- * container. The rzrm token preamble below is duplicated across all
- * razer-mice blocks and guarded by tests/razer-mice/tokens.test.mjs.
+ * container. Tokens, typography, links, focus and the full-bleed section reset
+ * come from styles/razer-design-system.css, which every page loads;
+ * this file adds only what is specific to the block.
  * Breakpoints mirror the source page (680/980/1260px), not the repo
  * default ladder — required for pixel parity.
  */
-
-/* rzrm:tokens:start */
-
-/*
- * Shared Razer-mice design tokens. Duplicated verbatim in every
- * razer-mice block stylesheet so each block stays copy-paste
- * independent. tests/razer-mice/tokens.test.mjs asserts the copies
- * never drift. Values mirror the final (--rzr-*) token layer of the
- * source page, with RazerF5 (proprietary) removed from font stacks.
- */
-
-@font-face {
-  font-family: "Titillium Web";
-  font-style: normal;
-  font-weight: 300;
-  font-display: swap;
-  src: url("/fonts/razer-mice/titillium-web/titillium-web-300-latin.woff2") format("woff2");
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-
-@font-face {
-  font-family: "Titillium Web";
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url("/fonts/razer-mice/titillium-web/titillium-web-400-latin.woff2") format("woff2");
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-
-@font-face {
-  font-family: "Titillium Web";
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: url("/fonts/razer-mice/titillium-web/titillium-web-600-latin.woff2") format("woff2");
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-
-@font-face {
-  font-family: "Titillium Web";
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-  src: url("/fonts/razer-mice/titillium-web/titillium-web-700-latin.woff2") format("woff2");
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-
-@font-face {
-  font-family: "Roboto Condensed";
-  font-style: normal;
-  font-weight: 300 700;
-  font-display: swap;
-  src: url("/fonts/razer-mice/roboto-condensed/roboto-condensed-var-latin.woff2") format("woff2");
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-
-.razer-pdp-hero,
-.razer-pdp-hero-container {
-  --rzrm-green: #44d62c;
-  --rzrm-green-glow: #4f4;
-  --rzrm-green-deep: #00754e;
-  --rzrm-surface-base: #000;
-  --rzrm-surface-raised: #111;
-  --rzrm-surface-card: #212121;
-  --rzrm-surface-card-alt: #222;
-  --rzrm-surface-line: #333;
-  --rzrm-light-base: #fff;
-  --rzrm-light-raised: #efefef;
-  --rzrm-light-sunken: #eee;
-  --rzrm-text-primary: #fff;
-  --rzrm-text-secondary: #bbb;
-  --rzrm-text-tertiary: #999;
-  --rzrm-text-muted: #888;
-  --rzrm-text-on-accent: #000;
-  --rzrm-info: #28aadc;
-  --rzrm-scrim-medium: rgb(0 0 0 / 50%);
-  --rzrm-scrim-heavy: rgb(0 0 0 / 80%);
-  --rzrm-font-display: "Titillium Web", "Roboto Condensed", system-ui, sans-serif;
-  --rzrm-font-body: roboto, "Helvetica Neue", arial, "Noto Sans", sans-serif;
-  --rzrm-font-condensed: "Roboto Condensed", sans-serif;
-  --rzrm-display-1-size: 32px;
-  --rzrm-display-1-weight: 700;
-  --rzrm-display-1-lh: 35px;
-  --rzrm-display-2-size: 25px;
-  --rzrm-display-2-weight: 500;
-  --rzrm-display-2-lh: 28px;
-  --rzrm-display-3-size: 20px;
-  --rzrm-display-3-weight: 400;
-  --rzrm-display-3-lh: 24px;
-  --rzrm-body-lg-size: 18px;
-  --rzrm-body-lg-lh: 24px;
-  --rzrm-body-size: 16px;
-  --rzrm-body-lh: 24px;
-  --rzrm-body-sm-size: 14px;
-  --rzrm-body-sm-lh: 24px;
-  --rzrm-body-xs-size: 12px;
-  --rzrm-body-xs-lh: 18px;
-  --rzrm-radius-xs: 2px;
-  --rzrm-radius-sm: 3px;
-  --rzrm-radius-md: 4px;
-  --rzrm-radius-lg: 6px;
-  --rzrm-radius-xl: 10px;
-  --rzrm-radius-2xl: 12px;
-  --rzrm-focus-ring: inset 0 0 0 1.5px #fff, 0 0 8px 2px rgb(68 255 68 / 60%);
-  --rzrm-shadow-sm: 0 -1px 10px rgb(172 171 171 / 30%);
-  --rzrm-shadow-md: 0 6px 14px rgb(25 28 33 / 30%);
-  --rzrm-shadow-lg: 0 32px 68px rgb(0 0 0 / 30%);
-  --rzrm-ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
-  --rzrm-ease-slow: cubic-bezier(0.4, 0, 0.6, 1);
-  --rzrm-duration-fast: 0.24s;
-  --rzrm-duration-base: 0.3s;
-  --rzrm-duration-slow: 0.5s;
-  --rzrm-duration-xslow: 0.8s;
-  --rzrm-scroll-offset: 104px;
-  --rzrm-shell: calc(100vw - 24px);
-}
-
-@media (min-width: 681px) {
-  .razer-pdp-hero,
-  .razer-pdp-hero-container {
-    --rzrm-display-1-size: 40px;
-    --rzrm-display-1-lh: 44px;
-    --rzrm-display-2-size: 28px;
-    --rzrm-display-2-lh: 31px;
-    --rzrm-shell: min(960px, calc(100vw - 32px));
-  }
-}
-
-@media (min-width: 1101px) {
-  .razer-pdp-hero,
-  .razer-pdp-hero-container {
-    --rzrm-shell: min(1200px, calc(100vw - 48px));
-  }
-}
-
-/* Container reset: paint the dark theme edge-to-edge inside the EDS section.
-   The main > .section qualifier out-ranks the styles.css section margin. */
-main > .section.razer-pdp-hero-container,
-.razer-pdp-hero-container {
-  margin: 0;
-  padding: 0;
-  background: var(--rzrm-surface-base, #000);
-}
-
-.razer-pdp-hero-container > div,
-.razer-pdp-hero-container .razer-pdp-hero-wrapper {
-  max-width: unset;
-  width: 100%;
-  margin: 0;
-  padding: 0;
-}
-
-main > .section.appear > div > .razer-pdp-hero-wrapper {
-  animation: none;
-}
-
-.razer-pdp-hero {
-  background: var(--rzrm-surface-base, #000);
-  color: var(--rzrm-text-primary, #fff);
-  font-family: var(--rzrm-font-body, roboto, "Helvetica Neue", arial, sans-serif);
-  font-size: var(--rzrm-body-size, 16px);
-  line-height: var(--rzrm-body-lh, 24px);
-}
-
-.razer-pdp-hero .rzrm-shell {
-  width: var(--rzrm-shell, min(1200px, calc(100vw - 48px)));
-  margin: 0 auto;
-}
-
-.razer-pdp-hero h1,
-.razer-pdp-hero h2,
-.razer-pdp-hero h3 {
-  font-family: var(--rzrm-font-display, "Titillium Web", system-ui, sans-serif);
-}
-
-.razer-pdp-hero img {
-  max-width: 100%;
-  display: block;
-}
-
-.razer-pdp-hero a {
-  color: inherit;
-  text-decoration: none;
-}
-
-.razer-pdp-hero button {
-  font: inherit;
-  color: inherit;
-}
-
-.razer-pdp-hero :focus-visible {
-  outline: 2px solid var(--rzrm-green, #44d62c);
-  outline-offset: 3px;
-}
-
-/* rzrm:tokens:end */
 
 /* ── Hero shell ─────────────────────────────────────────────────── */
 
@@ -220,24 +25,24 @@ main > .section.appear > div > .razer-pdp-hero-wrapper {
   align-items: center;
   gap: 8px;
   padding: 18px 0 6px;
-  font-family: var(--rzrm-font-condensed, "Roboto Condensed", sans-serif);
-  font-size: var(--rzrm-body-xs-size, 12px);
-  line-height: var(--rzrm-body-xs-lh, 18px);
+  font-family: var(--rzr-font-condensed, "Roboto Condensed", sans-serif);
+  font-size: var(--rzr-body-xs-size, 12px);
+  line-height: var(--rzr-body-xs-lh, 18px);
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 
 .razer-pdp-hero .pdp-breadcrumbs a {
-  color: var(--rzrm-text-tertiary, #999);
-  transition: color var(--rzrm-duration-fast, 0.24s) ease;
+  color: var(--rzr-text-tertiary, #999);
+  transition: color var(--rzr-duration-fast, 0.24s) ease;
 }
 
 .razer-pdp-hero .crumb-sep {
-  color: var(--rzrm-surface-line, #333);
+  color: var(--rzr-surface-line, #333);
 }
 
 .razer-pdp-hero .crumb-current {
-  color: var(--rzrm-text-primary, #fff);
+  color: var(--rzr-text-primary, #fff);
 }
 
 /* ── Masthead ───────────────────────────────────────────────────── */
@@ -249,21 +54,21 @@ main > .section.appear > div > .razer-pdp-hero-wrapper {
 .razer-pdp-hero .pdp-masthead h1 {
   margin: 0 0 6px;
   font-size: clamp(28px, 5.4vw, 40px);
-  font-weight: var(--rzrm-display-1-weight, 700);
+  font-weight: var(--rzr-display-1-weight, 700);
   line-height: 1.08;
   letter-spacing: -0.01em;
-  color: var(--rzrm-text-primary, #fff);
+  color: var(--rzr-text-primary, #fff);
 }
 
 .razer-pdp-hero .pdp-masthead p {
   margin: 0;
-  color: var(--rzrm-text-secondary, #bbb);
-  font-size: var(--rzrm-body-size, 16px);
-  line-height: var(--rzrm-body-lh, 24px);
+  color: var(--rzr-text-secondary, #bbb);
+  font-size: var(--rzr-body-size, 16px);
+  line-height: var(--rzr-body-lh, 24px);
 }
 
 .razer-pdp-hero .pdp-masthead a {
-  color: var(--rzrm-green, #44d62c);
+  color: var(--rzr-green, #44d62c);
   white-space: nowrap;
 }
 
@@ -279,7 +84,7 @@ main > .section.appear > div > .razer-pdp-hero-wrapper {
 
 .razer-pdp-hero .gallery-stage {
   position: relative;
-  border-radius: var(--rzrm-radius-lg, 6px);
+  border-radius: var(--rzr-radius-lg, 6px);
   background: #0d0d0d;
   touch-action: pan-y;
   outline-offset: 4px;
@@ -288,7 +93,7 @@ main > .section.appear > div > .razer-pdp-hero-wrapper {
 .razer-pdp-hero .stage-frame {
   position: relative;
   aspect-ratio: 3 / 2;
-  border-radius: var(--rzrm-radius-lg, 6px);
+  border-radius: var(--rzr-radius-lg, 6px);
   border: 1px solid rgb(255 255 255 / 7%);
   overflow: hidden;
 }
@@ -327,19 +132,19 @@ main > .section.appear > div > .razer-pdp-hero-wrapper {
   border: 1px solid rgb(255 255 255 / 16%);
   border-radius: 50%;
   background: rgb(0 0 0 / 55%);
-  color: var(--rzrm-text-primary, #fff);
+  color: var(--rzr-text-primary, #fff);
   font-size: 22px;
   line-height: 1;
   display: grid;
   place-items: center;
   cursor: pointer;
   transition:
-    border-color var(--rzrm-duration-fast, 0.24s) ease,
-    background var(--rzrm-duration-fast, 0.24s) ease;
+    border-color var(--rzr-duration-fast, 0.24s) ease,
+    background var(--rzr-duration-fast, 0.24s) ease;
 }
 
 .razer-pdp-hero .stage-arrow:hover {
-  border-color: var(--rzrm-green, #44d62c);
+  border-color: var(--rzr-green, #44d62c);
   background: rgb(0 0 0 / 75%);
 }
 
@@ -353,13 +158,13 @@ main > .section.appear > div > .razer-pdp-hero-wrapper {
 .razer-pdp-hero .gallery-thumbs button {
   position: relative;
   aspect-ratio: 3 / 2;
-  border: 1px solid var(--rzrm-surface-line, #333);
-  border-radius: var(--rzrm-radius-md, 4px);
+  border: 1px solid var(--rzr-surface-line, #333);
+  border-radius: var(--rzr-radius-md, 4px);
   background: #0a0a0a;
   padding: 0;
   overflow: hidden;
   cursor: pointer;
-  transition: border-color var(--rzrm-duration-fast, 0.24s) ease;
+  transition: border-color var(--rzr-duration-fast, 0.24s) ease;
 }
 
 .razer-pdp-hero .gallery-thumbs img {
@@ -367,7 +172,7 @@ main > .section.appear > div > .razer-pdp-hero-wrapper {
   height: 100%;
   object-fit: cover;
   opacity: 0.75;
-  transition: opacity var(--rzrm-duration-fast, 0.24s) ease;
+  transition: opacity var(--rzr-duration-fast, 0.24s) ease;
 }
 
 .razer-pdp-hero .gallery-caption {
@@ -379,17 +184,17 @@ main > .section.appear > div > .razer-pdp-hero-wrapper {
 }
 
 .razer-pdp-hero .gallery-caption span {
-  font-family: var(--rzrm-font-condensed, "Roboto Condensed", sans-serif);
-  font-size: var(--rzrm-body-xs-size, 12px);
+  font-family: var(--rzr-font-condensed, "Roboto Condensed", sans-serif);
+  font-size: var(--rzr-body-xs-size, 12px);
   letter-spacing: 0.14em;
-  color: var(--rzrm-green, #44d62c);
+  color: var(--rzr-green, #44d62c);
   white-space: nowrap;
 }
 
 .razer-pdp-hero .gallery-caption strong {
   font-weight: 400;
-  font-size: var(--rzrm-body-sm-size, 14px);
-  color: var(--rzrm-text-secondary, #bbb);
+  font-size: var(--rzr-body-sm-size, 14px);
+  color: var(--rzr-text-secondary, #bbb);
 }
 
 .razer-pdp-hero .gallery-specs {
@@ -404,9 +209,9 @@ main > .section.appear > div > .razer-pdp-hero-wrapper {
 .razer-pdp-hero .gallery-specs li {
   position: relative;
   padding-left: 24px;
-  font-size: var(--rzrm-body-sm-size, 14px);
+  font-size: var(--rzr-body-sm-size, 14px);
   line-height: 22px;
-  color: var(--rzrm-text-secondary, #bbb);
+  color: var(--rzr-text-secondary, #bbb);
 }
 
 .razer-pdp-hero .gallery-specs li::before {
@@ -414,7 +219,7 @@ main > .section.appear > div > .razer-pdp-hero-wrapper {
   position: absolute;
   left: 0;
   top: 0;
-  color: var(--rzrm-green, #44d62c);
+  color: var(--rzr-green, #44d62c);
   font-weight: 700;
 }
 
@@ -422,17 +227,17 @@ main > .section.appear > div > .razer-pdp-hero-wrapper {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  color: var(--rzrm-text-primary, #fff);
-  font-size: var(--rzrm-body-sm-size, 14px);
-  transition: color var(--rzrm-duration-fast, 0.24s) ease;
+  color: var(--rzr-text-primary, #fff);
+  font-size: var(--rzr-body-sm-size, 14px);
+  transition: color var(--rzr-duration-fast, 0.24s) ease;
 }
 
 .razer-pdp-hero .text-link span {
-  color: var(--rzrm-green, #44d62c);
+  color: var(--rzr-green, #44d62c);
 }
 
 .razer-pdp-hero .text-link:hover {
-  color: var(--rzrm-green, #44d62c);
+  color: var(--rzr-green, #44d62c);
 }
 
 .razer-pdp-hero .gallery-spec-link {
@@ -442,35 +247,35 @@ main > .section.appear > div > .razer-pdp-hero-wrapper {
 /* ── Configurator ───────────────────────────────────────────────── */
 
 .razer-pdp-hero .pdp-configurator {
-  background: var(--rzrm-surface-raised, #111);
+  background: var(--rzr-surface-raised, #111);
   border: 1px solid rgb(255 255 255 / 9%);
-  border-top: 2px solid var(--rzrm-green, #44d62c);
-  border-radius: var(--rzrm-radius-lg, 6px);
+  border-top: 2px solid var(--rzr-green, #44d62c);
+  border-radius: var(--rzr-radius-lg, 6px);
   padding: 24px 20px 20px;
 }
 
 .razer-pdp-hero .eyebrow {
   margin: 0 0 8px;
-  font-family: var(--rzrm-font-condensed, "Roboto Condensed", sans-serif);
-  font-size: var(--rzrm-body-xs-size, 12px);
-  line-height: var(--rzrm-body-xs-lh, 18px);
+  font-family: var(--rzr-font-condensed, "Roboto Condensed", sans-serif);
+  font-size: var(--rzr-body-xs-size, 12px);
+  line-height: var(--rzr-body-xs-lh, 18px);
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--rzrm-green, #44d62c);
+  color: var(--rzr-green, #44d62c);
 }
 
 .razer-pdp-hero .config-heading h2 {
   margin: 0 0 8px;
-  font-size: var(--rzrm-display-2-size, 25px);
+  font-size: var(--rzr-display-2-size, 25px);
   font-weight: 600;
-  line-height: var(--rzrm-display-2-lh, 28px);
+  line-height: var(--rzr-display-2-lh, 28px);
 }
 
 .razer-pdp-hero .config-note {
   margin: 0 0 4px;
-  font-size: var(--rzrm-body-sm-size, 14px);
+  font-size: var(--rzr-body-sm-size, 14px);
   line-height: 22px;
-  color: var(--rzrm-text-tertiary, #999);
+  color: var(--rzr-text-tertiary, #999);
 }
 
 .razer-pdp-hero .config-step {
@@ -485,14 +290,14 @@ main > .section.appear > div > .razer-pdp-hero-wrapper {
   width: 100%;
   margin: 0 0 12px;
   padding: 0;
-  font-family: var(--rzrm-font-display, "Titillium Web", sans-serif);
-  font-size: var(--rzrm-body-size, 16px);
+  font-family: var(--rzr-font-display, "Titillium Web", sans-serif);
+  font-size: var(--rzr-body-size, 16px);
   font-weight: 600;
 }
 
 .razer-pdp-hero .step-num {
-  color: var(--rzrm-green, #44d62c);
-  font-family: var(--rzrm-font-condensed, "Roboto Condensed", sans-serif);
+  color: var(--rzr-green, #44d62c);
+  font-family: var(--rzr-font-condensed, "Roboto Condensed", sans-serif);
   font-weight: 400;
   letter-spacing: 0.1em;
   margin-right: 8px;
@@ -507,17 +312,17 @@ main > .section.appear > div > .razer-pdp-hero-wrapper {
   align-items: center;
   gap: 5px;
   margin: -6px 0 12px;
-  font-size: var(--rzrm-body-xs-size, 12px);
-  color: var(--rzrm-text-tertiary, #999);
-  transition: color var(--rzrm-duration-fast, 0.24s) ease;
+  font-size: var(--rzr-body-xs-size, 12px);
+  color: var(--rzr-text-tertiary, #999);
+  transition: color var(--rzr-duration-fast, 0.24s) ease;
 }
 
 .razer-pdp-hero .config-help span {
-  color: var(--rzrm-green, #44d62c);
+  color: var(--rzr-green, #44d62c);
 }
 
 .razer-pdp-hero .config-help:hover {
-  color: var(--rzrm-text-primary, #fff);
+  color: var(--rzr-text-primary, #fff);
 }
 
 .razer-pdp-hero .finish-options,
@@ -537,14 +342,14 @@ main > .section.appear > div > .razer-pdp-hero-wrapper {
   gap: 10px;
   width: 100%;
   padding: 12px;
-  border: 1px solid var(--rzrm-surface-line, #333);
-  border-radius: var(--rzrm-radius-sm, 3px);
+  border: 1px solid var(--rzr-surface-line, #333);
+  border-radius: var(--rzr-radius-sm, 3px);
   background: #181818;
   text-align: left;
   cursor: pointer;
   transition:
-    border-color var(--rzrm-duration-fast, 0.24s) ease,
-    background var(--rzrm-duration-fast, 0.24s) ease;
+    border-color var(--rzr-duration-fast, 0.24s) ease,
+    background var(--rzr-duration-fast, 0.24s) ease;
 }
 
 .razer-pdp-hero .finish-options button {
@@ -554,7 +359,7 @@ main > .section.appear > div > .razer-pdp-hero-wrapper {
 }
 
 .razer-pdp-hero .config-step .option-label {
-  font-size: var(--rzrm-body-sm-size, 14px);
+  font-size: var(--rzr-body-sm-size, 14px);
   font-weight: 600;
   line-height: 20px;
   flex: 1;
@@ -562,21 +367,21 @@ main > .section.appear > div > .razer-pdp-hero-wrapper {
 
 .razer-pdp-hero .config-step .option-delta,
 .razer-pdp-hero .config-step .option-note {
-  font-size: var(--rzrm-body-sm-size, 14px);
+  font-size: var(--rzr-body-sm-size, 14px);
   white-space: nowrap;
 }
 
 .razer-pdp-hero .finish-options .option-delta,
 .razer-pdp-hero .finish-options .option-note {
-  font-size: var(--rzrm-body-xs-size, 12px);
+  font-size: var(--rzr-body-xs-size, 12px);
 }
 
 .razer-pdp-hero .config-step .option-delta {
-  color: var(--rzrm-green, #44d62c);
+  color: var(--rzr-green, #44d62c);
 }
 
 .razer-pdp-hero .config-step .option-note {
-  color: var(--rzrm-text-tertiary, #999);
+  color: var(--rzr-text-tertiary, #999);
 }
 
 .razer-pdp-hero .swatch {
@@ -617,7 +422,7 @@ main > .section.appear > div > .razer-pdp-hero-wrapper {
   margin-top: 20px;
   padding: 16px;
   border: 1px solid rgb(255 255 255 / 10%);
-  border-radius: var(--rzrm-radius-sm, 3px);
+  border-radius: var(--rzr-radius-sm, 3px);
   background: #0d0d0d;
 }
 
@@ -642,31 +447,31 @@ main > .section.appear > div > .razer-pdp-hero-wrapper {
 
 .razer-pdp-hero .summary-eyebrow {
   display: block;
-  font-family: var(--rzrm-font-condensed, "Roboto Condensed", sans-serif);
+  font-family: var(--rzr-font-condensed, "Roboto Condensed", sans-serif);
   font-size: 11px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--rzrm-text-muted, #888);
+  color: var(--rzr-text-muted, #888);
   margin-bottom: 4px;
 }
 
 .razer-pdp-hero .summary-finish {
   display: block;
-  font-family: var(--rzrm-font-display, "Titillium Web", sans-serif);
-  font-size: var(--rzrm-body-lg-size, 18px);
+  font-family: var(--rzr-font-display, "Titillium Web", sans-serif);
+  font-size: var(--rzr-body-lg-size, 18px);
   font-weight: 600;
   line-height: 24px;
 }
 
 .razer-pdp-hero .summary-model {
   display: block;
-  font-size: var(--rzrm-body-sm-size, 14px);
-  color: var(--rzrm-text-secondary, #bbb);
+  font-size: var(--rzr-body-sm-size, 14px);
+  color: var(--rzr-text-secondary, #bbb);
 }
 
 .razer-pdp-hero .price-value {
   display: block;
-  font-family: var(--rzrm-font-display, "Titillium Web", sans-serif);
+  font-family: var(--rzr-font-display, "Titillium Web", sans-serif);
   font-size: 30px;
   font-weight: 700;
   line-height: 34px;
@@ -675,8 +480,8 @@ main > .section.appear > div > .razer-pdp-hero-wrapper {
 
 .razer-pdp-hero .price-note {
   display: block;
-  font-size: var(--rzrm-body-xs-size, 12px);
-  color: var(--rzrm-text-muted, #888);
+  font-size: var(--rzr-body-xs-size, 12px);
+  color: var(--rzr-text-muted, #888);
 }
 
 .razer-pdp-hero .button {
@@ -687,31 +492,31 @@ main > .section.appear > div > .razer-pdp-hero-wrapper {
   min-height: 44px;
   padding: 0 18px;
   border: 0;
-  border-radius: var(--rzrm-radius-sm, 3px);
-  font-family: var(--rzrm-font-body, roboto, sans-serif);
-  font-size: var(--rzrm-body-size, 16px);
+  border-radius: var(--rzr-radius-sm, 3px);
+  font-family: var(--rzr-font-body, roboto, sans-serif);
+  font-size: var(--rzr-body-size, 16px);
   font-weight: 600;
   line-height: 20px;
   cursor: pointer;
   transition:
-    background var(--rzrm-duration-base, 0.3s) ease,
-    color var(--rzrm-duration-base, 0.3s) ease;
+    background var(--rzr-duration-base, 0.3s) ease,
+    color var(--rzr-duration-base, 0.3s) ease;
 }
 
 .razer-pdp-hero .button-primary {
-  background: var(--rzrm-green, #44d62c);
-  color: var(--rzrm-text-on-accent, #000);
+  background: var(--rzr-green, #44d62c);
+  color: var(--rzr-text-on-accent, #000);
 }
 
 .razer-pdp-hero .button-primary:hover {
-  background: var(--rzrm-green-glow, #4f4);
+  background: var(--rzr-green-glow, #4f4);
 }
 
 .razer-pdp-hero .availability-note {
   margin: 14px 0 0;
-  font-size: var(--rzrm-body-xs-size, 12px);
-  line-height: var(--rzrm-body-xs-lh, 18px);
-  color: var(--rzrm-text-muted, #888);
+  font-size: var(--rzr-body-xs-size, 12px);
+  line-height: var(--rzr-body-xs-lh, 18px);
+  color: var(--rzr-text-muted, #888);
 }
 
 /* ── Commerce: quantity, cart button states, status ─────────────── */
@@ -725,7 +530,7 @@ main > .section.appear > div > .razer-pdp-hero-wrapper {
   display: inline-flex;
   align-items: center;
   border: 1px solid rgb(255 255 255 / 18%);
-  border-radius: var(--rzrm-radius-sm, 3px);
+  border-radius: var(--rzr-radius-sm, 3px);
   overflow: hidden;
 }
 
@@ -734,11 +539,11 @@ main > .section.appear > div > .razer-pdp-hero-wrapper {
   min-height: 42px;
   border: 0;
   background: transparent;
-  color: var(--rzrm-text-primary, #fff);
+  color: var(--rzr-text-primary, #fff);
   font-size: 18px;
   line-height: 1;
   cursor: pointer;
-  transition: background var(--rzrm-duration-base, 0.3s) ease;
+  transition: background var(--rzr-duration-base, 0.3s) ease;
 }
 
 .razer-pdp-hero .qty-step:hover {
@@ -751,9 +556,9 @@ main > .section.appear > div > .razer-pdp-hero-wrapper {
   border: 0;
   border-inline: 1px solid rgb(255 255 255 / 18%);
   background: transparent;
-  color: var(--rzrm-text-primary, #fff);
-  font-family: var(--rzrm-font-body, roboto, sans-serif);
-  font-size: var(--rzrm-body-size, 16px);
+  color: var(--rzr-text-primary, #fff);
+  font-family: var(--rzr-font-body, roboto, sans-serif);
+  font-size: var(--rzr-body-size, 16px);
   font-variant-numeric: tabular-nums;
   text-align: center;
   appearance: textfield;
@@ -771,19 +576,19 @@ main > .section.appear > div > .razer-pdp-hero-wrapper {
 }
 
 .razer-pdp-hero .config-cta[data-state="added"] {
-  background: var(--rzrm-green-glow, #4f4);
+  background: var(--rzr-green-glow, #4f4);
 }
 
 .razer-pdp-hero .config-cta-status {
   flex: 1 0 100%;
   margin: 0;
-  font-size: var(--rzrm-body-xs-size, 12px);
-  line-height: var(--rzrm-body-xs-lh, 18px);
-  color: var(--rzrm-text-secondary, #bbb);
+  font-size: var(--rzr-body-xs-size, 12px);
+  line-height: var(--rzr-body-xs-lh, 18px);
+  color: var(--rzr-text-secondary, #bbb);
 }
 
 .razer-pdp-hero .config-cta-status[role="alert"] {
-  color: var(--rzrm-red, #f66);
+  color: var(--rzr-red, #f66);
 }
 
 /* Announced by screen readers only; the visual price lives in .price-value. */
@@ -818,7 +623,7 @@ main > .section.appear > div > .razer-pdp-hero-wrapper {
   gap: 14px;
   padding: 14px 16px;
   border: 1px solid rgb(255 255 255 / 8%);
-  border-radius: var(--rzrm-radius-lg, 6px);
+  border-radius: var(--rzr-radius-lg, 6px);
   background: #0c0c0c;
 }
 
@@ -830,7 +635,7 @@ main > .section.appear > div > .razer-pdp-hero-wrapper {
   place-items: center;
   border: 1px solid rgb(68 214 44 / 35%);
   border-radius: 50%;
-  color: var(--rzrm-green, #44d62c);
+  color: var(--rzr-green, #44d62c);
   font-size: 19px;
   background: rgb(68 214 44 / 6%);
 }
@@ -841,21 +646,21 @@ main > .section.appear > div > .razer-pdp-hero-wrapper {
 
 .razer-pdp-hero .service-copy strong {
   display: block;
-  font-size: var(--rzrm-body-sm-size, 14px);
+  font-size: var(--rzr-body-sm-size, 14px);
   font-weight: 600;
   line-height: 20px;
 }
 
 .razer-pdp-hero .service-copy small {
   display: block;
-  font-size: var(--rzrm-body-xs-size, 12px);
-  color: var(--rzrm-text-tertiary, #999);
+  font-size: var(--rzr-body-xs-size, 12px);
+  color: var(--rzr-text-tertiary, #999);
 }
 
 /* ── Interactions (state rules last for ascending specificity) ──── */
 
 .razer-pdp-hero .pdp-breadcrumbs a:hover {
-  color: var(--rzrm-green, #44d62c);
+  color: var(--rzr-green, #44d62c);
 }
 
 .razer-pdp-hero .pdp-masthead a:hover {
@@ -863,26 +668,26 @@ main > .section.appear > div > .razer-pdp-hero-wrapper {
 }
 
 .razer-pdp-hero .gallery-thumbs button:hover {
-  border-color: var(--rzrm-text-muted, #888);
+  border-color: var(--rzr-text-muted, #888);
 }
 
 .razer-pdp-hero .gallery-thumbs button.is-active {
-  border-color: var(--rzrm-green, #44d62c);
+  border-color: var(--rzr-green, #44d62c);
 }
 
 .razer-pdp-hero .config-step button:hover {
-  border-color: var(--rzrm-text-muted, #888);
+  border-color: var(--rzr-text-muted, #888);
 }
 
 .razer-pdp-hero .config-step button.is-selected {
-  border-color: var(--rzrm-green, #44d62c);
+  border-color: var(--rzr-green, #44d62c);
   background: rgb(68 214 44 / 8%);
 }
 
 .razer-pdp-hero .config-step button.is-selected .swatch {
   box-shadow:
-    0 0 0 2px var(--rzrm-surface-raised, #111),
-    0 0 0 3px var(--rzrm-green, #44d62c);
+    0 0 0 2px var(--rzr-surface-raised, #111),
+    0 0 0 3px var(--rzr-green, #44d62c);
 }
 
 .razer-pdp-hero .gallery-thumbs button:hover img,
@@ -909,7 +714,7 @@ main > .section.appear > div > .razer-pdp-hero-wrapper {
 
   .razer-pdp-hero .pdp-configurator {
     position: sticky;
-    top: calc(var(--rzrm-scroll-offset, 104px) + 12px);
+    top: calc(var(--rzr-scroll-offset, 104px) + 12px);
     padding: 28px 26px 22px;
   }
 

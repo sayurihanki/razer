@@ -9,6 +9,12 @@ Support / Company), and the legal row with copyright, legal links, and
 locale. All content is baked in, so a table containing only the block
 name renders the exact source footer.
 
+This is the site-wide footer. Authored pages place the block themselves;
+every other page has it appended by `buildRazerChrome` in
+`scripts/scripts.js`, which also collapses the boilerplate `<footer>` so
+`/footer` never paints below it. A page opts out with `chrome: none` in
+its metadata. See [razer-site-header](../razer-site-header/README.md).
+
 ## DA.live Authoring Model
 
 6 columns, typed rows. Column 1 is the row type.

@@ -1,0 +1,633 @@
+/*
+ * razer-design-system.css — the single source of truth for the Razer
+ * visual language.
+ *
+ * Loaded unconditionally from head.html, before any block stylesheet, so
+ * every page inherits the same foundation whether or not it happens to
+ * contain a Razer block. That is the whole point of the file: a new page
+ * needs no styling work to look like the rest of the site.
+ *
+ * What lives here, and nothing else does:
+ *  1. @font-face   — every face the site uses, declared once.
+ *  2. Tokens       — the canonical --rzr-* set on :root.
+ *  3. Token remap  — the boilerplate's --color-, --type- and --shape- ramps
+ *                    restated in Razer terms, so the Adobe Commerce
+ *                    dropins and every boilerplate component inherit the
+ *                    brand without a second set of component rules.
+ *  4. Foundation   — body background, colour and type.
+ *  5. Base elements and the focus ring.
+ *  6. Primitives   — .rzr-shell, buttons, .eyebrow, .section-heading.
+ *
+ * Blocks must not redeclare any of the above. They consume var(--rzr-*)
+ * and add only rules specific to themselves. tests/design-system.test.mjs
+ * enforces that: it fails if a block stylesheet declares a --rzr-* token.
+ */
+
+/* stylelint-disable no-descending-specificity */
+
+/* ------------------------------------------------------------------ *
+ * 1. Fonts
+ *
+ * RazerF5 is the brand display face and the site standard. Titillium Web
+ * follows it in the stack as the metric-compatible fallback, and is what
+ * actually paints for the weights RazerF5 does not ship.
+ * ------------------------------------------------------------------ */
+
+@font-face {
+  font-family: "RazerF5";
+  src: url("../fonts/RazerF5Light.woff") format("woff");
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "RazerF5";
+  src: url("../fonts/RazerF5.woff") format("woff");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "RazerF5";
+  src: url("../fonts/RazerF5SemiBold.woff") format("woff");
+  font-style: normal;
+  font-weight: 500 600;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "RazerF5";
+  src: url("../fonts/RazerF5Bold.woff") format("woff");
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Titillium Web";
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url("../fonts/razer-mice/titillium-web/titillium-web-300-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Titillium Web";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../fonts/razer-mice/titillium-web/titillium-web-400-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Titillium Web";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("../fonts/razer-mice/titillium-web/titillium-web-600-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Titillium Web";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("../fonts/razer-mice/titillium-web/titillium-web-700-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Roboto Condensed";
+  font-style: normal;
+  font-weight: 300 700;
+  font-display: swap;
+  src: url("../fonts/razer-mice/roboto-condensed/roboto-condensed-var-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* ------------------------------------------------------------------ *
+ * 2. Tokens
+ * ------------------------------------------------------------------ */
+
+:root {
+  /* Brand */
+  --rzr-green: #44d62c;
+  --rzr-green-glow: #4f4;
+  --rzr-green-deep: #00754e;
+
+  /* Dark surfaces, base to raised */
+  --rzr-surface-base: #000;
+  --rzr-surface-raised: #111;
+  --rzr-surface-card: #212121;
+  --rzr-surface-card-alt: #222;
+  --rzr-surface-line: #333;
+
+  /* Light surfaces, for the inverted sections a few blocks use */
+  --rzr-light-base: #fff;
+  --rzr-light-raised: #efefef;
+  --rzr-light-sunken: #eee;
+
+  /* Text */
+  --rzr-text-primary: #fff;
+  --rzr-text-secondary: #bbb;
+  --rzr-text-tertiary: #999;
+  --rzr-text-muted: #888;
+  --rzr-text-on-accent: #000;
+  --rzr-info: #28aadc;
+  --rzr-scrim-medium: rgb(0 0 0 / 50%);
+  --rzr-scrim-heavy: rgb(0 0 0 / 80%);
+
+  /* Type stacks */
+  --rzr-font-display: "RazerF5", "Titillium Web", "Roboto Condensed", system-ui, sans-serif;
+  --rzr-font-body: roboto, "Helvetica Neue", arial, "Noto Sans", sans-serif;
+  --rzr-font-condensed: "Roboto Condensed", sans-serif;
+
+  /* Type scale. The display steps grow at 681px, below. */
+  --rzr-display-1-size: 32px;
+  --rzr-display-1-weight: 700;
+  --rzr-display-1-lh: 35px;
+  --rzr-display-2-size: 25px;
+  --rzr-display-2-weight: 500;
+  --rzr-display-2-lh: 28px;
+  --rzr-display-3-size: 20px;
+  --rzr-display-3-weight: 400;
+  --rzr-display-3-lh: 24px;
+  --rzr-body-lg-size: 18px;
+  --rzr-body-lg-lh: 24px;
+  --rzr-body-size: 16px;
+  --rzr-body-lh: 24px;
+  --rzr-body-sm-size: 14px;
+  --rzr-body-sm-lh: 24px;
+  --rzr-body-xs-size: 12px;
+  --rzr-body-xs-lh: 18px;
+
+  /* Shape */
+  --rzr-radius-xs: 2px;
+  --rzr-radius-sm: 3px;
+  --rzr-radius-md: 4px;
+  --rzr-radius-lg: 6px;
+  --rzr-radius-xl: 10px;
+  --rzr-radius-2xl: 12px;
+  --rzr-focus-ring: inset 0 0 0 1.5px #fff, 0 0 8px 2px rgb(68 255 68 / 60%);
+  --rzr-shadow-sm: 0 -1px 10px rgb(172 171 171 / 30%);
+  --rzr-shadow-md: 0 6px 14px rgb(25 28 33 / 30%);
+  --rzr-shadow-lg: 0 32px 68px rgb(0 0 0 / 30%);
+
+  /* Motion */
+  --rzr-ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --rzr-ease-slow: cubic-bezier(0.4, 0, 0.6, 1);
+  --rzr-duration-fast: 0.24s;
+  --rzr-duration-base: 0.3s;
+  --rzr-duration-slow: 0.5s;
+  --rzr-duration-xslow: 0.8s;
+
+  /* Layout. --rzr-shell is the content column every block centres on;
+     --rzr-scroll-offset clears the fixed header for anchor targets. */
+  --rzr-scroll-offset: 104px;
+  --rzr-shell: calc(100vw - 24px);
+}
+
+@media (min-width: 681px) {
+  :root {
+    --rzr-display-1-size: 40px;
+    --rzr-display-1-lh: 44px;
+    --rzr-display-2-size: 28px;
+    --rzr-display-2-lh: 31px;
+    --rzr-shell: min(960px, calc(100vw - 32px));
+  }
+}
+
+@media (min-width: 1101px) {
+  :root {
+    --rzr-shell: min(1200px, calc(100vw - 48px));
+  }
+}
+
+/* ------------------------------------------------------------------ *
+ * 3. Boilerplate token remap
+ *
+ * styles.css ships the Adobe Commerce ramps — a light neutral scale, a
+ * grey brand scale and Adobe Clean — and every boilerplate component and
+ * Commerce dropin reads them. Restating them here in Razer terms brands
+ * all of that at once, instead of writing a parallel set of component
+ * rules that would then have to be kept in sync.
+ *
+ * The selector mirrors styles.css's own `:root, .dropin-design`: a dropin
+ * container carries that class and would otherwise re-declare the light
+ * ramp for its own subtree and beat the inherited dark one. This file
+ * loads after styles.css, so at equal specificity these win.
+ *
+ * Tokens that styles.css composes from other tokens (--background-color,
+ * --color-button-*, --color-action-button-*, every --type-*-font) are
+ * restated in full: custom properties are substituted where they are
+ * declared, so those already resolved against the light ramp.
+ * ------------------------------------------------------------------ */
+
+:root,
+.dropin-design {
+  /* Neutral ramp, inverted: 50 is the surface that used to be white,
+     800/900 the text that used to be near-black. */
+  --color-neutral-50: #0e0e0e;
+  --color-neutral-100: #121212;
+  --color-neutral-200: #171717;
+  --color-neutral-300: #242424;
+  --color-neutral-400: #3a3a3a;
+  --color-neutral-500: #5c5c5c;
+  --color-neutral-600: #8f8f8f;
+  --color-neutral-700: #b5b5b5;
+  --color-neutral-800: #fff;
+  --color-neutral-900: #fff;
+
+  /* Razer green replaces the boilerplate's grey brand ramp, so every
+     primary action reads as the brand. */
+  --color-brand-50: #0b1c07;
+  --color-brand-100: #12300c;
+  --color-brand-300: #7cee66;
+  --color-brand-500: var(--rzr-green);
+  --color-brand-600: #38b924;
+  --color-brand-700: #2c9b1c;
+
+  /* Status colours re-tuned for a dark surface: the -200 backgrounds go
+     dark, the -800 foregrounds go light enough to read on them. */
+  --color-positive-200: #0f2412;
+  --color-positive-500: #4fc46a;
+  --color-positive-800: #7ede93;
+  --color-informational-200: #14172b;
+  --color-informational-500: #7f8ce6;
+  --color-informational-800: #a3adf2;
+  --color-warning-200: #2a1f10;
+  --color-warning-500: #e79f5c;
+  --color-warning-800: #f2b87f;
+  --color-alert-200: #2a1414;
+  --color-alert-500: #e07070;
+  --color-alert-800: #ff9494;
+
+  /* Composed in styles.css from the tokens above. */
+  --background-color: var(--rzr-surface-base);
+  --color-button-active: var(--color-brand-700);
+  --color-button-focus: var(--color-brand-300);
+  --color-button-hover: var(--color-brand-600);
+  --color-action-button-active: var(--color-neutral-200);
+  --color-action-button-hover: var(--color-neutral-300);
+
+  /* Aliases a few dropins read instead of the ramp. */
+  --color-primary: var(--color-brand-500);
+  --color-primary-700: var(--color-brand-700);
+  --color-text-primary: var(--color-neutral-800);
+  --color-text-secondary: var(--color-neutral-700);
+  --color-border: var(--color-neutral-400);
+  --color-success: var(--color-brand-500);
+  --color-error: var(--color-alert-800);
+  --color-error-light: var(--color-alert-200);
+  --color-disabled-background: #1a1a1a;
+
+  /* Razer's chrome is squared off; the boilerplate's 24px pill radius is
+     the single loudest tell that this is not razer.com. */
+  --shape-border-radius-1: var(--rzr-radius-xs);
+  --shape-border-radius-2: var(--rzr-radius-md);
+  --shape-border-radius-3: var(--rzr-radius-md);
+
+  /* One step up in weight throughout: the boilerplate's 300 is the right
+     density on white and too thin to hold together as light-on-dark. */
+  --type-base-font-family: var(--rzr-font-body);
+  --type-display-1-font: normal normal 700 6rem/7.2rem var(--rzr-font-display);
+  --type-display-1-letter-spacing: 0;
+  --type-display-2-font: normal normal 700 4.8rem/5.6rem var(--rzr-font-display);
+  --type-display-2-letter-spacing: 0;
+  --type-display-3-font: normal normal 600 3.4rem/4rem var(--rzr-font-display);
+  --type-display-3-letter-spacing: 0;
+  --type-headline-1-font: normal normal 600 2.4rem/3.2rem var(--rzr-font-display);
+  --type-headline-1-letter-spacing: 0;
+  --type-headline-2-default-font: normal normal 400 2rem/2.4rem var(--rzr-font-display);
+  --type-headline-2-default-letter-spacing: 0;
+  --type-headline-2-strong-font: normal normal 700 2rem/2.4rem var(--rzr-font-display);
+  --type-headline-2-strong-letter-spacing: 0;
+  --type-body-1-default-font: normal normal 400 1.6rem/2.4rem var(--type-base-font-family);
+  --type-body-1-default-letter-spacing: 0;
+  --type-body-1-strong-font: normal normal 600 1.6rem/2.4rem var(--type-base-font-family);
+  --type-body-1-strong-letter-spacing: 0;
+  --type-body-1-emphasized-font: normal normal 700 1.6rem/2.4rem var(--type-base-font-family);
+  --type-body-1-emphasized-letter-spacing: 0;
+  --type-body-2-default-font: normal normal 400 1.4rem/2rem var(--type-base-font-family);
+  --type-body-2-default-letter-spacing: 0;
+  --type-body-2-strong-font: normal normal 600 1.4rem/2rem var(--type-base-font-family);
+  --type-body-2-strong-letter-spacing: 0;
+  --type-body-2-emphasized-font: normal normal 700 1.4rem/2rem var(--type-base-font-family);
+  --type-body-2-emphasized-letter-spacing: 0;
+  --type-button-1-font: normal normal 700 2rem/2.6rem var(--type-base-font-family);
+  --type-button-1-letter-spacing: 0.08em;
+  --type-button-2-font: normal normal 700 1.6rem/2.4rem var(--type-base-font-family);
+  --type-button-2-letter-spacing: 0.08em;
+  --type-details-caption-1-font: normal normal 400 1.2rem/1.6rem var(--type-base-font-family);
+  --type-details-caption-1-letter-spacing: 0.04em;
+  --type-details-caption-2-font: normal normal 400 1.2rem/1.6rem var(--type-base-font-family);
+  --type-details-caption-2-letter-spacing: 0.04em;
+  --type-details-overline-font: normal normal 600 1.2rem/2rem var(--type-base-font-family);
+  --type-details-overline-letter-spacing: 0.16em;
+}
+
+/* ------------------------------------------------------------------ *
+ * 4. Page foundation
+ *
+ * styles.css computed body's background and colour from :root before this
+ * file loaded, so both are restated rather than left to the tokens above.
+ * ------------------------------------------------------------------ */
+
+body {
+  background-color: var(--rzr-surface-base);
+  color: var(--rzr-text-primary);
+  font-family: var(--rzr-font-body);
+  font-size: var(--rzr-body-size);
+  line-height: var(--rzr-body-lh);
+
+  /* Native controls otherwise render their light UA theme — dropdown
+     lists, date pickers, the caret. */
+  color-scheme: dark;
+  scroll-behavior: smooth;
+  scroll-padding-top: var(--rzr-scroll-offset);
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--rzr-green);
+  color: var(--rzr-text-on-accent);
+}
+
+/* ------------------------------------------------------------------ *
+ * 5. Base elements
+ * ------------------------------------------------------------------ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--rzr-font-display);
+  letter-spacing: normal;
+  text-transform: uppercase;
+  scroll-margin-top: var(--rzr-scroll-offset);
+}
+
+main p {
+  color: var(--rzr-text-secondary);
+}
+
+main img {
+  max-width: 100%;
+  display: block;
+}
+
+/* Authored content links are handled by the boilerplate rule in
+   styles.css, which reads --color-brand-500 — remapped to Razer green
+   above — so it needs no counterpart here. Links inside a Razer block are
+   navigation, not prose: they inherit their context's colour. The
+   :any-link pseudo-class lifts this to (0,2,1) so it outranks the
+   boilerplate's `a:not(.dropin-design a)` at (0,1,2). */
+.rzr-block a:any-link {
+  color: inherit;
+  font: inherit;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+:where(a, button, input, select, textarea):focus-visible {
+  outline: 2px solid var(--rzr-green);
+  outline-offset: 3px;
+}
+
+/* ------------------------------------------------------------------ *
+ * 6. Primitives
+ *
+ * The layout and component shapes blocks compose from. A block that needs
+ * a centred column, an eyebrow, a section heading or a button uses these
+ * rather than restating them.
+ * ------------------------------------------------------------------ */
+
+.rzr-shell {
+  width: var(--rzr-shell);
+  margin-inline: auto;
+}
+
+/* Razer sections are full-bleed: the dark surface has to reach the
+   viewport edge. scripts.js stamps .rzr-section on the EDS section
+   wrapping any razer-* block, which out-ranks the styles.css section
+   margin and max-width. */
+main > .section.rzr-section {
+  margin: 0;
+  padding: 0;
+  background: var(--rzr-surface-base);
+}
+
+main > .section.rzr-section > div {
+  max-width: unset;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* The EDS section reveal animation fights the header's own fixed
+   positioning and the hero's entrance, so Razer sections opt out. */
+main > .section.rzr-section.appear > div {
+  animation: none;
+}
+
+/* Blocks paint their own surfaces on top of the page foundation, and
+   their controls inherit rather than falling back to the UA styles. */
+.rzr-block :is(button, input, select, textarea) {
+  font: inherit;
+  color: inherit;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.rzr-eyebrow {
+  color: var(--rzr-green);
+  font-family: var(--rzr-font-body);
+  font-size: var(--rzr-body-xs-size);
+  font-weight: 400;
+  line-height: var(--rzr-body-xs-lh);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin: 0 0 16px;
+}
+
+.rzr-card-index {
+  color: var(--rzr-text-tertiary);
+  font-family: var(--rzr-font-condensed);
+  font-size: var(--rzr-body-xs-size);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.rzr-section-heading {
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: end;
+  gap: 16px;
+  margin-bottom: 28px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--rzr-surface-line);
+}
+
+.rzr-section-heading h2 {
+  margin: 0;
+  font-size: var(--rzr-display-2-size);
+  font-weight: var(--rzr-display-2-weight);
+  line-height: var(--rzr-display-2-lh);
+}
+
+.rzr-section-heading h2 span {
+  color: var(--rzr-green);
+}
+
+.rzr-section-heading > p {
+  margin: 0;
+  max-width: 520px;
+  color: var(--rzr-text-tertiary);
+  font-size: var(--rzr-body-size);
+  line-height: var(--rzr-body-lh);
+}
+
+@media (min-width: 681px) {
+  .rzr-section-heading {
+    margin-bottom: 40px;
+    padding-bottom: 24px;
+  }
+}
+
+@media (min-width: 821px) {
+  .rzr-section-heading {
+    grid-template-columns: minmax(0, 1.3fr) minmax(280px, 0.7fr);
+    gap: 48px;
+  }
+}
+
+/* Buttons.
+ *
+ * EDS styles `main a.button:any-link` at (0,2,2); the :any-link variants
+ * below are (0,3,2) so the Razer treatment wins outright rather than by
+ * load order. */
+.rzr-button-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.rzr-button,
+main a.rzr-button:any-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-height: 40px;
+  padding-inline: 17px;
+  border: 0;
+  border-radius: var(--rzr-radius-sm);
+  font-family: var(--rzr-font-body);
+  font-size: var(--rzr-body-size);
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: normal;
+  text-transform: none;
+  cursor: pointer;
+  transition:
+    color var(--rzr-duration-slow) ease,
+    background var(--rzr-duration-base) ease,
+    border-color var(--rzr-duration-base) ease,
+    box-shadow var(--rzr-duration-base) ease;
+}
+
+@media (min-width: 681px) {
+  .rzr-button,
+  main a.rzr-button:any-link {
+    padding-inline: 16px;
+  }
+}
+
+.rzr-button-primary,
+main a.rzr-button-primary:any-link {
+  background: var(--rzr-green);
+  color: var(--rzr-text-on-accent);
+  border-color: var(--rzr-green);
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.rzr-button-primary:hover {
+  background: #5ce843;
+  color: var(--rzr-text-on-accent);
+}
+
+.rzr-button-ghost,
+main a.rzr-button-ghost:any-link {
+  min-height: 0;
+  padding: 15px 30px 15px 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+  color: var(--rzr-text-primary);
+}
+
+.rzr-button-ghost:hover {
+  background: none;
+  color: var(--rzr-green);
+}
+
+.rzr-button-ghost span {
+  color: var(--rzr-green);
+  margin-left: 5px;
+  font-size: var(--rzr-display-3-size);
+}
+
+.rzr-button-outline,
+main a.rzr-button-outline:any-link {
+  background: none;
+  border: 1px solid #555;
+  color: var(--rzr-text-primary);
+}
+
+.rzr-button-outline:hover {
+  border-color: var(--rzr-text-primary);
+  color: var(--rzr-text-primary);
+  background: rgb(255 255 255 / 5%);
+}
+
+.rzr-button:disabled {
+  opacity: 0.42;
+  cursor: not-allowed;
+}
+
+/* Razer sets its primary calls to action in uppercase; the dropins bake
+   the label casing into the markup, so it has to be done in CSS. */
+.dropin-button--primary,
+.dropin-button--secondary {
+  text-transform: uppercase;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+}

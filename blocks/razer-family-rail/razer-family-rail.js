@@ -157,7 +157,7 @@ export default function decorate(block) {
   block.textContent = '';
   if (!families.length) return;
 
-  const scroll = el('div', 'mouse-family-scroll rzrm-shell');
+  const scroll = el('div', 'mouse-family-scroll rzr-shell');
 
   families.forEach((family) => {
     const link = el('a');

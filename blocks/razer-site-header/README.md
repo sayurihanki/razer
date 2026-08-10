@@ -5,9 +5,9 @@
 `razer-site-header` reproduces the full site chrome from the Razer
 gaming-mice demo page: skip link, black global nav with green underline
 hover states, the Store mega menu, the category nav strip, a shared
-backdrop, the mobile navigation panel, the light-themed cart panel, and
-the live-search dialog. All content is baked in, so a table containing
-only the block name renders the exact source header.
+backdrop, the mobile navigation panel, the cart drawer, and the
+live-search dialog. All content is baked in, so a table containing only
+the block name renders the exact source header.
 
 This is the site-wide header. Authored pages place the block themselves;
 every other page — the storefront pages inherited from the boilerplate
@@ -88,6 +88,19 @@ Copy-paste artifacts (regenerate with
   unless `cart-autoopen` is `false`. This is why
   `collapseBoilerplateHeader` hiding the boilerplate header on Razer
   pages is correct: the Razer header now owns a real cart.
+- **Cart drawer skin:** the dropin ships neutral light-theme markup, so
+  `razer-site-header.css` re-points the dropin design tokens
+  (`--color-brand-500`, the neutral ramp, `--type-base-font-family`) on
+  the `.dropin-design` elements themselves — declaring them on an
+  ancestor loses to the block's own class — and dresses the result:
+  panel head, item cards with a hover-lit green rail, the configuration
+  list as a condensed-label build sheet, and a pinned checkout bar. The
+  panel is a flex column and the chain continues through the fragment's
+  section/wrapper/block so the item list scrolls on its own. The
+  dropin's own "Shopping Cart (n)" heading and raw SKU line are hidden:
+  the drawer head already carries the count and the configuration rows
+  already name the variant. Catalog placeholder images are dropped so a
+  missing product shot reads as an empty lit tile, not a white square.
 - **Live search:** the dialog ranks the real product catalog — imported
   from `razer-product-explorer` (`DEFAULT_PRODUCTS`), so both blocks
   share one source of truth — plus the `search-popular` quick-link

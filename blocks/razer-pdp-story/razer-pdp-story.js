@@ -247,7 +247,7 @@ function buildBand(config) {
   scrim.setAttribute('aria-hidden', 'true');
   band.append(scrim);
 
-  const inner = el('div', 'band-inner rzrm-shell');
+  const inner = el('div', 'band-inner rzr-shell');
   if (config.kicker) inner.append(el('p', 'story-kicker', [text(config.kicker)]));
   if (config.heading) inner.append(el('h2', 'story-heading', [text(config.heading)]));
   if (config.body) inner.append(el('p', 'story-body', [text(config.body)]));
@@ -261,7 +261,7 @@ function formatStat(value, suffix) {
 
 function buildStats(config, stats) {
   if (!stats.length) return null;
-  const list = el('ul', 'story-stats rzrm-shell');
+  const list = el('ul', 'story-stats rzr-shell');
   list.setAttribute('aria-label', config['stats-label']);
   stats.forEach((stat) => {
     list.append(el('li', '', [
@@ -306,7 +306,7 @@ function buildTileFeature(entry) {
 
 function buildFeatures(features) {
   if (!features.length) return null;
-  const wrap = el('div', 'story-features rzrm-shell');
+  const wrap = el('div', 'story-features rzr-shell');
   const tiles = el('div', 'feature-tiles');
   tiles.dataset.reveal = '';
   features.forEach((entry) => {

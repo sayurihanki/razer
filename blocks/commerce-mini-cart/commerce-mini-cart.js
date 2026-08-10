@@ -50,6 +50,8 @@ export default async function decorate(block) {
   shadowWrapper.appendChild(updateMessage);
 
   const showMessage = (message) => {
+    // Unauthored placeholders would otherwise flash an empty banner.
+    if (!message) return;
     updateMessage.textContent = message;
     updateMessage.classList.add('commerce-mini-cart__update-message--visible');
     shadowWrapper.classList.add('commerce-mini-cart__message-wrapper--visible');

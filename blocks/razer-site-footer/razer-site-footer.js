@@ -67,22 +67,22 @@ export const DEFAULT_COLUMNS = [
 
 export const DEFAULT_COLUMN_LINKS = [
   {
-    columnKey: 'column-01', key: 'link-01', label: 'RazerStores', href: 'https://www.razer.com/razerstores',
+    columnKey: 'column-01', key: 'link-01', label: 'RazerStores', href: '/pc/gaming-mice',
   },
   {
-    columnKey: 'column-01', key: 'link-02', label: 'Store Locator', href: 'https://www.razer.com/store-finder',
+    columnKey: 'column-01', key: 'link-02', label: 'Store Locator', href: '/support',
   },
   {
     columnKey: 'column-01', key: 'link-03', label: 'Purchase Programs', href: 'https://www.razer.com/corporate-programs',
   },
   {
-    columnKey: 'column-01', key: 'link-04', label: 'Only at Razer', href: 'https://www.razer.com/exclusives',
+    columnKey: 'column-01', key: 'link-04', label: 'Only at Razer', href: '/pc/gaming-mice',
   },
   {
-    columnKey: 'column-01', key: 'link-05', label: 'Razer Silver', href: 'https://www.razer.com/razer-silver',
+    columnKey: 'column-01', key: 'link-05', label: 'Razer Silver', href: '/pc/gaming-mice',
   },
   {
-    columnKey: 'column-02', key: 'link-01', label: 'Technology', href: 'https://www.razer.com/technology',
+    columnKey: 'column-02', key: 'link-01', label: 'Technology', href: '/pc/gaming-mice',
   },
   {
     columnKey: 'column-02', key: 'link-02', label: 'Chroma RGB', href: 'https://www.razer.com/chroma',
@@ -91,25 +91,25 @@ export const DEFAULT_COLUMN_LINKS = [
     columnKey: 'column-02', key: 'link-03', label: 'Concepts', href: 'https://www.razer.com/concepts',
   },
   {
-    columnKey: 'column-02', key: 'link-04', label: 'Esports', href: 'https://www.razer.com/esports',
+    columnKey: 'column-02', key: 'link-04', label: 'Esports', href: '/pc/gaming-mice',
   },
   {
     columnKey: 'column-02', key: 'link-05', label: 'Collabs', href: 'https://www.razer.com/collabs',
   },
   {
-    columnKey: 'column-03', key: 'link-01', label: 'Get Help', href: 'https://support.razer.com/',
+    columnKey: 'column-03', key: 'link-01', label: 'Get Help', href: '/support',
   },
   {
-    columnKey: 'column-03', key: 'link-02', label: 'Registration & Warranty', href: 'https://www.razer.com/product-registration',
+    columnKey: 'column-03', key: 'link-02', label: 'Registration & Warranty', href: '/customer/account',
   },
   {
-    columnKey: 'column-03', key: 'link-03', label: 'RazerStore Support', href: 'https://www.razer.com/store-faq',
+    columnKey: 'column-03', key: 'link-03', label: 'RazerStore Support', href: '/support',
   },
   {
     columnKey: 'column-03', key: 'link-04', label: 'RazerCare', href: 'https://www.razer.com/razercare',
   },
   {
-    columnKey: 'column-03', key: 'link-05', label: 'Manage Razer ID', href: 'https://razerid.razer.com/',
+    columnKey: 'column-03', key: 'link-05', label: 'Manage Razer ID', href: '/customer/account',
   },
   {
     columnKey: 'column-03', key: 'link-06', label: 'Accessibility Statement', href: 'https://www.razer.com/accessibility',
@@ -129,8 +129,8 @@ export const DEFAULT_COLUMN_LINKS = [
 ];
 
 export const DEFAULT_LEGAL_LINKS = [
-  { key: 'legal-01', label: 'Legal Terms', href: 'https://www.razer.com/legal' },
-  { key: 'legal-02', label: 'Privacy Policy', href: 'https://www.razer.com/legal/privacy-policy' },
+  { key: 'legal-01', label: 'Legal Terms', href: '/privacy-policy' },
+  { key: 'legal-02', label: 'Privacy Policy', href: '/privacy-policy' },
   { key: 'legal-03', label: 'Cookie Policy', href: 'https://www.razer.com/cookie-policy' },
 ];
 
@@ -305,12 +305,12 @@ export default function decorate(block) {
     });
 
     footer.append(el('section', 'newsletter-section', [
-      el('div', 'rzrm-shell newsletter-grid', [copy, form]),
+      el('div', 'rzr-shell newsletter-grid', [copy, form]),
     ]));
   }
 
   /* Main columns */
-  const main = el('div', 'rzrm-shell footer-main');
+  const main = el('div', 'rzr-shell footer-main');
 
   const brand = el('div', 'footer-brand');
   if (config.logo) {
@@ -357,7 +357,7 @@ export default function decorate(block) {
   footer.append(main);
 
   /* Legal row */
-  const legal = el('div', 'rzrm-shell footer-legal');
+  const legal = el('div', 'rzr-shell footer-legal');
   if (config.copyright) legal.append(el('span', '', [text(config.copyright)]));
   if (legalLinks.length) {
     const links = el('div');

@@ -159,7 +159,7 @@ export default function decorate(block) {
 
   block.textContent = '';
 
-  const copy = el('div', 'plp-hero-copy rzrm-shell');
+  const copy = el('div', 'plp-hero-copy rzr-shell');
   if (content.heading) {
     const heading = el('h1', '', [document.createTextNode(content.heading)]);
     if (content.headingId) heading.id = content.headingId;

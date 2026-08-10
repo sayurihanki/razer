@@ -91,25 +91,25 @@ export const DEFAULT_NAV = [
     key: 'nav-02', label: 'PC', href: '/pc/gaming-mice', kind: 'link',
   },
   {
-    key: 'nav-03', label: 'Console', href: 'https://www.razer.com/console-gaming', kind: 'link',
+    key: 'nav-03', label: 'Console', href: '/pc/gaming-mice', kind: 'link',
   },
   {
-    key: 'nav-04', label: 'Mobile', href: 'https://www.razer.com/mobile', kind: 'link',
+    key: 'nav-04', label: 'Mobile', href: '/pc/gaming-mice', kind: 'link',
   },
   {
-    key: 'nav-05', label: 'Furniture & Lifestyle', href: 'https://www.razer.com/lifestyle', kind: 'link',
+    key: 'nav-05', label: 'Furniture & Lifestyle', href: '/pc/gaming-mice', kind: 'link',
   },
   {
-    key: 'nav-06', label: 'Gold & Silver', href: 'https://www.razer.com/razer-gold', kind: 'link',
+    key: 'nav-06', label: 'Gold & Silver', href: '/pc/gaming-mice', kind: 'link',
   },
   {
-    key: 'nav-07', label: 'Community', href: 'https://www.razer.com/community', kind: 'link',
+    key: 'nav-07', label: 'Community', href: '/pc/gaming-mice', kind: 'link',
   },
   {
-    key: 'nav-08', label: 'Razer.AI', href: 'https://www.razer.ai/', kind: 'link',
+    key: 'nav-08', label: 'Razer.AI', href: '/pc/gaming-mice', kind: 'link',
   },
   {
-    key: 'nav-09', label: 'Support', href: 'https://support.razer.com/', kind: 'link',
+    key: 'nav-09', label: 'Support', href: '/support', kind: 'link',
   },
 ];
 
@@ -125,40 +125,40 @@ export const DEFAULT_MEGA_LINKS = [
     columnKey: 'explore', key: 'link-01', label: 'Shop the latest', href: '/pc/gaming-mice', feature: true,
   },
   {
-    columnKey: 'explore', key: 'link-02', label: 'Find your gear', href: '/gear-finder', feature: true,
+    columnKey: 'explore', key: 'link-02', label: 'Find your gear', href: '/pc/gaming-mice', feature: true,
   },
   {
-    columnKey: 'explore', key: 'link-03', label: 'Only at Razer', href: 'https://www.razer.com/exclusives', feature: true,
+    columnKey: 'explore', key: 'link-03', label: 'Only at Razer', href: '/pc/gaming-mice', feature: true,
   },
   {
-    columnKey: 'categories', key: 'link-01', label: 'Laptops & Accessories', href: 'https://www.razer.com/gaming-laptops', feature: false,
+    columnKey: 'categories', key: 'link-01', label: 'Laptops & Accessories', href: '/pc/gaming-mice', feature: false,
   },
   {
     columnKey: 'categories', key: 'link-02', label: 'Mice', href: '/pc/gaming-mice', feature: false,
   },
   {
-    columnKey: 'categories', key: 'link-03', label: 'Mats', href: 'https://www.razer.com/pc/gaming-mouse-mats', feature: false,
+    columnKey: 'categories', key: 'link-03', label: 'Mats', href: '/pc/gaming-mice', feature: false,
   },
   {
-    columnKey: 'categories', key: 'link-04', label: 'Keyboards', href: 'https://www.razer.com/pc/gaming-keyboards-and-keypads', feature: false,
+    columnKey: 'categories', key: 'link-04', label: 'Keyboards', href: '/pc/gaming-mice', feature: false,
   },
   {
     columnKey: 'featured', key: 'link-01', label: 'Razer Basilisk V3 Pro 35K', href: '/gaming-mice/razer-basilisk-v3-pro-35k/rz01-05240100-r3u1', feature: false,
   },
   {
-    columnKey: 'featured', key: 'link-02', label: 'Razer Viper V3 Pro', href: 'https://www.razer.com/gaming-mice/Razer-Viper-V3-Pro/RZ01-05120100-R3U1', feature: false,
+    columnKey: 'featured', key: 'link-02', label: 'Razer Viper V3 Pro', href: '/pc/gaming-mice', feature: false,
   },
   {
-    columnKey: 'featured', key: 'link-03', label: 'Razer Blade 18', href: 'https://www.razer.com/gaming-laptops/razer-blade-18', feature: false,
+    columnKey: 'featured', key: 'link-03', label: 'Razer Blade 18', href: '/pc/gaming-mice', feature: false,
   },
   {
-    columnKey: 'more', key: 'link-01', label: 'RazerStores', href: 'https://www.razer.com/razerstores', feature: false,
+    columnKey: 'more', key: 'link-01', label: 'RazerStores', href: '/pc/gaming-mice', feature: false,
   },
   {
-    columnKey: 'more', key: 'link-02', label: 'Help', href: 'https://support.razer.com/', feature: false,
+    columnKey: 'more', key: 'link-02', label: 'Help', href: '/support', feature: false,
   },
   {
-    columnKey: 'more', key: 'link-03', label: 'FAQ', href: 'https://www.razer.com/store-faq', feature: false,
+    columnKey: 'more', key: 'link-03', label: 'FAQ', href: '/support', feature: false,
   },
   {
     columnKey: 'more', key: 'link-04', label: 'RazerCare', href: 'https://www.razer.com/razercare', feature: false,
@@ -166,33 +166,33 @@ export const DEFAULT_MEGA_LINKS = [
 ];
 
 export const DEFAULT_CATEGORIES = [
-  { key: 'category-01', label: 'Laptops & Accessories', href: 'https://www.razer.com/gaming-laptops' },
+  { key: 'category-01', label: 'Laptops & Accessories', href: '/pc/gaming-mice' },
   { key: 'category-02', label: 'Mice', href: '/pc/gaming-mice' },
-  { key: 'category-03', label: 'Mats', href: 'https://www.razer.com/pc/gaming-mouse-mats' },
-  { key: 'category-04', label: 'Keyboards', href: 'https://www.razer.com/pc/gaming-keyboards-and-keypads' },
-  { key: 'category-05', label: 'Controllers', href: 'https://www.razer.com/console-gaming/controllers' },
-  { key: 'category-06', label: 'Headsets', href: 'https://www.razer.com/pc/gaming-headsets-and-audio' },
-  { key: 'category-07', label: 'Speakers', href: 'https://www.razer.com/pc/gaming-speakers' },
-  { key: 'category-08', label: 'Chairs', href: 'https://www.razer.com/gaming-chairs' },
-  { key: 'category-09', label: 'Content Creation', href: 'https://www.razer.com/content-creation' },
-  { key: 'category-10', label: 'Skins', href: 'https://www.razer.com/skins' },
-  { key: 'category-11', label: 'PC Components', href: 'https://www.razer.com/pc/components' },
-  { key: 'category-12', label: 'Software', href: 'https://www.razer.com/software' },
+  { key: 'category-03', label: 'Mats', href: '/pc/gaming-mice' },
+  { key: 'category-04', label: 'Keyboards', href: '/pc/gaming-mice' },
+  { key: 'category-05', label: 'Controllers', href: '/pc/gaming-mice' },
+  { key: 'category-06', label: 'Headsets', href: '/pc/gaming-mice' },
+  { key: 'category-07', label: 'Speakers', href: '/pc/gaming-mice' },
+  { key: 'category-08', label: 'Chairs', href: '/pc/gaming-mice' },
+  { key: 'category-09', label: 'Content Creation', href: '/pc/gaming-mice' },
+  { key: 'category-10', label: 'Skins', href: '/pc/gaming-mice' },
+  { key: 'category-11', label: 'PC Components', href: '/pc/gaming-mice' },
+  { key: 'category-12', label: 'Software', href: '/pc/gaming-mice' },
 ];
 
 export const DEFAULT_MOBILE_LINKS = [
   { key: 'mobile-01', label: 'Store', href: '/pc/gaming-mice' },
   { key: 'mobile-02', label: 'PC', href: '/pc/gaming-mice' },
-  { key: 'mobile-03', label: 'Console', href: 'https://www.razer.com/console-gaming' },
-  { key: 'mobile-04', label: 'Mobile', href: 'https://www.razer.com/mobile' },
-  { key: 'mobile-05', label: 'Furniture & Lifestyle', href: 'https://www.razer.com/lifestyle' },
-  { key: 'mobile-06', label: 'Gold & Silver', href: 'https://www.razer.com/razer-gold' },
-  { key: 'mobile-07', label: 'Community', href: 'https://www.razer.com/community' },
-  { key: 'mobile-08', label: 'Razer.AI', href: 'https://www.razer.ai/' },
-  { key: 'mobile-09', label: 'Support', href: 'https://support.razer.com/' },
+  { key: 'mobile-03', label: 'Console', href: '/pc/gaming-mice' },
+  { key: 'mobile-04', label: 'Mobile', href: '/pc/gaming-mice' },
+  { key: 'mobile-05', label: 'Furniture & Lifestyle', href: '/pc/gaming-mice' },
+  { key: 'mobile-06', label: 'Gold & Silver', href: '/pc/gaming-mice' },
+  { key: 'mobile-07', label: 'Community', href: '/pc/gaming-mice' },
+  { key: 'mobile-08', label: 'Razer.AI', href: '/pc/gaming-mice' },
+  { key: 'mobile-09', label: 'Support', href: '/support' },
 ];
 
-export const DEFAULT_PANEL_CTA = { label: 'Find your gear', href: '/gear-finder' };
+export const DEFAULT_PANEL_CTA = { label: 'Find your gear', href: '/pc/gaming-mice' };
 export const DEFAULT_CART_CTA = { label: 'Browse gaming mice', href: '/pc/gaming-mice' };
 
 /**
@@ -217,10 +217,10 @@ export const DEFAULT_SEARCH_INDEX = [
     key: 'search-02', label: 'Razer Basilisk V3 Pro 35K', href: '/gaming-mice/razer-basilisk-v3-pro-35k/rz01-05240100-r3u1', terms: 'basilisk ergonomic wireless 35k',
   },
   {
-    key: 'search-03', label: 'Find your gear', href: '/gear-finder', terms: 'quiz configurator compare guide finder',
+    key: 'search-03', label: 'Find your gear', href: '/pc/gaming-mice', terms: 'quiz configurator compare guide finder',
   },
   {
-    key: 'search-04', label: 'Razer Blade laptops', href: 'https://www.razer.com/gaming-laptops', terms: 'blade laptop pc',
+    key: 'search-04', label: 'Razer Blade laptops', href: '/pc/gaming-mice', terms: 'blade laptop pc',
   },
 ];
 
@@ -591,11 +591,11 @@ export default function decorate(block) {
     : null;
   const actions = el('div', 'nav-actions', [searchButton, accountLink, cartButton, menuButton]);
 
-  const globalNav = el('nav', 'global-nav rzrm-shell', [brand, desktopNav, actions]);
+  const globalNav = el('nav', 'global-nav rzr-shell', [brand, desktopNav, actions]);
   globalNav.setAttribute('aria-label', config['nav-aria-label']);
 
   /* Mega menu */
-  const megaGrid = el('div', 'rzrm-shell mega-grid');
+  const megaGrid = el('div', 'rzr-shell mega-grid');
   megaColumns.forEach((column) => {
     const columnNode = el('div', '', [el('p', 'menu-label', [text(column.label)])]);
     megaLinks
@@ -614,7 +614,7 @@ export default function decorate(block) {
   megaMenu.setAttribute('aria-hidden', 'true');
 
   /* Category nav */
-  const categoryScroll = el('div', 'rzrm-shell category-scroll');
+  const categoryScroll = el('div', 'rzr-shell category-scroll');
   categories.forEach((category) => {
     const link = el('a', '', [text(category.label)]);
     if (category.href) link.href = category.href;

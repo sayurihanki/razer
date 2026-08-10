@@ -19,7 +19,7 @@ const CLEAR_TOKEN = '__empty__';
 const DEFAULT_CONTENT = {
   text: 'Gear built for every grip. Compare the full lineup or use the guided finder.',
   linkLabel: 'Find your mouse >',
-  linkHref: '/gear-finder',
+  linkHref: '/pc/gaming-mice',
 };
 
 function cellText(cell) {

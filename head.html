@@ -41,6 +41,12 @@
 
 <link rel="stylesheet" href="/styles/styles.css" />
 
+<!-- The Razer visual language: tokens, page foundation and primitives.
+     Loaded after styles.css so its restatement of the boilerplate ramps
+     wins at equal specificity, and unconditionally so every page gets the
+     same foundation whether or not it carries a Razer block. -->
+<link rel="stylesheet" href="/styles/razer-design-system.css" />
+
 <script nonce="aem" type="module">
     if (!(HTMLScriptElement.supports?.('importmap'))) {
         import('/scripts/__dropins__/tools/shims/importmap.js');

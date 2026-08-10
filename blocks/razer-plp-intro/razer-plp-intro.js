@@ -108,7 +108,7 @@ export default function decorate(block) {
     copy.append(el('p', '', [document.createTextNode(content.body)]));
   }
 
-  const section = el('section', 'plp-intro rzrm-shell', [copy]);
+  const section = el('section', 'plp-intro rzr-shell', [copy]);
   if (content.anchorId) section.id = content.anchorId;
 
   if (content.ctaLabel) {

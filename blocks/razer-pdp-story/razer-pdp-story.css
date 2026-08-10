@@ -3,207 +3,12 @@
  * (backdrop band, stat rail, media feature sections, numeral tiles).
  *
  * All selectors are scoped to `.razer-pdp-story` / its EDS
- * container. The rzrm token preamble below is duplicated across all
- * razer-mice blocks and guarded by tests/razer-mice/tokens.test.mjs.
+ * container. Tokens, typography, links, focus and the full-bleed section reset
+ * come from styles/razer-design-system.css, which every page loads;
+ * this file adds only what is specific to the block.
  * Breakpoints mirror the source page (680/980/1260px), not the repo
  * default ladder — required for pixel parity.
  */
-
-/* rzrm:tokens:start */
-
-/*
- * Shared Razer-mice design tokens. Duplicated verbatim in every
- * razer-mice block stylesheet so each block stays copy-paste
- * independent. tests/razer-mice/tokens.test.mjs asserts the copies
- * never drift. Values mirror the final (--rzr-*) token layer of the
- * source page, with RazerF5 (proprietary) removed from font stacks.
- */
-
-@font-face {
-  font-family: "Titillium Web";
-  font-style: normal;
-  font-weight: 300;
-  font-display: swap;
-  src: url("/fonts/razer-mice/titillium-web/titillium-web-300-latin.woff2") format("woff2");
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-
-@font-face {
-  font-family: "Titillium Web";
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url("/fonts/razer-mice/titillium-web/titillium-web-400-latin.woff2") format("woff2");
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-
-@font-face {
-  font-family: "Titillium Web";
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: url("/fonts/razer-mice/titillium-web/titillium-web-600-latin.woff2") format("woff2");
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-
-@font-face {
-  font-family: "Titillium Web";
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-  src: url("/fonts/razer-mice/titillium-web/titillium-web-700-latin.woff2") format("woff2");
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-
-@font-face {
-  font-family: "Roboto Condensed";
-  font-style: normal;
-  font-weight: 300 700;
-  font-display: swap;
-  src: url("/fonts/razer-mice/roboto-condensed/roboto-condensed-var-latin.woff2") format("woff2");
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-
-.razer-pdp-story,
-.razer-pdp-story-container {
-  --rzrm-green: #44d62c;
-  --rzrm-green-glow: #4f4;
-  --rzrm-green-deep: #00754e;
-  --rzrm-surface-base: #000;
-  --rzrm-surface-raised: #111;
-  --rzrm-surface-card: #212121;
-  --rzrm-surface-card-alt: #222;
-  --rzrm-surface-line: #333;
-  --rzrm-light-base: #fff;
-  --rzrm-light-raised: #efefef;
-  --rzrm-light-sunken: #eee;
-  --rzrm-text-primary: #fff;
-  --rzrm-text-secondary: #bbb;
-  --rzrm-text-tertiary: #999;
-  --rzrm-text-muted: #888;
-  --rzrm-text-on-accent: #000;
-  --rzrm-info: #28aadc;
-  --rzrm-scrim-medium: rgb(0 0 0 / 50%);
-  --rzrm-scrim-heavy: rgb(0 0 0 / 80%);
-  --rzrm-font-display: "Titillium Web", "Roboto Condensed", system-ui, sans-serif;
-  --rzrm-font-body: roboto, "Helvetica Neue", arial, "Noto Sans", sans-serif;
-  --rzrm-font-condensed: "Roboto Condensed", sans-serif;
-  --rzrm-display-1-size: 32px;
-  --rzrm-display-1-weight: 700;
-  --rzrm-display-1-lh: 35px;
-  --rzrm-display-2-size: 25px;
-  --rzrm-display-2-weight: 500;
-  --rzrm-display-2-lh: 28px;
-  --rzrm-display-3-size: 20px;
-  --rzrm-display-3-weight: 400;
-  --rzrm-display-3-lh: 24px;
-  --rzrm-body-lg-size: 18px;
-  --rzrm-body-lg-lh: 24px;
-  --rzrm-body-size: 16px;
-  --rzrm-body-lh: 24px;
-  --rzrm-body-sm-size: 14px;
-  --rzrm-body-sm-lh: 24px;
-  --rzrm-body-xs-size: 12px;
-  --rzrm-body-xs-lh: 18px;
-  --rzrm-radius-xs: 2px;
-  --rzrm-radius-sm: 3px;
-  --rzrm-radius-md: 4px;
-  --rzrm-radius-lg: 6px;
-  --rzrm-radius-xl: 10px;
-  --rzrm-radius-2xl: 12px;
-  --rzrm-focus-ring: inset 0 0 0 1.5px #fff, 0 0 8px 2px rgb(68 255 68 / 60%);
-  --rzrm-shadow-sm: 0 -1px 10px rgb(172 171 171 / 30%);
-  --rzrm-shadow-md: 0 6px 14px rgb(25 28 33 / 30%);
-  --rzrm-shadow-lg: 0 32px 68px rgb(0 0 0 / 30%);
-  --rzrm-ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
-  --rzrm-ease-slow: cubic-bezier(0.4, 0, 0.6, 1);
-  --rzrm-duration-fast: 0.24s;
-  --rzrm-duration-base: 0.3s;
-  --rzrm-duration-slow: 0.5s;
-  --rzrm-duration-xslow: 0.8s;
-  --rzrm-scroll-offset: 104px;
-  --rzrm-shell: calc(100vw - 24px);
-}
-
-@media (min-width: 681px) {
-  .razer-pdp-story,
-  .razer-pdp-story-container {
-    --rzrm-display-1-size: 40px;
-    --rzrm-display-1-lh: 44px;
-    --rzrm-display-2-size: 28px;
-    --rzrm-display-2-lh: 31px;
-    --rzrm-shell: min(960px, calc(100vw - 32px));
-  }
-}
-
-@media (min-width: 1101px) {
-  .razer-pdp-story,
-  .razer-pdp-story-container {
-    --rzrm-shell: min(1200px, calc(100vw - 48px));
-  }
-}
-
-/* Container reset: paint the dark theme edge-to-edge inside the EDS section.
-   The main > .section qualifier out-ranks the styles.css section margin. */
-main > .section.razer-pdp-story-container,
-.razer-pdp-story-container {
-  margin: 0;
-  padding: 0;
-  background: var(--rzrm-surface-base, #000);
-}
-
-.razer-pdp-story-container > div,
-.razer-pdp-story-container .razer-pdp-story-wrapper {
-  max-width: unset;
-  width: 100%;
-  margin: 0;
-  padding: 0;
-}
-
-main > .section.appear > div > .razer-pdp-story-wrapper {
-  animation: none;
-}
-
-.razer-pdp-story {
-  background: var(--rzrm-surface-base, #000);
-  color: var(--rzrm-text-primary, #fff);
-  font-family: var(--rzrm-font-body, roboto, "Helvetica Neue", arial, sans-serif);
-  font-size: var(--rzrm-body-size, 16px);
-  line-height: var(--rzrm-body-lh, 24px);
-}
-
-.razer-pdp-story .rzrm-shell {
-  width: var(--rzrm-shell, min(1200px, calc(100vw - 48px)));
-  margin: 0 auto;
-}
-
-.razer-pdp-story h1,
-.razer-pdp-story h2,
-.razer-pdp-story h3 {
-  font-family: var(--rzrm-font-display, "Titillium Web", system-ui, sans-serif);
-}
-
-.razer-pdp-story img {
-  max-width: 100%;
-  display: block;
-}
-
-.razer-pdp-story a {
-  color: inherit;
-  text-decoration: none;
-}
-
-.razer-pdp-story button {
-  font: inherit;
-  color: inherit;
-}
-
-.razer-pdp-story :focus-visible {
-  outline: 2px solid var(--rzrm-green, #44d62c);
-  outline-offset: 3px;
-}
-
-/* rzrm:tokens:end */
 
 /* ── Story shell ────────────────────────────────────────────────── */
 
@@ -246,12 +51,12 @@ main > .section.appear > div > .razer-pdp-story-wrapper {
 
 .razer-pdp-story .story-kicker {
   margin: 0 0 10px;
-  font-family: var(--rzrm-font-condensed, "Roboto Condensed", sans-serif);
-  font-size: var(--rzrm-body-xs-size, 12px);
-  line-height: var(--rzrm-body-xs-lh, 18px);
+  font-family: var(--rzr-font-condensed, "Roboto Condensed", sans-serif);
+  font-size: var(--rzr-body-xs-size, 12px);
+  line-height: var(--rzr-body-xs-lh, 18px);
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--rzrm-green, #44d62c);
+  color: var(--rzr-green, #44d62c);
 }
 
 .razer-pdp-story .story-heading {
@@ -261,15 +66,15 @@ main > .section.appear > div > .razer-pdp-story-wrapper {
   font-weight: 700;
   line-height: 1.06;
   letter-spacing: -0.01em;
-  color: var(--rzrm-text-primary, #fff);
+  color: var(--rzr-text-primary, #fff);
 }
 
 .razer-pdp-story .story-body {
   margin: 0;
   max-width: 560px;
-  font-size: var(--rzrm-body-lg-size, 18px);
+  font-size: var(--rzr-body-lg-size, 18px);
   line-height: 26px;
-  color: var(--rzrm-light-sunken, #eee);
+  color: var(--rzr-light-sunken, #eee);
 }
 
 /* ── Stat rail ──────────────────────────────────────────────────── */
@@ -283,7 +88,7 @@ main > .section.appear > div > .razer-pdp-story-wrapper {
   gap: 1px;
   background: rgb(255 255 255 / 8%);
   border: 1px solid rgb(255 255 255 / 8%);
-  border-radius: var(--rzrm-radius-xl, 10px);
+  border-radius: var(--rzr-radius-xl, 10px);
   overflow: hidden;
 }
 
@@ -295,23 +100,23 @@ main > .section.appear > div > .razer-pdp-story-wrapper {
 
 .razer-pdp-story .story-stats strong {
   display: block;
-  font-family: var(--rzrm-font-display, "Titillium Web", sans-serif);
+  font-family: var(--rzr-font-display, "Titillium Web", sans-serif);
   font-size: clamp(26px, 3.6vw, 36px);
   font-weight: 700;
   line-height: 1.1;
-  color: var(--rzrm-green, #44d62c);
+  color: var(--rzr-green, #44d62c);
   font-variant-numeric: tabular-nums;
 }
 
 .razer-pdp-story .story-stats span {
   display: block;
   margin-top: 4px;
-  font-family: var(--rzrm-font-condensed, "Roboto Condensed", sans-serif);
-  font-size: var(--rzrm-body-xs-size, 12px);
-  line-height: var(--rzrm-body-xs-lh, 18px);
+  font-family: var(--rzr-font-condensed, "Roboto Condensed", sans-serif);
+  font-size: var(--rzr-body-xs-size, 12px);
+  line-height: var(--rzr-body-xs-lh, 18px);
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--rzrm-text-tertiary, #999);
+  color: var(--rzr-text-tertiary, #999);
 }
 
 /* ── Media feature sections ─────────────────────────────────────── */
@@ -329,7 +134,7 @@ main > .section.appear > div > .razer-pdp-story-wrapper {
 }
 
 .razer-pdp-story .feature-media-frame {
-  border-radius: var(--rzrm-radius-xl, 10px);
+  border-radius: var(--rzr-radius-xl, 10px);
   border: 1px solid rgb(255 255 255 / 7%);
   overflow: hidden;
   background: #0a0a0a;
@@ -345,11 +150,11 @@ main > .section.appear > div > .razer-pdp-story-wrapper {
 
 .razer-pdp-story .card-index {
   margin: 0 0 10px;
-  font-family: var(--rzrm-font-condensed, "Roboto Condensed", sans-serif);
-  font-size: var(--rzrm-body-xs-size, 12px);
+  font-family: var(--rzr-font-condensed, "Roboto Condensed", sans-serif);
+  font-size: var(--rzr-body-xs-size, 12px);
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--rzrm-text-muted, #888);
+  color: var(--rzr-text-muted, #888);
 }
 
 .razer-pdp-story .feature-copy h3 {
@@ -362,9 +167,9 @@ main > .section.appear > div > .razer-pdp-story-wrapper {
 .razer-pdp-story .feature-body {
   margin: 0;
   max-width: 46ch;
-  font-size: var(--rzrm-body-size, 16px);
+  font-size: var(--rzr-body-size, 16px);
   line-height: 24px;
-  color: var(--rzrm-text-secondary, #bbb);
+  color: var(--rzr-text-secondary, #bbb);
 }
 
 /* ── Numeral tiles ──────────────────────────────────────────────── */
@@ -376,9 +181,9 @@ main > .section.appear > div > .razer-pdp-story-wrapper {
 
 .razer-pdp-story .feature-tile {
   padding: 24px 22px 26px;
-  background: var(--rzrm-surface-raised, #111);
+  background: var(--rzr-surface-raised, #111);
   border: 1px solid rgb(255 255 255 / 9%);
-  border-radius: var(--rzrm-radius-xl, 10px);
+  border-radius: var(--rzr-radius-xl, 10px);
 }
 
 .razer-pdp-story .feature-tile .card-index {
@@ -388,22 +193,22 @@ main > .section.appear > div > .razer-pdp-story-wrapper {
 .razer-pdp-story .tile-numeral {
   display: block;
   margin: 0 0 10px;
-  font-family: var(--rzrm-font-display, "Titillium Web", sans-serif);
+  font-family: var(--rzr-font-display, "Titillium Web", sans-serif);
   font-size: 40px;
   font-weight: 700;
   line-height: 1;
-  color: var(--rzrm-green, #44d62c);
+  color: var(--rzr-green, #44d62c);
 }
 
 .razer-pdp-story .feature-tile h3 {
   margin: 0 0 8px;
-  font-size: var(--rzrm-display-3-size, 20px);
+  font-size: var(--rzr-display-3-size, 20px);
   font-weight: 600;
-  line-height: var(--rzrm-display-3-lh, 24px);
+  line-height: var(--rzr-display-3-lh, 24px);
 }
 
 .razer-pdp-story .feature-tile .feature-body {
-  font-size: var(--rzrm-body-sm-size, 14px);
+  font-size: var(--rzr-body-sm-size, 14px);
   line-height: 22px;
 }
 
@@ -414,8 +219,8 @@ main > .section.appear > div > .razer-pdp-story-wrapper {
     opacity: 0;
     transform: translateY(16px);
     transition:
-      opacity var(--rzrm-duration-slow, 0.5s) var(--rzrm-ease-standard, ease),
-      transform var(--rzrm-duration-slow, 0.5s) var(--rzrm-ease-standard, ease);
+      opacity var(--rzr-duration-slow, 0.5s) var(--rzr-ease-standard, ease),
+      transform var(--rzr-duration-slow, 0.5s) var(--rzr-ease-standard, ease);
   }
 
   .razer-pdp-story [data-reveal].is-inview {

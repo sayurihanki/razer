@@ -116,7 +116,7 @@ export default function decorate(block) {
 
   block.textContent = '';
 
-  const inner = el('div', 'rzrm-shell mouse-proof-inner');
+  const inner = el('div', 'rzr-shell mouse-proof-inner');
 
   if (content.badge) {
     const badge = el('img');

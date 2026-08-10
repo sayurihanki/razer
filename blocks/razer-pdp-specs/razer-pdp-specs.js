@@ -31,7 +31,7 @@ export const DEFAULT_SETTINGS = {
   'platform-title': 'PC · Razer Synapse 4',
   'platform-body': 'Configure button mapping, sensor settings, on-board profiles, scroll behavior, and Chroma RGB on supported Windows PCs.',
   'support-label': 'Official support & manuals',
-  'support-href': 'https://mysupport.razer.com/app/answers/detail/a_id/14675/',
+  'support-href': '/support',
 };
 
 export const DEFAULT_TAGS = [
@@ -187,7 +187,7 @@ export default function decorate(block) {
 
   const section = el('section', 'spec-section');
   if (config['anchor-id']) section.id = config['anchor-id'];
-  const shell = el('div', 'rzrm-shell');
+  const shell = el('div', 'rzr-shell');
 
   const headingCopy = el('div');
   if (config.eyebrow) headingCopy.append(el('p', 'eyebrow', [text(config.eyebrow)]));
