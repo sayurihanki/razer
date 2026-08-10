@@ -187,7 +187,7 @@ export default function decorate(block) {
 
   const section = el('section', 'spec-section');
   if (config['anchor-id']) section.id = config['anchor-id'];
-  const shell = el('div', 'rzr-shell');
+  const shell = el('div', 'shell');
 
   const headingCopy = el('div');
   if (config.eyebrow) headingCopy.append(el('p', 'eyebrow', [text(config.eyebrow)]));

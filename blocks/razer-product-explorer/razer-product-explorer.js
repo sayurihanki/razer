@@ -692,7 +692,7 @@ export default function decorate(block) {
   empty.hidden = true;
 
   const results = el('div', 'plp-results', [toolbar, grid, empty]);
-  const shellNode = el('div', 'plp-shell rzr-shell', [aside, results]);
+  const shellNode = el('div', 'plp-shell shell', [aside, results]);
 
   /* Mobile drawer + backdrop */
   const drawerClose = el('button', '', [text('×')]);

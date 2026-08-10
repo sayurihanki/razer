@@ -415,7 +415,7 @@ main img {
  * rather than restating them.
  * ------------------------------------------------------------------ */
 
-.rzr-shell {
+.rzr-block .shell {
   width: var(--rzr-shell);
   margin-inline: auto;
 }
@@ -451,7 +451,14 @@ main > .section.rzr-section.appear > div {
   -webkit-tap-highlight-color: transparent;
 }
 
-.rzr-eyebrow {
+/* Content primitives.
+ *
+ * Named plainly (.eyebrow, .section-heading, .button) rather than with an
+ * rzr- prefix because those names are an authoring contract: they appear
+ * as row labels in 14 DA.live paste tables. The .rzr-block marker is what
+ * scopes them, so the names stay stable for authors while the definition
+ * lives in exactly one place. */
+.rzr-block .eyebrow {
   color: var(--rzr-green);
   font-family: var(--rzr-font-body);
   font-size: var(--rzr-body-xs-size);
@@ -462,7 +469,7 @@ main > .section.rzr-section.appear > div {
   margin: 0 0 16px;
 }
 
-.rzr-card-index {
+.rzr-block .card-index {
   color: var(--rzr-text-tertiary);
   font-family: var(--rzr-font-condensed);
   font-size: var(--rzr-body-xs-size);
@@ -471,7 +478,7 @@ main > .section.rzr-section.appear > div {
   text-transform: uppercase;
 }
 
-.rzr-section-heading {
+.rzr-block .section-heading {
   display: grid;
   grid-template-columns: 1fr;
   align-items: end;
@@ -481,18 +488,18 @@ main > .section.rzr-section.appear > div {
   border-bottom: 1px solid var(--rzr-surface-line);
 }
 
-.rzr-section-heading h2 {
+.rzr-block .section-heading h2 {
   margin: 0;
   font-size: var(--rzr-display-2-size);
   font-weight: var(--rzr-display-2-weight);
   line-height: var(--rzr-display-2-lh);
 }
 
-.rzr-section-heading h2 span {
+.rzr-block .section-heading h2 span {
   color: var(--rzr-green);
 }
 
-.rzr-section-heading > p {
+.rzr-block .section-heading > p {
   margin: 0;
   max-width: 520px;
   color: var(--rzr-text-tertiary);
@@ -501,14 +508,14 @@ main > .section.rzr-section.appear > div {
 }
 
 @media (min-width: 681px) {
-  .rzr-section-heading {
+  .rzr-block .section-heading {
     margin-bottom: 40px;
     padding-bottom: 24px;
   }
 }
 
 @media (min-width: 821px) {
-  .rzr-section-heading {
+  .rzr-block .section-heading {
     grid-template-columns: minmax(0, 1.3fr) minmax(280px, 0.7fr);
     gap: 48px;
   }
@@ -516,17 +523,17 @@ main > .section.rzr-section.appear > div {
 
 /* Buttons.
  *
- * EDS styles `main a.button:any-link` at (0,2,2); the :any-link variants
- * below are (0,3,2) so the Razer treatment wins outright rather than by
- * load order. */
-.rzr-button-row {
+ * EDS styles `main a.button:any-link` at (0,2,2); the variants below add
+ * .rzr-block for (0,3,2), so the Razer treatment wins outright rather than
+ * by load order. */
+.rzr-block .button-row {
   display: flex;
   flex-wrap: wrap;
   gap: 16px;
 }
 
-.rzr-button,
-main a.rzr-button:any-link {
+.rzr-block .button,
+main .rzr-block a.button:any-link {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -550,14 +557,14 @@ main a.rzr-button:any-link {
 }
 
 @media (min-width: 681px) {
-  .rzr-button,
-  main a.rzr-button:any-link {
+  .rzr-block .button,
+  main .rzr-block a.button:any-link {
     padding-inline: 16px;
   }
 }
 
-.rzr-button-primary,
-main a.rzr-button-primary:any-link {
+.rzr-block .button-primary,
+main .rzr-block a.button-primary:any-link {
   background: var(--rzr-green);
   color: var(--rzr-text-on-accent);
   border-color: var(--rzr-green);
@@ -565,13 +572,13 @@ main a.rzr-button-primary:any-link {
   text-transform: uppercase;
 }
 
-.rzr-button-primary:hover {
+.rzr-block .button-primary:hover {
   background: #5ce843;
   color: var(--rzr-text-on-accent);
 }
 
-.rzr-button-ghost,
-main a.rzr-button-ghost:any-link {
+.rzr-block .button-ghost,
+main .rzr-block a.button-ghost:any-link {
   min-height: 0;
   padding: 15px 30px 15px 0;
   border: 0;
@@ -581,31 +588,31 @@ main a.rzr-button-ghost:any-link {
   color: var(--rzr-text-primary);
 }
 
-.rzr-button-ghost:hover {
+.rzr-block .button-ghost:hover {
   background: none;
   color: var(--rzr-green);
 }
 
-.rzr-button-ghost span {
+.rzr-block .button-ghost span {
   color: var(--rzr-green);
   margin-left: 5px;
   font-size: var(--rzr-display-3-size);
 }
 
-.rzr-button-outline,
-main a.rzr-button-outline:any-link {
+.rzr-block .button-outline,
+main .rzr-block a.button-outline:any-link {
   background: none;
   border: 1px solid #555;
   color: var(--rzr-text-primary);
 }
 
-.rzr-button-outline:hover {
+.rzr-block .button-outline:hover {
   border-color: var(--rzr-text-primary);
   color: var(--rzr-text-primary);
   background: rgb(255 255 255 / 5%);
 }
 
-.rzr-button:disabled {
+.rzr-block .button:disabled {
   opacity: 0.42;
   cursor: not-allowed;
 }

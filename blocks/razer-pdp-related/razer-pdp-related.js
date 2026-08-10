@@ -196,7 +196,7 @@ export default function decorate(block) {
   block.textContent = '';
 
   const section = el('section', 'related-section');
-  const shell = el('div', 'rzr-shell');
+  const shell = el('div', 'shell');
 
   const headingCopy = el('div');
   if (config.eyebrow) headingCopy.append(el('p', 'eyebrow', [text(config.eyebrow)]));

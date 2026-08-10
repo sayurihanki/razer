@@ -74,10 +74,19 @@ describe('razer-chroma block family', () => {
         assert.match(readme, /## Behavior/);
       });
 
-      test('is registered for the shared stylesheet', async () => {
-        const scripts = await read(SCRIPTS_DIR, 'scripts.js');
-        // Omitting a block here means its tokens silently resolve to nothing.
-        assert.match(scripts, new RegExp(`'${name}'`), `${name} must be in RAZER_CHROMA_BLOCKS`);
+      test('consumes the design system rather than the retired chroma tokens', async () => {
+        const css = await read(BLOCKS_DIR, `${name}/${name}.css`);
+        // These blocks used to depend on styles/razer-chroma-shared.css, loaded
+        // conditionally from a RAZER_CHROMA_BLOCKS list in scripts.js, and
+        // omitting a block from that list resolved its tokens to nothing.
+        // styles/razer-design-system.css now loads on every page, so the list
+        // and the failure mode are both gone — what has to hold instead is that
+        // no block still reaches for a token nobody declares any more.
+        assert.doesNotMatch(
+          css,
+          /var\(\s*--(shell|dim|ink-raised|font)\b/,
+          `${name}.css still reads a retired razer-chroma-shared token`,
+        );
       });
     });
   });
@@ -112,24 +121,28 @@ describe('shared stylesheet', () => {
   });
 });
 
-describe('conditional loader', () => {
-  test('returns early when no razer-chroma block is present', async () => {
-    const scripts = await read(SCRIPTS_DIR, 'scripts.js');
-    const fn = scripts.slice(scripts.indexOf('function loadRazerChromaStyles'));
-    assert.match(fn, /if \(!blocks\.length\) return;/, 'must not load or mark up unrelated pages');
+describe('token delivery', () => {
+  /*
+   * There used to be a conditional loader here: scripts.js kept a
+   * RAZER_CHROMA_BLOCKS list, and loadRazerChromaStyles injected
+   * razer-chroma-shared.css and a marker class only on pages carrying one of
+   * those blocks. It had two failure modes worth testing — loading on pages
+   * that needed nothing, and a block missing from the list resolving its
+   * tokens to nothing.
+   *
+   * styles/razer-design-system.css replaced both: it loads from head.html on
+   * every page, so there is no list to fall off and no page to skip. These
+   * tests assert the replacement rather than the mechanism it retired.
+   */
+  test('the design system loads unconditionally, not per block', async () => {
+    const head = await read(new URL('../../', import.meta.url), 'head.html');
+    assert.match(head, /styles\/razer-design-system\.css/);
   });
 
-  test('excludes the self-contained site chrome blocks', async () => {
+  test('the retired conditional loader is gone from scripts.js', async () => {
     const scripts = await read(SCRIPTS_DIR, 'scripts.js');
-    const list = scripts.slice(
-      scripts.indexOf('const RAZER_CHROMA_BLOCKS'),
-      scripts.indexOf('function loadRazerChromaStyles'),
-    );
-    // These carry their own copy of the tokens; stamping the shared marker
-    // class on them would let the shared element rules restyle them.
-    ['razer-site-header', 'razer-site-footer', 'razer-promo-bar'].forEach((name) => {
-      assert.doesNotMatch(list, new RegExp(`'${name}'`), `${name} must not be in the list`);
-    });
+    assert.doesNotMatch(scripts, /RAZER_CHROMA_BLOCKS/, 'the block list should be gone');
+    assert.doesNotMatch(scripts, /loadRazerChromaStyles/, 'the loader should be gone');
   });
 });
 

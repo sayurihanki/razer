@@ -591,11 +591,11 @@ export default function decorate(block) {
     : null;
   const actions = el('div', 'nav-actions', [searchButton, accountLink, cartButton, menuButton]);
 
-  const globalNav = el('nav', 'global-nav rzr-shell', [brand, desktopNav, actions]);
+  const globalNav = el('nav', 'global-nav shell', [brand, desktopNav, actions]);
   globalNav.setAttribute('aria-label', config['nav-aria-label']);
 
   /* Mega menu */
-  const megaGrid = el('div', 'rzr-shell mega-grid');
+  const megaGrid = el('div', 'shell mega-grid');
   megaColumns.forEach((column) => {
     const columnNode = el('div', '', [el('p', 'menu-label', [text(column.label)])]);
     megaLinks
@@ -614,7 +614,7 @@ export default function decorate(block) {
   megaMenu.setAttribute('aria-hidden', 'true');
 
   /* Category nav */
-  const categoryScroll = el('div', 'rzr-shell category-scroll');
+  const categoryScroll = el('div', 'shell category-scroll');
   categories.forEach((category) => {
     const link = el('a', '', [text(category.label)]);
     if (category.href) link.href = category.href;

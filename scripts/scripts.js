@@ -137,73 +137,36 @@ export function decorateMain(main) {
 }
 
 /*
- * Homepage content blocks ported from the razer-chroma-reactor site. They
- * share one set of design tokens and primitives in
- * styles/razer-chroma-shared.css.
- *
- * The site chrome (razer-site-header, razer-site-footer, razer-promo-bar) is
- * deliberately absent: those blocks are self-contained, carrying their own
- * copy of the tokens, and stamping the shared marker class on them would let
- * this file's element-level rules restyle them.
+ * Blocks that opt out of the Razer visual language. The minipage family is
+ * a separate, self-contained design that shares only the razer- name
+ * prefix, so marking it would restyle it.
  */
-const RAZER_CHROMA_BLOCKS = [
-  'razer-campaign-carousel',
-  'razer-capability-grid',
-  'razer-family-grid',
-  'razer-final-cta',
-  'razer-gear-finder',
-  'razer-home-hero',
-  'razer-home-promo-bar',
-  'razer-proof-strip',
-  'razer-resource-grid',
-  'razer-story-grid',
-  'razer-use-case-tabs',
-];
+const RAZER_DESIGN_SYSTEM_EXCLUDES = /^razer-minipage/;
 
 /**
- * Loads the razer-chroma tokens and marks up the page for them, but only when
- * one of those blocks is actually present.
+ * Stamps the Razer design-system marker classes onto every Razer block and
+ * the EDS section wrapping it.
  *
- * Deliberately not part of the global stylesheet chain: these blocks are a
- * dark, full-bleed brand system, and installing it globally would restyle
- * every razer page. A page using none of these blocks never requests the file.
+ * styles/razer-design-system.css is loaded globally from head.html, so
+ * tokens, typography and the page foundation need no marker. These two
+ * classes carry the things that must not apply page-wide:
+ *  - .rzr-block  scopes the content primitives (.shell, .eyebrow,
+ *    .section-heading, .button) and makes block links inherit their
+ *    context's colour instead of the authored-link green;
+ *  - .rzr-section makes the EDS section full-bleed, overriding the
+ *    boilerplate's centred max-width column.
  *
- * Runs in the eager phase rather than the lazy one because the header and hero
- * are LCP content -- deferring the theme would flash the default light page.
+ * Matching on data-block-name (set by decorateBlock) rather than a class
+ * substring keeps this to real blocks whose name starts with razer-.
  *
- * @param {Element} doc The container element
+ * @param {Element} main The container element
  */
-function loadRazerChromaStyles(doc) {
-  const blocks = doc.querySelectorAll(RAZER_CHROMA_BLOCKS.map((name) => `.${name}.block`).join(','));
-  if (!blocks.length) return;
-  // Marker class the shared stylesheet scopes to. A broader attribute selector
-  // would also catch the unrelated razer-minipage blocks.
-  blocks.forEach((block) => block.classList.add('razer-chroma'));
-  document.body.classList.add('razer-chroma-page');
-  loadCSS(`${window.hlx.codeBasePath}/styles/razer-chroma-shared.css`);
-}
-
-/**
- * Restyles the commerce dropins in razer's dark brand system, but only on
- * pages that render one. The dropins are entirely design-token driven, so
- * the stylesheet is a token remap rather than a second set of component
- * rules; the razer chrome blocks read none of those tokens (they carry
- * their own `--rzrm-*` set), so the dark theme cannot leak into them.
- *
- * Matches on `data-block-name`, set by decorateBlock a moment earlier, so
- * `commerce-` matches the block name exactly rather than any class that
- * happens to contain it.
- *
- * Eager, alongside the chroma theme and for the same reason: cart and
- * checkout are the page's LCP content, and deferring the theme would
- * flash the default light page first.
- *
- * @param {Element} doc The container element
- */
-function loadRazerCommerceStyles(doc) {
-  if (!doc.querySelector('main div.block[data-block-name^="commerce-"]')) return;
-  document.body.classList.add('razer-commerce-page');
-  loadCSS(`${window.hlx.codeBasePath}/styles/razer-commerce.css`);
+function markRazerBlocks(main) {
+  main.querySelectorAll('div.block[data-block-name^="razer-"]').forEach((block) => {
+    if (RAZER_DESIGN_SYSTEM_EXCLUDES.test(block.dataset.blockName)) return;
+    block.classList.add('rzr-block');
+    block.closest('.section')?.classList.add('rzr-section');
+  });
 }
 
 /**
@@ -302,8 +265,7 @@ async function loadEager(doc) {
       await initializeCommerce();
       buildRazerChrome(main);
       decorateMain(main);
-      loadRazerChromaStyles(doc);
-      loadRazerCommerceStyles(doc);
+      markRazerBlocks(main);
       collapseBoilerplateChrome(doc);
       applyTemplates(doc);
       await loadCommerceEager();

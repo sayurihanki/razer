@@ -305,12 +305,12 @@ export default function decorate(block) {
     });
 
     footer.append(el('section', 'newsletter-section', [
-      el('div', 'rzr-shell newsletter-grid', [copy, form]),
+      el('div', 'shell newsletter-grid', [copy, form]),
     ]));
   }
 
   /* Main columns */
-  const main = el('div', 'rzr-shell footer-main');
+  const main = el('div', 'shell footer-main');
 
   const brand = el('div', 'footer-brand');
   if (config.logo) {
@@ -357,7 +357,7 @@ export default function decorate(block) {
   footer.append(main);
 
   /* Legal row */
-  const legal = el('div', 'rzr-shell footer-legal');
+  const legal = el('div', 'shell footer-legal');
   if (config.copyright) legal.append(el('span', '', [text(config.copyright)]));
   if (legalLinks.length) {
     const links = el('div');

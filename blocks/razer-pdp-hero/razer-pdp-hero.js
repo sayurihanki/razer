@@ -439,7 +439,7 @@ function mergeContent(parsed) {
 /* ── Render helpers ────────────────────────────────────────────── */
 
 function buildBreadcrumbs(content, refs) {
-  const nav = el('nav', 'pdp-breadcrumbs rzr-shell');
+  const nav = el('nav', 'pdp-breadcrumbs shell');
   nav.setAttribute('aria-label', content.config['breadcrumb-label']);
   content.crumbs.forEach((crumb, index) => {
     if (index > 0) {
@@ -463,7 +463,7 @@ function buildBreadcrumbs(content, refs) {
 }
 
 function buildMasthead(content) {
-  const head = el('header', 'pdp-masthead rzr-shell');
+  const head = el('header', 'pdp-masthead shell');
   const h1 = el('h1', '', [text(content.config.title)]);
   h1.id = 'pdp-title';
   head.append(h1);
@@ -693,7 +693,7 @@ function buildConfigurator(content, refs) {
 
 function buildServices(content) {
   if (!content.services.length) return null;
-  const strip = el('section', 'pdp-services rzr-shell');
+  const strip = el('section', 'pdp-services shell');
   strip.setAttribute('aria-label', content.config['services-label']);
   content.services.forEach((service) => {
     const item = el('div', 'service-item');
@@ -950,7 +950,7 @@ export default function decorate(block) {
   if (content.crumbs.length) hero.append(buildBreadcrumbs(content, refs));
   hero.append(buildMasthead(content));
 
-  const commerce = el('div', 'pdp-commerce rzr-shell');
+  const commerce = el('div', 'pdp-commerce shell');
   commerce.setAttribute('role', 'group');
   commerce.setAttribute('aria-label', content.config['gallery-label']);
   if (content.images.length) commerce.append(buildGallery(content, refs));
