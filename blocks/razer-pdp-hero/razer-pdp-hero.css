@@ -605,14 +605,39 @@ main > .section.appear > div > .razer-pdp-hero-wrapper {
 
 /* ── Summary ────────────────────────────────────────────────────── */
 
+/* Wrapping flex rather than fixed columns: the summary sits in the sticky
+   configurator, whose width is a fraction of the page, so a viewport media
+   query cannot tell whether there is room for two columns. Each item declares
+   the width it needs and the row breaks itself when they no longer fit. */
 .razer-pdp-hero .config-summary {
-  display: grid;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
   gap: 16px;
   margin-top: 20px;
   padding: 16px;
   border: 1px solid rgb(255 255 255 / 10%);
   border-radius: var(--rzrm-radius-sm, 3px);
   background: #0d0d0d;
+}
+
+/* Grows to absorb the free space, which both pushes the price to the trailing
+   edge and stops the quantity ever joining this row. */
+.razer-pdp-hero .config-chosen {
+  flex: 1 1 200px;
+  min-width: 0;
+}
+
+.razer-pdp-hero .config-price {
+  flex: 0 1 auto;
+}
+
+.razer-pdp-hero .config-qty {
+  flex: 0 0 auto;
+}
+
+.razer-pdp-hero .config-summary .config-cta {
+  flex: 1 1 190px;
 }
 
 .razer-pdp-hero .summary-eyebrow {
@@ -750,6 +775,7 @@ main > .section.appear > div > .razer-pdp-hero-wrapper {
 }
 
 .razer-pdp-hero .config-cta-status {
+  flex: 1 0 100%;
   margin: 0;
   font-size: var(--rzrm-body-xs-size, 12px);
   line-height: var(--rzrm-body-xs-lh, 18px);
@@ -871,25 +897,6 @@ main > .section.appear > div > .razer-pdp-hero-wrapper {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
-  /* Row 1 pairs the chosen configuration with the price, row 2 pairs the
-     quantity with the buy button. Squeezing quantity into row 1 collapses
-     the configuration text in the narrow sticky column. */
-  .razer-pdp-hero .config-summary {
-    grid-template-columns: minmax(0, 1fr) auto;
-    align-items: center;
-  }
-
-  .razer-pdp-hero .config-summary .config-qty {
-    justify-self: start;
-  }
-
-  .razer-pdp-hero .config-summary .config-cta {
-    justify-self: stretch;
-  }
-
-  .razer-pdp-hero .config-summary .config-cta-status {
-    grid-column: 1 / -1;
-  }
 }
 
 @media (min-width: 981px) {

@@ -427,11 +427,11 @@ function attach({
   if (refs.configNote && config['config-body-live']) {
     refs.configNote.textContent = config['config-body-live'];
   }
-  if (refs.availabilityNote) {
-    refs.availabilityNote.textContent = product.inStock
-      ? config['in-stock-note']
-      : config['out-of-stock-note'];
-  }
+  const stockNote = () => (product.inStock ? config['in-stock-note'] : config['out-of-stock-note']);
+  const setNote = (message) => {
+    if (refs.availabilityNote) refs.availabilityNote.textContent = message;
+  };
+  setNote(stockNote());
   // Only warn about unpriced options when we are actually not pricing them.
   if (refs.priceNote && config['price-source'] !== 'catalog+deltas'
     && config['price-options-note']) {
@@ -464,16 +464,20 @@ function attach({
     });
     if (rejectedFinishes.has(selection.finish)) {
       setState(button, 'unmapped', config['unavailable-config-label']);
+      // Never leave "In stock" sitting under a button that cannot be pressed.
+      setNote(config['unavailable-config-note']);
       return;
     }
 
     const selected = GROUPS.map((group) => chosenEntry(group, selection));
     if (selected.some((entry) => entry && !entry.optionUid)) {
       setState(button, 'unmapped', config['unavailable-config-label']);
+      setNote(config['unavailable-config-note']);
       return;
     }
     if (selected.some((entry) => entry && !entry.available)) {
       setState(button, 'unavailable', config['out-of-stock-label']);
+      setNote(config['out-of-stock-note']);
       return;
     }
     // Back on a buyable configuration: clear any stale rejection message.
@@ -481,6 +485,7 @@ function attach({
       status.removeAttribute('role');
       status.textContent = '';
     }
+    setNote(stockNote());
     if (button.dataset.state !== 'added') setState(button, ...idle());
   };
 

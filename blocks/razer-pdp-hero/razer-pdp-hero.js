@@ -79,6 +79,7 @@ export const DEFAULT_SETTINGS = {
   'added-label': 'Added to cart',
   'out-of-stock-label': 'Out of stock',
   'unavailable-config-label': 'This configuration is not available online',
+  'unavailable-config-note': 'This finish cannot be ordered online right now. Choose another colour to continue.',
   'cart-error-label': 'We could not add that to your cart. Please try again.',
   'qty-label': 'Quantity',
   'qty-decrease-label': 'Decrease quantity',
