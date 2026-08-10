@@ -1043,7 +1043,7 @@ main > .section.appear > div > .razer-site-header-wrapper {
 .razer-site-header .cart-panel .dropin-cart-item::before {
   content: "";
   background: var(--rzrm-green, #44d62c);
-  opacity: 0%;
+  opacity: 0;
   width: 2px;
   transition:
     opacity var(--rzrm-duration-base, 0.3s) ease,
@@ -1062,14 +1062,13 @@ main > .section.appear > div > .razer-site-header-wrapper {
 
 .razer-site-header .cart-panel .dropin-cart-item:hover::before,
 .razer-site-header .cart-panel .dropin-cart-item:focus-within::before {
-  opacity: 100%;
+  opacity: 1;
   transform: scaleY(1);
 }
 
 .razer-site-header .cart-panel .dropin-cart-item__wrapper {
   grid-template-columns: 84px minmax(0, 1fr);
-  column-gap: 14px;
-  row-gap: 0;
+  gap: 0 14px;
 }
 
 /* The dropin spans its content across a 4-column grid; this one is 2. */
@@ -1115,7 +1114,7 @@ main > .section.appear > div > .razer-site-header-wrapper {
  * read as "no shot yet".
  */
 .razer-site-header .cart-panel .dropin-cart-item__image img[src*="placeholder"] {
-  opacity: 30%;
+  opacity: 0.3;
   filter: grayscale(100%) invert(100%);
   padding: 22px;
 }
@@ -1324,7 +1323,18 @@ main > .section.appear > div > .razer-site-header-wrapper {
   padding-top: 2px;
 }
 
+/* An empty cart still renders the footer shell; don't draw a bar for it. */
+.razer-site-header .cart-panel .cart-mini-cart__footer:not(:has(.cart-mini-cart__footer__ctas)) {
+  border-top: 0;
+  padding: 0;
+}
+
 /* Dropin empty state (the baked-in one above covers first paint). */
+.razer-site-header .cart-panel .cart-mini-cart__products:has(.cart-empty-cart) {
+  align-content: center;
+  display: grid;
+}
+
 .razer-site-header .cart-panel .cart-empty-cart {
   padding: 40px 4px;
 }
@@ -1353,12 +1363,12 @@ main > .section.appear > div > .razer-site-header-wrapper {
 @media (prefers-reduced-motion: no-preference) {
   @keyframes rzr-cart-rise {
     from {
-      opacity: 0%;
+      opacity: 0;
       transform: translateY(12px);
     }
 
     to {
-      opacity: 100%;
+      opacity: 1;
       transform: none;
     }
   }
