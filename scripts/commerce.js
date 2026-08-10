@@ -495,6 +495,16 @@ export async function fetchPlaceholders(path) {
           window.placeholders[resourceCacheKey] = data;
           return data;
         }
+        // The `sheet` query routes to the content bus, so the fallback
+        // sheets committed under placeholders/ (code bus) never answer
+        // it. Retry the bare path before giving up: published content
+        // sheets keep winning, the repo files fill the gaps.
+        const staticResponse = await fetch(url, { cache: 'force-cache' });
+        if (staticResponse.ok) {
+          const data = await staticResponse.json();
+          window.placeholders[resourceCacheKey] = data;
+          return data;
+        }
         console.warn(`Failed to fetch placeholders from ${url}: HTTP ${response.status} ${response.statusText}`);
         return {};
       }).catch((error) => {
