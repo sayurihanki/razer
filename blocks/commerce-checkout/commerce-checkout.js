@@ -41,6 +41,7 @@ import {
   renderOrderSummary,
   renderOutOfStock,
   renderPaymentMethods,
+  renderPaymentSelector,
   renderPlaceOrder,
   renderServerError,
   renderShippingAddressFormSkeleton,
@@ -140,6 +141,7 @@ export default async function decorate(block) {
   const $shippingForm = getElement(selectors.checkout.shippingForm);
   const $billToShipping = getElement(selectors.checkout.billToShipping);
   const $delivery = getElement(selectors.checkout.delivery);
+  const $paymentSelector = getElement(selectors.checkout.paymentSelector);
   const $paymentMethods = getElement(selectors.checkout.paymentMethods);
   const $billingForm = getElement(selectors.checkout.billingForm);
   const $orderSummary = getElement(selectors.checkout.orderSummary);
@@ -203,6 +205,7 @@ export default async function decorate(block) {
     shippingFormSkeleton,
     _billToShipping,
     _shippingMethods,
+    _paymentSelector,
     _paymentMethods,
     billingFormSkeleton,
     _orderSummary,
@@ -225,6 +228,8 @@ export default async function decorate(block) {
     renderBillToShippingAddress($billToShipping),
 
     renderShippingMethods($delivery),
+
+    renderPaymentSelector($paymentSelector),
 
     renderPaymentMethods($paymentMethods, creditCardFormRef),
 

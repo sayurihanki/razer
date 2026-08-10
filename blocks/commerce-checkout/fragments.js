@@ -19,6 +19,7 @@ export const selectors = Object.freeze({
     shippingForm: '.checkout__shipping-form',
     billToShipping: '.checkout__bill-to-shipping',
     delivery: '.checkout__delivery',
+    paymentSelector: '.checkout__payment-selector',
     paymentMethods: '.checkout__payment-methods',
     billingForm: '.checkout__billing-form',
     orderSummary: '.checkout__order-summary',
@@ -53,6 +54,7 @@ export function createCheckoutFragment() {
           <div class="checkout__shipping-form ${CHECKOUT_BLOCK}"></div>
           <div class="checkout__bill-to-shipping ${CHECKOUT_BLOCK}"></div>
           <div class="checkout__delivery ${CHECKOUT_BLOCK}"></div>
+          <div class="checkout__payment-selector ${CHECKOUT_BLOCK}"></div>
           <div class="checkout__payment-methods ${CHECKOUT_BLOCK}"></div>
           <div class="checkout__billing-form ${CHECKOUT_BLOCK}"></div>
           <div class="checkout__terms-and-conditions ${CHECKOUT_BLOCK}"></div>

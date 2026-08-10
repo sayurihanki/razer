@@ -92,35 +92,6 @@ describe('razer-chroma block family', () => {
   });
 });
 
-describe('shared stylesheet', () => {
-  test('is not wired into the global stylesheet chain', async () => {
-    const head = await read(new URL('../../', import.meta.url), 'head.html');
-    assert.doesNotMatch(head, /razer-chroma-shared/);
-  });
-
-  test('binds the font aliases the --rzr-font-* tokens depend on', async () => {
-    const css = await read(STYLES_DIR, 'razer-chroma-shared.css');
-    // Without these, --rzr-font-display/-body are invalid at computed-value
-    // time and the whole family silently falls back to system fonts -- the
-    // exact defect the source site ships.
-    ['--font-roboto', '--font-roboto-condensed', '--font-titillium'].forEach((alias) => {
-      assert.match(css, new RegExp(`${alias}:`), `${alias} must be defined at :root`);
-    });
-  });
-
-  test('does not declare a bare .section rule', async () => {
-    const css = await read(STYLES_DIR, 'razer-chroma-shared.css');
-    // A bare `.section` would collide with EDS's own section wrappers and
-    // repad every section on any page that loads this file.
-    assert.doesNotMatch(css, /(^|\})\s*\.section\s*\{/m);
-  });
-
-  test('button rules outrank EDS\'s own main a.button:any-link', async () => {
-    const css = await read(STYLES_DIR, 'razer-chroma-shared.css');
-    assert.match(css, /a\.button:any-link/, 'needs the :any-link variant to win on specificity');
-  });
-});
-
 describe('token delivery', () => {
   /*
    * There used to be a conditional loader here: scripts.js kept a

@@ -61,6 +61,7 @@ import {
 } from '@dropins/storefront-checkout/lib/utils.js';
 
 import { showModal, swatchImageSlot } from './utils.js';
+import { renderPaymentSelectorUI } from './payment-selector.js';
 
 // External dependencies
 import {
@@ -96,6 +97,7 @@ export const CONTAINERS = Object.freeze({
   SHIPPING_ADDRESS_FORM_SKELETON: 'shippingAddressFormSkeleton',
   BILL_TO_SHIPPING_ADDRESS: 'billToShippingAddress',
   SHIPPING_METHODS: 'shippingMethods',
+  PAYMENT_SELECTOR: 'paymentSelector',
   PAYMENT_METHODS: 'paymentMethods',
   BILLING_ADDRESS_FORM_SKELETON: 'billingAddressFormSkeleton',
   ORDER_SUMMARY: 'orderSummary',
@@ -333,6 +335,17 @@ export const renderShippingMethods = async (container) => renderContainer(
 );
 
 /**
+ * Renders the Razer demo payment selector (presentation-only method tiles).
+ * The real payment state stays on the hidden PaymentMethods dropin.
+ * @param {HTMLElement} container - DOM element to render the selector in
+ * @returns {Promise<Object>} - The rendered payment selector component
+ */
+export const renderPaymentSelector = async (container) => renderContainer(
+  CONTAINERS.PAYMENT_SELECTOR,
+  async () => renderPaymentSelectorUI(container),
+);
+
+/**
  * Renders payment methods with credit card integration - original regular checkout functionality
  * @param {HTMLElement} container - DOM element to render payment methods in
  * @param {Object} creditCardFormRef - React-style ref for credit card form
@@ -489,7 +502,7 @@ export const renderCartSummaryList = async (container) => renderContainer(
       variant: 'secondary',
       slots: {
         Heading: (headingCtx) => {
-          const title = placeholders?.Checkout?.Summary?.heading;
+          const title = placeholders?.Checkout?.Summary?.heading ?? 'Your Items ({count})';
 
           const cartSummaryListHeading = document.createElement('div');
           cartSummaryListHeading.classList.add('cart-summary-list__heading');
@@ -507,7 +520,7 @@ export const renderCartSummaryList = async (container) => renderContainer(
           editCartLink.classList.add('cart-summary-list__edit');
           editCartLink.href = rootLink('/cart');
           editCartLink.rel = 'noreferrer';
-          editCartLink.innerText = placeholders?.Checkout?.Summary?.Edit;
+          editCartLink.innerText = placeholders?.Checkout?.Summary?.Edit ?? 'Edit';
 
           cartSummaryListHeading.appendChild(cartSummaryListHeadingText);
           cartSummaryListHeading.appendChild(editCartLink);
@@ -611,7 +624,7 @@ export const renderCustomerShippingAddresses = async (container, formRef, data) 
     }, ADDRESS_INPUT_DEBOUNCE_TIME);
 
     return AccountProvider.render(Addresses, {
-      addressFormTitle: placeholders?.Checkout?.Addresses?.shippingAddressTitle,
+      addressFormTitle: placeholders?.Checkout?.Addresses?.shippingAddressTitle ?? 'Shipping Address',
       defaultSelectAddressId: shippingAddressId,
       fieldIdPrefix: 'shipping',
       formName: SHIPPING_FORM_NAME,
@@ -630,7 +643,7 @@ export const renderCustomerShippingAddresses = async (container, formRef, data) 
       showBillingCheckBox: false,
       showSaveCheckBox: true,
       showShippingCheckBox: false,
-      title: placeholders?.Checkout?.Addresses?.shippingAddressTitle,
+      title: placeholders?.Checkout?.Addresses?.shippingAddressTitle ?? 'Shipping Address',
     })(container);
   },
 );
@@ -680,7 +693,7 @@ export const renderCustomerBillingAddresses = async (container, formRef, data) =
     }, ADDRESS_INPUT_DEBOUNCE_TIME);
 
     return AccountProvider.render(Addresses, {
-      addressFormTitle: placeholders?.Checkout?.Addresses?.billToNewAddress,
+      addressFormTitle: placeholders?.Checkout?.Addresses?.billToNewAddress ?? 'Bill to New Address',
       defaultSelectAddressId: billingAddressId,
       formName: BILLING_FORM_NAME,
       forwardFormRef: formRef,
@@ -697,7 +710,7 @@ export const renderCustomerBillingAddresses = async (container, formRef, data) =
       showBillingCheckBox: false,
       showSaveCheckBox: true,
       showShippingCheckBox: false,
-      title: placeholders?.Checkout?.Addresses?.billingAddressTitle,
+      title: placeholders?.Checkout?.Addresses?.billingAddressTitle ?? 'Billing Address',
     })(container);
   },
 );
@@ -753,8 +766,8 @@ export const renderAddressForm = async (container, formRef, data, addressType) =
       // Address type specific configurations
       const formName = isShipping ? SHIPPING_FORM_NAME : BILLING_FORM_NAME;
       const addressTitle = isShipping
-        ? placeholders?.Checkout?.Addresses?.shippingAddressTitle
-        : placeholders?.Checkout?.Addresses?.billingAddressTitle;
+        ? placeholders?.Checkout?.Addresses?.shippingAddressTitle ?? 'Shipping Address'
+        : placeholders?.Checkout?.Addresses?.billingAddressTitle ?? 'Billing Address';
       const className = isShipping
         ? 'checkout-shipping-form__address-form'
         : 'checkout-billing-form__address-form';

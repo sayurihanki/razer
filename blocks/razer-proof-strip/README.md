@@ -31,7 +31,7 @@ paste it into a blank DA.live document to reproduce the section.
 ## Dependencies
 
 - `scripts/razer-chroma.js` — shared row readers and element helpers.
-- `styles/razer-chroma-shared.css` — tokens, `.shell`, `.eyebrow` and the
-  `.button` family. Injected automatically by `loadRazerChromaStyles` in
-  `scripts/scripts.js` whenever a razer-chroma block is on the page; the block
-  name must stay listed in `RAZER_CHROMA_BLOCKS` there.
+- `styles/razer-design-system.css` — tokens, `.shell`, `.eyebrow` and the
+  `.button` family. Loaded on every page from `head.html`, so there is no list
+  to register with; `markRazerBlocks` in `scripts/scripts.js` stamps the
+  `.rzr-block` marker that scopes the primitives.
