@@ -1,0 +1,190 @@
+/*
+ * Razer dark theme for the Adobe Commerce dropins (cart, checkout,
+ * account, order, auth).
+ *
+ * The dropins are entirely design-token driven — their injected
+ * stylesheets read --color-*, --type-*, --shape-* and --spacing-* and
+ * declare almost no literal colours — so brand-matching them is a token
+ * remap rather than a second set of component rules. Only the handful of
+ * rules under "Component corrections" restyle a component directly, and
+ * each one is there because no token expresses the difference.
+ *
+ * This file is NOT part of razer's global stylesheet chain. It is
+ * injected at runtime only when a commerce-* block is on the page (see
+ * loadRazerCommerceStyles in scripts/scripts.js), so pages without one
+ * never receive it.
+ *
+ * Scoping rules, and why they are what they are:
+ *  - Everything hangs off body.razer-commerce-page, the marker class the
+ *    loader stamps on the page, so the dark ramp cannot leak onto pages
+ *    that render no commerce block.
+ *  - .dropin-design is repeated in the token selector because
+ *    styles.css declares the light ramp on `:root, .dropin-design`. A
+ *    dropin container carrying that class would otherwise re-declare the
+ *    light values for its own subtree and win over the inherited dark
+ *    ones.
+ *  - Tokens that styles.css composes from other tokens (--background-color,
+ *    --color-button-*, --color-action-button-*, every --type-*-font) are
+ *    restated in full. Custom properties are substituted where they are
+ *    *declared*, so those resolved against the light ramp on :root and
+ *    would not follow the overrides below.
+ *  - The razer-site-header/-footer blocks read none of these tokens (they
+ *    carry their own --rzrm-* set), so the site chrome is unaffected.
+ *
+ * Titillium Web is loaded by the razer-site-header stylesheet, which is
+ * present on every page carrying the site chrome — and buildRazerChrome
+ * guarantees the chrome on exactly the pages this file themes. The stack
+ * still degrades to the boilerplate face if the header is ever removed.
+ */
+
+body.razer-commerce-page,
+body.razer-commerce-page .dropin-design {
+  /* Neutral ramp, inverted: 50 is the surface that used to be white,
+     800/900 the text that used to be near-black. */
+  --color-neutral-50: #0e0e0e;
+  --color-neutral-100: #121212;
+  --color-neutral-200: #171717;
+  --color-neutral-300: #242424;
+  --color-neutral-400: #3a3a3a;
+  --color-neutral-500: #5c5c5c;
+  --color-neutral-600: #8f8f8f;
+  --color-neutral-700: #b5b5b5;
+  --color-neutral-800: #fff;
+  --color-neutral-900: #fff;
+
+  /* Razer green replaces the boilerplate's grey brand ramp, so every
+     primary action (Checkout, Place order, Apply) reads as the brand. */
+  --color-brand-50: #0b1c07;
+  --color-brand-100: #12300c;
+  --color-brand-300: #7cee66;
+  --color-brand-500: #44d62c;
+  --color-brand-600: #38b924;
+  --color-brand-700: #2c9b1c;
+
+  /* Status colours re-tuned for a dark surface: the -200 backgrounds go
+     dark, the -800 foregrounds go light enough to read on them. */
+  --color-positive-200: #0f2412;
+  --color-positive-500: #4fc46a;
+  --color-positive-800: #7ede93;
+  --color-informational-200: #14172b;
+  --color-informational-500: #7f8ce6;
+  --color-informational-800: #a3adf2;
+  --color-warning-200: #2a1f10;
+  --color-warning-500: #e79f5c;
+  --color-warning-800: #f2b87f;
+  --color-alert-200: #2a1414;
+  --color-alert-500: #e07070;
+  --color-alert-800: #ff9494;
+
+  /* Composed in styles.css from the tokens above; restated because that
+     substitution already happened against the light ramp. */
+  --background-color: #000;
+  --color-button-active: var(--color-brand-700);
+  --color-button-focus: var(--color-brand-300);
+  --color-button-hover: var(--color-brand-600);
+  --color-action-button-active: var(--color-neutral-200);
+  --color-action-button-hover: var(--color-neutral-300);
+
+  /* Aliases a few dropins read instead of the ramp. */
+  --color-primary: var(--color-brand-500);
+  --color-primary-700: var(--color-brand-700);
+  --color-text-primary: var(--color-neutral-800);
+  --color-text-secondary: var(--color-neutral-700);
+  --color-border: var(--color-neutral-400);
+  --color-success: var(--color-brand-500);
+  --color-error: var(--color-alert-800);
+  --color-error-light: var(--color-alert-200);
+  --color-disabled-background: #1a1a1a;
+
+  /* Razer's chrome is squared off; the boilerplate's 24px pill radius is
+     the single loudest tell that this is not razer.com. */
+  --shape-border-radius-1: 2px;
+  --shape-border-radius-2: 4px;
+  --shape-border-radius-3: 4px;
+
+  /* Titillium Web, and one step up in weight throughout: the
+     boilerplate's 300 weight is the right density on white and too thin
+     to hold together as light-on-dark. */
+  --type-base-font-family: "Titillium Web", "Roboto Condensed", roboto, roboto-fallback, system-ui, sans-serif;
+  --type-display-1-font: normal normal 700 6rem/7.2rem var(--type-base-font-family);
+  --type-display-1-letter-spacing: 0;
+  --type-display-2-font: normal normal 700 4.8rem/5.6rem var(--type-base-font-family);
+  --type-display-2-letter-spacing: 0;
+  --type-display-3-font: normal normal 600 3.4rem/4rem var(--type-base-font-family);
+  --type-display-3-letter-spacing: 0;
+  --type-headline-1-font: normal normal 600 2.4rem/3.2rem var(--type-base-font-family);
+  --type-headline-1-letter-spacing: 0;
+  --type-headline-2-default-font: normal normal 400 2rem/2.4rem var(--type-base-font-family);
+  --type-headline-2-default-letter-spacing: 0;
+  --type-headline-2-strong-font: normal normal 700 2rem/2.4rem var(--type-base-font-family);
+  --type-headline-2-strong-letter-spacing: 0;
+  --type-body-1-default-font: normal normal 400 1.6rem/2.4rem var(--type-base-font-family);
+  --type-body-1-default-letter-spacing: 0;
+  --type-body-1-strong-font: normal normal 600 1.6rem/2.4rem var(--type-base-font-family);
+  --type-body-1-strong-letter-spacing: 0;
+  --type-body-1-emphasized-font: normal normal 700 1.6rem/2.4rem var(--type-base-font-family);
+  --type-body-1-emphasized-letter-spacing: 0;
+  --type-body-2-default-font: normal normal 400 1.4rem/2rem var(--type-base-font-family);
+  --type-body-2-default-letter-spacing: 0;
+  --type-body-2-strong-font: normal normal 600 1.4rem/2rem var(--type-base-font-family);
+  --type-body-2-strong-letter-spacing: 0;
+  --type-body-2-emphasized-font: normal normal 700 1.4rem/2rem var(--type-base-font-family);
+  --type-body-2-emphasized-letter-spacing: 0;
+  --type-button-1-font: normal normal 700 2rem/2.6rem var(--type-base-font-family);
+  --type-button-1-letter-spacing: 0.08em;
+  --type-button-2-font: normal normal 700 1.6rem/2.4rem var(--type-base-font-family);
+  --type-button-2-letter-spacing: 0.08em;
+  --type-details-caption-1-font: normal normal 400 1.2rem/1.6rem var(--type-base-font-family);
+  --type-details-caption-1-letter-spacing: 0.04em;
+  --type-details-caption-2-font: normal normal 400 1.2rem/1.6rem var(--type-base-font-family);
+  --type-details-caption-2-letter-spacing: 0.04em;
+  --type-details-overline-font: normal normal 600 1.2rem/2rem var(--type-base-font-family);
+  --type-details-overline-letter-spacing: 0.16em;
+}
+
+/*
+ * The tokens are inherited, but body's own background-color and color
+ * were computed from :root before this file loaded.
+ */
+body.razer-commerce-page {
+  background-color: #000;
+  color: var(--color-neutral-800);
+
+  /* Native controls still render their light UA theme (dropdown lists,
+     date pickers, the caret) unless the page declares its scheme. */
+  color-scheme: dark;
+}
+
+/* Component corrections
+ *
+ * Each rule below is a difference the token layer cannot express.
+ */
+
+/* Razer sets its primary calls to action in uppercase; the dropins bake
+   the label casing into the markup, so it has to be done in CSS. */
+body.razer-commerce-page .dropin-button--primary,
+body.razer-commerce-page .dropin-button--secondary {
+  text-transform: uppercase;
+}
+
+/* Placeholders inherit the input's colour at reduced opacity, which on
+   white text over near-black lands too close to the entered value. */
+body.razer-commerce-page input::placeholder,
+body.razer-commerce-page textarea::placeholder {
+  color: var(--color-neutral-600);
+  opacity: 1;
+}
+
+/* Boilerplate link styling (styles.css) resolved --color-brand-500 as
+   grey; on the dark page the brand green is both the razer accent and
+   the only accessible option. */
+/* stylelint-disable selector-not-notation -- the dropin subtree has to be
+   excluded by descendant, which needs the complex :not() notation. */
+body.razer-commerce-page main a:not(.dropin-design a):not(.button) {
+  color: var(--color-brand-500);
+}
+
+body.razer-commerce-page main a:not(.dropin-design a):not(.button):hover {
+  color: var(--color-brand-300);
+}
+/* stylelint-enable selector-not-notation */

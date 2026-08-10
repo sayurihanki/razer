@@ -183,6 +183,12 @@ footer {
   grid-row: 3;
 }
 
+/* Counterpart to header.nav-missing for pages that carry the razer site
+   footer in main: the boilerplate /footer must not paint below it. */
+footer.chrome-owned {
+  display: none;
+}
+
 header .header,
 footer .footer {
   visibility: hidden;

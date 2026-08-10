@@ -646,12 +646,14 @@ main > .section.appear > div > .razer-site-header-wrapper {
   margin: 22px 24px;
 }
 
+/* Flex item of the (flex-column) cart panel body — see "Cart drawer". */
 .razer-site-header .empty-cart {
   text-align: center;
+  flex: 1;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: calc(100% - 70px);
+  min-height: 0;
   padding: 44px;
   display: flex;
 }
@@ -828,26 +830,6 @@ main > .section.appear > div > .razer-site-header-wrapper {
   color: var(--rzrm-green, #44d62c);
 }
 
-/* Cart panel is light-themed in the source's final layer */
-.razer-site-header .cart-panel {
-  background: var(--rzrm-light-base, #fff);
-  color: #111;
-}
-
-.razer-site-header .cart-panel .panel-head {
-  border-color: #ddd;
-}
-
-.razer-site-header .cart-panel .panel-head strong,
-.razer-site-header .cart-panel .panel-head button,
-.razer-site-header .cart-panel .empty-cart h2 {
-  color: #111;
-}
-
-.razer-site-header .cart-panel .empty-cart p {
-  color: #666;
-}
-
 /* ── Live cart ──────────────────────────────────────────────────── */
 
 .razer-site-header .cart-icon {
@@ -873,23 +855,513 @@ main > .section.appear > div > .razer-site-header-wrapper {
   text-align: center;
 }
 
+/* ── Cart drawer ────────────────────────────────────────────────── */
+
+/*
+ * The drawer is the commerce mini-cart dropin wearing Razer chrome.
+ *
+ * Layout: the panel is a flex column and that chain continues through
+ * the EDS section/wrapper/block the mini-cart fragment brings with it,
+ * so the item list scrolls on its own and the checkout bar stays pinned
+ * to the bottom of the drawer instead of below the fold.
+ *
+ * Skin: styles.css declares the dropin token set on `:root,
+ * .dropin-design` and the block itself carries `.dropin-design`, so the
+ * re-pointed tokens have to land on those elements — an override on an
+ * ancestor alone loses to the block's own class.
+ */
+
+.razer-site-header .cart-panel {
+  border-left-color: rgb(68 214 44 / 35%);
+  width: min(448px, 94vw);
+  flex-direction: column;
+  display: flex;
+}
+
+.razer-site-header .cart-panel .panel-head {
+  border-bottom: 0;
+  flex: none;
+  position: relative;
+}
+
+/* Ties the drawer to the header's green underline. */
+.razer-site-header .cart-panel .panel-head::after {
+  content: "";
+  background: linear-gradient(90deg, rgb(68 214 44 / 60%), rgb(255 255 255 / 8%) 45%, transparent);
+  height: 1px;
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+}
+
+.razer-site-header .cart-panel .panel-head strong {
+  font-family: var(--rzrm-font-display, "Titillium Web", system-ui, sans-serif);
+  letter-spacing: 0.08em;
+  font-weight: 700;
+}
+
+.razer-site-header .cart-panel .panel-head button {
+  color: var(--rzrm-text-tertiary, #999);
+  transition: color var(--rzrm-duration-fast, 0.24s) ease;
+}
+
+.razer-site-header .cart-panel .panel-head button:hover {
+  color: var(--rzrm-text-primary, #fff);
+}
+
 .razer-site-header .cart-panel-body {
   flex: 1;
   min-height: 0;
-  overflow-y: auto;
+  overflow: hidden;
+  flex-direction: column;
+  display: flex;
 }
 
-/* The mini-cart dropin renders into the light-themed panel. */
+.razer-site-header .cart-panel-body > .section,
+.razer-site-header .cart-panel-body > .section > div,
 .razer-site-header .cart-panel-body .commerce-mini-cart {
-  --color-neutral-900: #111;
-  --color-neutral-700: #444;
-
-  padding: 16px;
-  color: #111;
+  flex: 1;
+  min-height: 0;
+  flex-direction: column;
+  display: flex;
 }
 
-.razer-site-header .cart-panel-body .commerce-mini-cart a {
+.razer-site-header .cart-panel-body .cart-mini-cart {
+  max-height: none;
+  min-height: 0;
+  height: 100%;
+  padding: 0;
+}
+
+.razer-site-header .cart-panel .dropin-design {
+  --color-brand-500: var(--rzrm-green, #44d62c);
+  --color-button-hover: #5ce843;
+  --color-button-active: #35c01f;
+  --color-button-focus: var(--rzrm-green, #44d62c);
+  --color-neutral-50: #000;
+  --color-neutral-200: #0d0d0d;
+  --color-neutral-300: #1c1c1c;
+  --color-neutral-400: rgb(255 255 255 / 10%);
+  --color-neutral-500: #6b6b6b;
+  --color-neutral-600: #888;
+  --color-neutral-700: #bbb;
+  --color-neutral-800: #fff;
+  --color-neutral-900: #fff;
+  --type-base-font-family: var(--rzrm-font-body, roboto, "Helvetica Neue", arial, sans-serif);
+}
+
+.razer-site-header .cart-panel .cart-mini-cart__products {
+  scrollbar-color: var(--rzrm-surface-line, #333) transparent;
+  scrollbar-width: thin;
+  padding: 18px 20px 22px;
+}
+
+.razer-site-header .cart-panel .cart-mini-cart__products::-webkit-scrollbar {
+  width: 6px;
+}
+
+.razer-site-header .cart-panel .cart-mini-cart__products::-webkit-scrollbar-thumb {
+  background: var(--rzrm-surface-line, #333);
+  border-radius: 3px;
+}
+
+.razer-site-header .cart-panel .cart-mini-cart__products::-webkit-scrollbar-thumb:hover {
+  background: rgb(68 214 44 / 60%);
+}
+
+/*
+ * The drawer head already carries the count and the configuration list
+ * already names the variant, so the dropin's own heading and the raw
+ * SKU string are duplicates.
+ */
+.razer-site-header .cart-panel .cart-cart-summary-list__heading,
+.razer-site-header .cart-panel .dropin-cart-item__sku {
+  display: none;
+}
+
+.razer-site-header .cart-panel .dropin-cart-list__wrapper {
+  gap: 12px;
+}
+
+.razer-site-header .cart-panel .dropin-cart-item {
+  border: 1px solid var(--rzrm-surface-line, #333);
+  border-radius: var(--rzrm-radius-lg, 6px);
+  background: var(--rzrm-surface-raised, #111);
+  padding: 14px 14px 16px 18px;
+  transition:
+    border-color var(--rzrm-duration-base, 0.3s) ease,
+    box-shadow var(--rzrm-duration-base, 0.3s) ease;
+}
+
+/* Chroma rail: lights the line you are pointing at. */
+.razer-site-header .cart-panel .dropin-cart-item::before {
+  content: "";
+  background: var(--rzrm-green, #44d62c);
+  opacity: 0%;
+  width: 2px;
+  transition:
+    opacity var(--rzrm-duration-base, 0.3s) ease,
+    transform var(--rzrm-duration-base, 0.3s) var(--rzrm-ease-standard, ease);
+  position: absolute;
+  inset-block: 12px;
+  inset-inline-start: 0;
+  transform: scaleY(0.35);
+}
+
+.razer-site-header .cart-panel .dropin-cart-item:hover,
+.razer-site-header .cart-panel .dropin-cart-item:focus-within {
+  border-color: rgb(68 214 44 / 45%);
+  box-shadow: 0 14px 34px -18px rgb(0 0 0 / 90%);
+}
+
+.razer-site-header .cart-panel .dropin-cart-item:hover::before,
+.razer-site-header .cart-panel .dropin-cart-item:focus-within::before {
+  opacity: 100%;
+  transform: scaleY(1);
+}
+
+.razer-site-header .cart-panel .dropin-cart-item__wrapper {
+  grid-template-columns: 84px minmax(0, 1fr);
+  column-gap: 14px;
+  row-gap: 0;
+}
+
+/* The dropin spans its content across a 4-column grid; this one is 2. */
+.razer-site-header .cart-panel .dropin-cart-item__title,
+.razer-site-header .cart-panel .dropin-cart-item__attributes,
+.razer-site-header .cart-panel .dropin-cart-item__configurations,
+.razer-site-header .cart-panel .dropin-cart-item__savings__wrapper,
+.razer-site-header .cart-panel .dropin-cart-item__price,
+.razer-site-header .cart-panel .dropin-cart-item__total,
+.razer-site-header .cart-panel .dropin-cart-item__warning,
+.razer-site-header .cart-panel .dropin-cart-item__alert,
+.razer-site-header .cart-panel .dropin-cart-item__footer {
+  grid-column: 2 / 3;
+}
+
+.razer-site-header .cart-panel .dropin-cart-item__image {
+  grid-area: 1 / 1 / 15 / 2;
+  align-self: start;
+}
+
+.razer-site-header .cart-panel .dropin-cart-item__image a {
+  border: 1px solid var(--rzrm-surface-line, #333);
+  border-radius: var(--rzrm-radius-md, 4px);
+  background:
+    radial-gradient(115% 115% at 50% 32%, rgb(68 214 44 / 16%), transparent 62%),
+    #0a0a0a;
+  aspect-ratio: 1;
+  display: block;
+  overflow: hidden;
+}
+
+.razer-site-header .cart-panel .dropin-cart-item__image img {
+  object-fit: contain;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  padding: 8px;
+}
+
+/*
+ * Catalog placeholders are a pale logo on white: left alone they read as
+ * a lit panel where the product shot should be. Sunk into the tile they
+ * read as "no shot yet".
+ */
+.razer-site-header .cart-panel .dropin-cart-item__image img[src*="placeholder"] {
+  opacity: 30%;
+  filter: grayscale(100%) invert(100%);
+  padding: 22px;
+}
+
+.razer-site-header .cart-panel .cart-item-edit-container {
+  margin-top: 8px;
+}
+
+.razer-site-header .cart-panel .cart-item-edit-link .dropin-button,
+.razer-site-header .cart-panel .cart-item-edit-link .dropin-iconButton {
+  border: 1px solid var(--rzrm-surface-line, #333);
+  border-radius: var(--rzrm-radius-sm, 3px);
+  color: var(--rzrm-text-tertiary, #999);
+  font-family: var(--rzrm-font-condensed, "Roboto Condensed", sans-serif);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  min-width: 0;
+  min-height: 0;
+  padding: 5px;
+  font-size: 11px;
+  font-weight: 600;
+  display: flex;
+  transition:
+    color var(--rzrm-duration-fast, 0.24s) ease,
+    border-color var(--rzrm-duration-fast, 0.24s) ease;
+}
+
+.razer-site-header .cart-panel .cart-item-edit-link .dropin-button:hover,
+.razer-site-header .cart-panel .cart-item-edit-link .dropin-iconButton:hover {
+  border-color: rgb(68 214 44 / 45%);
+  color: var(--rzrm-green, #44d62c);
+}
+
+.razer-site-header .cart-panel .cart-item-edit-link .dropin-icon {
   color: inherit;
+  width: 14px;
+  height: 14px;
+}
+
+.razer-site-header .cart-panel .dropin-cart-item__title {
+  color: var(--rzrm-text-primary, #fff);
+  font-family: var(--rzrm-font-display, "Titillium Web", system-ui, sans-serif);
+  letter-spacing: 0.01em;
+  padding-right: 34px;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 20px;
+}
+
+.razer-site-header .cart-panel .dropin-cart-item__title a {
+  transition: color var(--rzrm-duration-fast, 0.24s) ease;
+}
+
+.razer-site-header .cart-panel .dropin-cart-item__title a:hover {
+  color: var(--rzrm-green, #44d62c);
+}
+
+/*
+ * The configuration list is the point of a configurable product, so it
+ * is set as a build sheet: condensed uppercase label, plain-text value.
+ */
+.razer-site-header .cart-panel .dropin-cart-item__configurations {
+  border-bottom: 1px solid rgb(255 255 255 / 8%);
+  row-gap: 4px;
+  margin: 10px 0 0;
+  padding-bottom: 12px;
+  display: grid;
+}
+
+.razer-site-header .cart-panel .dropin-cart-item__configurations:empty {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+.razer-site-header .cart-panel .dropin-cart-item__configurations__item {
+  color: var(--rzrm-text-muted, #888);
+  font-family: var(--rzrm-font-condensed, "Roboto Condensed", sans-serif);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-right: 0;
+  font-size: 11px;
+  line-height: 18px;
+}
+
+.razer-site-header .cart-panel .dropin-cart-item__configurations__item__value {
+  color: var(--rzrm-text-primary, #fff);
+  font-family: var(--rzrm-font-body, roboto, sans-serif);
+  letter-spacing: normal;
+  text-transform: none;
+  font-size: 13px;
+  font-weight: 400;
+}
+
+.razer-site-header .cart-panel .dropin-cart-item__price,
+.razer-site-header .cart-panel .dropin-cart-item__total {
+  grid-row: 14;
+  align-self: end;
+  margin-top: 12px;
+}
+
+.razer-site-header .cart-panel .dropin-cart-item__price {
+  color: var(--rzrm-text-muted, #888);
+  font-family: var(--rzrm-font-condensed, "Roboto Condensed", sans-serif);
+  letter-spacing: 0.06em;
+  font-size: 12px;
+}
+
+.razer-site-header .cart-panel .dropin-cart-item__total {
+  justify-self: end;
+}
+
+.razer-site-header .cart-panel .dropin-cart-item__total .dropin-price {
+  color: var(--rzrm-text-primary, #fff);
+  font-family: var(--rzrm-font-display, "Titillium Web", system-ui, sans-serif);
+  letter-spacing: 0.01em;
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 20px;
+}
+
+.razer-site-header .cart-panel .dropin-cart-item__remove {
+  border-radius: 50%;
+  color: var(--rzrm-text-muted, #888);
+  width: 30px;
+  min-width: 0;
+  height: 30px;
+  min-height: 0;
+  padding: 6px;
+  transition:
+    color var(--rzrm-duration-fast, 0.24s) ease,
+    background-color var(--rzrm-duration-fast, 0.24s) ease;
+  top: 8px;
+  right: 8px;
+}
+
+.razer-site-header .cart-panel .dropin-cart-item__remove .dropin-icon {
+  color: inherit;
+  width: 17px;
+  height: 17px;
+}
+
+.razer-site-header .cart-panel .dropin-cart-item__remove:hover {
+  background-color: rgb(255 255 255 / 8%);
+  color: var(--rzrm-text-primary, #fff);
+}
+
+/* "Added to cart" confirmation, raised out of the dropin's pale green. */
+.razer-site-header .cart-panel .commerce-mini-cart__message-wrapper--visible {
+  border: 1px solid rgb(68 214 44 / 30%);
+  border-radius: var(--rzrm-radius-md, 4px);
+  background: rgb(68 214 44 / 10%);
+  margin-bottom: 14px;
+  padding: 10px 12px;
+}
+
+.razer-site-header .cart-panel .commerce-mini-cart__update-message {
+  color: #a9f09b;
+  font-family: var(--rzrm-font-condensed, "Roboto Condensed", sans-serif);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.razer-site-header .cart-panel .cart-mini-cart__footer {
+  border-top: 1px solid var(--rzrm-surface-line, #333);
+  background: var(--rzrm-surface-base, #000);
+  flex: none;
+  row-gap: 14px;
+  padding: 16px 20px calc(20px + env(safe-area-inset-bottom, 0));
+}
+
+.razer-site-header .cart-panel .cart-mini-cart__footer__estimated-total {
+  color: var(--rzrm-text-tertiary, #999);
+  font-family: var(--rzrm-font-condensed, "Roboto Condensed", sans-serif);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  align-items: baseline;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/*
+ * The dropin pins `font: inherit` inline on the amount, so the drawer's
+ * subtotal type has to out-rank an inline style.
+ */
+.razer-site-header .cart-panel .cart-mini-cart__footer__estimated-total .dropin-price {
+  font: 700 22px/26px var(--rzrm-font-display, "Titillium Web", system-ui, sans-serif) !important;
+  color: var(--rzrm-text-primary, #fff);
+  letter-spacing: 0;
+}
+
+.razer-site-header .cart-panel .cart-mini-cart__footer__estimated-total-excluding-taxes {
+  color: var(--rzrm-text-muted, #888);
+  font-family: var(--rzrm-font-condensed, "Roboto Condensed", sans-serif);
+  letter-spacing: 0.08em;
+  font-size: 12px;
+}
+
+.razer-site-header .cart-panel .cart-mini-cart__footer__ctas {
+  gap: 10px;
+  padding-top: 2px;
+}
+
+.razer-site-header .cart-panel .cart-mini-cart__footer__ctas .dropin-button {
+  border-radius: var(--rzrm-radius-sm, 3px);
+  font-family: var(--rzrm-font-display, "Titillium Web", system-ui, sans-serif);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  justify-content: center;
+  align-items: center;
+  min-height: 48px;
+  padding: 0 16px;
+  font-size: 15px;
+  font-weight: 700;
+  display: flex;
+  transition:
+    color var(--rzrm-duration-fast, 0.24s) ease,
+    background-color var(--rzrm-duration-fast, 0.24s) ease,
+    border-color var(--rzrm-duration-fast, 0.24s) ease,
+    box-shadow var(--rzrm-duration-base, 0.3s) ease,
+    transform var(--rzrm-duration-fast, 0.24s) var(--rzrm-ease-standard, ease);
+}
+
+.razer-site-header .cart-panel .cart-mini-cart__footer__ctas .dropin-button--primary {
+  background: var(--rzrm-green, #44d62c);
+  color: var(--rzrm-text-on-accent, #000);
+}
+
+.razer-site-header .cart-panel .cart-mini-cart__footer__ctas .dropin-button--primary:hover {
+  background-color: #5ce843;
+  box-shadow: 0 10px 30px -12px rgb(68 214 44 / 70%);
+}
+
+.razer-site-header .cart-panel .cart-mini-cart__footer__ctas .dropin-button--primary:active {
+  transform: translateY(1px);
+}
+
+.razer-site-header .cart-panel .cart-mini-cart__footer__ctas .dropin-button--tertiary {
+  border: 1px solid var(--rzrm-surface-line, #333);
+  background: none;
+  color: var(--rzrm-text-secondary, #bbb);
+}
+
+.razer-site-header .cart-panel .cart-mini-cart__footer__ctas .dropin-button--tertiary:hover {
+  border-color: rgb(255 255 255 / 55%);
+  color: var(--rzrm-text-primary, #fff);
+}
+
+/* Dropin empty state (the baked-in one above covers first paint). */
+.razer-site-header .cart-panel .cart-empty-cart {
+  text-align: center;
+  color: var(--rzrm-text-secondary, #bbb);
+  align-items: center;
+  gap: 10px;
+  padding: 44px 20px;
+  display: grid;
+  justify-items: center;
+}
+
+.razer-site-header .cart-panel .cart-empty-cart__icon {
+  color: var(--rzrm-green, #44d62c);
+}
+
+.razer-site-header .cart-panel .cart-empty-cart-button {
+  margin-top: 6px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes rzr-cart-rise {
+    from {
+      opacity: 0%;
+      transform: translateY(12px);
+    }
+
+    to {
+      opacity: 100%;
+      transform: none;
+    }
+  }
+
+  .razer-site-header .cart-panel.is-open .cart-mini-cart__products {
+    animation: rzr-cart-rise 0.4s 0.1s var(--rzrm-ease-standard, ease) both;
+  }
+
+  .razer-site-header .cart-panel.is-open .cart-mini-cart__footer {
+    animation: rzr-cart-rise 0.4s 0.18s var(--rzrm-ease-standard, ease) both;
+  }
 }
 
 /* ── Responsive ─────────────────────────────────────────────────── */

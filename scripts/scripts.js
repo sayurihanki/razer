@@ -1,5 +1,6 @@
 import {
   buildBlock,
+  getMetadata,
   loadHeader,
   loadFooter,
   decorateIcons,
@@ -183,8 +184,32 @@ function loadRazerChromaStyles(doc) {
 }
 
 /**
- * True when the page authors its own site chrome (razer-site-header) and
- * therefore never renders the boilerplate nav.
+ * Restyles the commerce dropins in razer's dark brand system, but only on
+ * pages that render one. The dropins are entirely design-token driven, so
+ * the stylesheet is a token remap rather than a second set of component
+ * rules; the razer chrome blocks read none of those tokens (they carry
+ * their own `--rzrm-*` set), so the dark theme cannot leak into them.
+ *
+ * Matches on `data-block-name`, set by decorateBlock a moment earlier, so
+ * `commerce-` matches the block name exactly rather than any class that
+ * happens to contain it.
+ *
+ * Eager, alongside the chroma theme and for the same reason: cart and
+ * checkout are the page's LCP content, and deferring the theme would
+ * flash the default light page first.
+ *
+ * @param {Element} doc The container element
+ */
+function loadRazerCommerceStyles(doc) {
+  if (!doc.querySelector('main div.block[data-block-name^="commerce-"]')) return;
+  document.body.classList.add('razer-commerce-page');
+  loadCSS(`${window.hlx.codeBasePath}/styles/razer-commerce.css`);
+}
+
+/**
+ * True when the page carries the razer site chrome (razer-site-header) in
+ * main and therefore never renders the boilerplate nav — whether the block
+ * was authored onto the page or built in by buildRazerChrome.
  *
  * @param {Document} doc The container document
  * @returns {boolean}
@@ -194,23 +219,63 @@ export function pageUsesOwnChrome(doc = document) {
 }
 
 /**
- * Collapses the boilerplate <header> on pages that don't use the boilerplate
- * nav, in the eager phase so the reserved --nav-height space never paints as
- * an empty band above the first section (and never jumps away later).
+ * Builds the razer site chrome into pages that don't author it, so cart,
+ * checkout, the account pages and every other storefront page inherited
+ * from the boilerplate carry the same header and footer as the authored
+ * razer pages instead of the boilerplate nav.
+ *
+ * Both blocks render their full preset from an empty table (see their
+ * READMEs), so an empty block is the whole content contract — an author
+ * who wants to override entries adds the real block to the page and this
+ * step steps aside.
+ *
+ * Deliberately called from loadEager against the page's own main rather
+ * than from decorateMain: decorateMain also runs over every loaded
+ * fragment (including the header's own /mini-cart), which must not grow
+ * a nested header. Running before decorateMain lets the built sections
+ * pick up the normal section/block decoration.
+ *
+ * `chrome: none` in page metadata opts a page out and gives it the
+ * boilerplate header and footer back.
+ *
+ * @param {Element} main The container element
+ */
+function buildRazerChrome(main) {
+  if (getMetadata('chrome') === 'none') return;
+
+  if (!main.querySelector('.razer-site-header')) {
+    const section = document.createElement('div');
+    section.append(buildBlock('razer-site-header', ''));
+    main.prepend(section);
+  }
+
+  if (!main.querySelector('.razer-site-footer')) {
+    const section = document.createElement('div');
+    section.append(buildBlock('razer-site-footer', ''));
+    main.append(section);
+  }
+}
+
+/**
+ * Collapses the boilerplate <header> and <footer> on pages that don't use
+ * them, in the eager phase so the reserved --nav-height space never paints
+ * as an empty band above the first section (and never jumps away later).
  *
  * Two signals, both known before first paint:
- * - the page authors the razer site chrome: it brings its own fixed header,
- *   and whatever /nav holds (a leftover commerce nav, or a 404) must not
- *   surface next to it;
+ * - the page carries the razer site chrome: it brings its own fixed header
+ *   and footer, and whatever /nav and /footer hold (a leftover commerce
+ *   nav, or a 404) must not surface next to them;
  * - the header block observed a missing nav fragment earlier this session
  *   (sessionStorage echo, same pattern as fonts-loaded): the first such page
  *   can only collapse once its fetch 404s, but every following page hides
  *   the header up front. The header block un-hides it if the nav comes back.
+ *   This one says nothing about /footer, so it collapses the header alone.
  *
  * @param {Element} doc The container element
  */
-function collapseBoilerplateHeader(doc) {
-  let collapse = pageUsesOwnChrome(doc);
+function collapseBoilerplateChrome(doc) {
+  const ownChrome = pageUsesOwnChrome(doc);
+  let collapse = ownChrome;
   if (!collapse) {
     try {
       collapse = !!sessionStorage.getItem('nav-missing');
@@ -220,6 +285,7 @@ function collapseBoilerplateHeader(doc) {
   }
   if (!collapse) return;
   doc.querySelector('body > header')?.classList.add('nav-missing');
+  if (ownChrome) doc.querySelector('body > footer')?.classList.add('chrome-owned');
 }
 
 /**
@@ -234,9 +300,11 @@ async function loadEager(doc) {
   if (main) {
     try {
       await initializeCommerce();
+      buildRazerChrome(main);
       decorateMain(main);
       loadRazerChromaStyles(doc);
-      collapseBoilerplateHeader(doc);
+      loadRazerCommerceStyles(doc);
+      collapseBoilerplateChrome(doc);
       applyTemplates(doc);
       await loadCommerceEager();
     } catch (e) {
@@ -311,7 +379,12 @@ function loadBodeaSharedTokens(doc) {
  * @param {Element} doc The container element
  */
 async function loadLazy(doc) {
-  loadHeader(doc.querySelector('header'));
+  // The boilerplate header and footer are collapsed on pages carrying the
+  // razer chrome, so loading them would only spend a /nav and a /footer
+  // fetch (plus both blocks' CSS and JS) on markup nobody sees.
+  const ownChrome = pageUsesOwnChrome(doc);
+
+  if (!ownChrome) loadHeader(doc.querySelector('header'));
 
   const main = doc.querySelector('main');
   await loadSections(main);
@@ -320,7 +393,7 @@ async function loadLazy(doc) {
   const element = hash ? doc.getElementById(hash.substring(1)) : false;
   if (hash && element) element.scrollIntoView();
 
-  loadFooter(doc.querySelector('footer'));
+  if (!ownChrome) loadFooter(doc.querySelector('footer'));
 
   loadCommerceLazy();
 

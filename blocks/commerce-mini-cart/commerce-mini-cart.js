@@ -193,7 +193,9 @@ export default async function decorate(block) {
           editLink.className = 'cart-item-edit-link';
 
           UI.render(Button, {
-            children: placeholders?.Global?.CartEditButton,
+            // Without a label this renders as a bare pencil with no
+            // accessible name, so fall back rather than leave it unnamed.
+            children: placeholders?.Global?.CartEditButton ?? 'Edit',
             variant: 'tertiary',
             size: 'medium',
             icon: h(Icon, { source: 'Edit' }),
