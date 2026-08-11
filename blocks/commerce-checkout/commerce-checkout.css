@@ -35,6 +35,9 @@
 /*
  * Step section cards: each checkout step sits on a raised surface with a
  * numbered notch on its top border, replacing the old bare dividers.
+ * Surface and hairline match razer-commerce.css's shared card (#0d0d0d on
+ * #1f1f1f) so the checkout speaks the same card language as the cart and
+ * auth pages instead of introducing a second one.
  */
 .checkout__login,
 .checkout__shipping-form,
@@ -44,8 +47,8 @@
 .checkout__billing-form,
 .checkout__terms-and-conditions {
     position: relative;
-    background: var(--rzr-surface-raised);
-    border: 1px solid var(--rzr-surface-line);
+    background: #0d0d0d;
+    border: 1px solid #1f1f1f;
     border-radius: var(--rzr-radius-lg);
     padding: var(--spacing-big);
     transition: border-color var(--rzr-duration-fast) var(--rzr-ease-standard);
@@ -74,7 +77,7 @@
 .checkout__payment-selector:hover,
 .checkout__billing-form:hover,
 .checkout__terms-and-conditions:hover {
-    border-color: var(--color-neutral-500);
+    border-color: var(--rzr-surface-line);
 }
 
 /* Step number notches, sitting on the card's top border */
@@ -86,13 +89,16 @@
     position: absolute;
     top: -9px;
     left: var(--spacing-medium);
-    padding: 0 var(--spacing-xsmall);
+
+    /* the right pad is a step down because tracking already trails the
+       last glyph with its own space */
+    padding: 0 5px 0 8px;
     background: var(--rzr-surface-base);
     color: var(--rzr-green);
     font-family: var(--rzr-font-condensed);
     font-size: var(--rzr-body-xs-size);
     font-weight: 600;
-    letter-spacing: 0.18em;
+    letter-spacing: 0.14em;
     line-height: 18px;
 }
 
@@ -108,8 +114,8 @@
    their own labels and sit at ragged widths. */
 .checkout__delivery .checkout-shipping-methods__method {
     width: auto;
-    background: var(--rzr-surface-card);
-    border: 1px solid var(--rzr-surface-line);
+    background: #151515;
+    border: 1px solid #262626;
     border-radius: var(--rzr-radius-md);
     padding: var(--spacing-small) var(--spacing-medium);
     transition:
@@ -171,8 +177,8 @@
 
 .checkout__payment-selector .payment-selector__tile {
     position: relative;
-    background: var(--rzr-surface-card);
-    border: 1px solid var(--rzr-surface-line);
+    background: #151515;
+    border: 1px solid #262626;
     border-radius: var(--rzr-radius-md);
     transition:
         border-color var(--rzr-duration-fast) var(--rzr-ease-standard),
@@ -347,9 +353,10 @@
     text-transform: uppercase;
 }
 
+/* Same recessed well razer-commerce.css gives the dropin inputs */
 .checkout__payment-selector .payment-selector__field input {
     width: 100%;
-    background: var(--color-neutral-100);
+    background: #0a0a0a;
     border: 1px solid var(--rzr-surface-line);
     border-radius: var(--rzr-radius-sm);
     color: var(--rzr-text-primary);
@@ -497,23 +504,21 @@
     display: none;
 }
 
-/* remove margin from the heading divider */
+/* razer-commerce.css already underlines the page title with its green
+   accent; the dropin header's own divider under it was a second,
+   stray-looking rule. */
 .checkout__heading .dropin-divider {
-    margin: 0;
+    display: none;
 }
 
-/* Summary cards in the aside share the step-card surface */
-.checkout__order-summary,
-.checkout__cart-summary {
-    background: var(--rzr-surface-raised);
-    border: 1px solid var(--rzr-surface-line);
-    border-radius: var(--rzr-radius-lg);
-    overflow: hidden;
-}
-
-/* Cart Summary */
-.checkout__block .cart-cart-summary-list {
-    padding: var(--spacing-medium);
+/* razer-commerce.css already draws the shared card on every aside block
+   (.checkout__aside > div), and the dropins paint a second panel of their
+   own inside it — box in a box, with the labels squeezed between two
+   24px paddings. Flatten the inner panel so each summary is one surface. */
+.checkout__order-summary .cart-order-summary,
+.checkout__cart-summary .cart-cart-summary-list {
+    background: none;
+    padding: 0;
 }
 
 /* Order Summary Coupon */
@@ -530,10 +535,17 @@
     display: none;
 }
 
+/* Product shots (and the backend's white placeholder) sit on white; a
+   radius keeps the light tile from reading as a hole in the dark card. */
+.checkout__cart-summary .dropin-cart-list img {
+    border-radius: var(--rzr-radius-sm);
+}
+
 .cart-summary-list__heading {
     display: flex;
     justify-content: space-between;
-    align-items: flex-end;
+    align-items: baseline;
+    gap: var(--spacing-small);
 }
 
 .cart-summary-list__heading-text {
@@ -556,6 +568,7 @@
 .cart-summary-list__edit {
     font: var(--type-body-2-strong-font);
     letter-spacing: var(--type-body-2-strong-letter-spacing);
+    white-space: nowrap;
 }
 
 .checkout__block
@@ -599,7 +612,9 @@
     display: none;
 }
 
-@media only screen and (min-width: 320px) and (max-width: 768px) {
+/* Single column all the way to 1100px: between 768 and 1100 the aside
+   was landing in a ~250-350px strip where every summary label wrapped. */
+@media only screen and (max-width: 1099px) {
     .checkout__main,
     .checkout__aside {
         display: contents;
@@ -634,7 +649,7 @@
     }
 }
 
-@media only screen and (min-width: 768px) {
+@media only screen and (min-width: 1100px) {
     .checkout__content {
         display: grid;
         align-items: start;
