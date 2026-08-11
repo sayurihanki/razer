@@ -307,14 +307,31 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 160px;
-    height: 40px;
+    width: 180px;
+    height: 42px;
     border-radius: var(--rzr-radius-md);
     justify-self: start;
+    cursor: pointer;
+    transition:
+        filter var(--rzr-duration-fast) var(--rzr-ease-standard),
+        transform var(--rzr-duration-fast) var(--rzr-ease-standard);
+}
+
+.checkout__payment-selector .payment-selector__wallet-button:hover {
+    filter: brightness(1.08);
+}
+
+.checkout__payment-selector .payment-selector__wallet-button:active {
+    transform: scale(0.98);
 }
 
 .checkout__payment-selector .payment-selector__wallet-button svg {
     height: 22px;
+}
+
+.checkout__payment-selector .payment-selector__wallet-button--paypal {
+    background: #ffc439;
+    border: 0;
 }
 
 .checkout__payment-selector .payment-selector__wallet-button--apple {
@@ -327,6 +344,152 @@
     background: #fff;
     color: #3c4043;
     border: 1px solid #dadce0;
+}
+
+/* Simulated flow states */
+.checkout__payment-selector .payment-selector__flow {
+    display: grid;
+    gap: var(--spacing-xsmall);
+    justify-items: start;
+}
+
+.checkout__payment-selector .payment-selector__progress {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--rzr-text-secondary);
+    font-size: var(--rzr-body-sm-size);
+    min-height: 42px;
+}
+
+.checkout__payment-selector .payment-selector__spinner {
+    width: 16px;
+    height: 16px;
+    border: 2px solid var(--rzr-surface-line);
+    border-top-color: var(--rzr-green);
+    border-radius: 50%;
+    animation: payment-spinner 0.7s linear infinite;
+}
+
+@keyframes payment-spinner {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.checkout__payment-selector .payment-selector__status {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--rzr-green);
+    font-size: var(--rzr-body-sm-size);
+    line-height: 2rem;
+}
+
+.checkout__payment-selector .payment-selector__status svg {
+    width: 14px;
+    height: 14px;
+    flex: none;
+}
+
+.checkout__payment-selector .payment-selector__status strong {
+    color: var(--rzr-text-primary);
+    font-weight: 600;
+}
+
+.checkout__payment-selector .payment-selector__reset {
+    color: var(--rzr-text-tertiary);
+    font-size: var(--rzr-body-xs-size);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.checkout__payment-selector .payment-selector__reset:hover {
+    color: var(--rzr-green);
+}
+
+/* Klarna installment timeline */
+.checkout__payment-selector .payment-selector__schedule {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--spacing-xsmall);
+    margin-top: var(--spacing-xsmall);
+}
+
+.checkout__payment-selector .payment-selector__schedule-stop {
+    display: grid;
+    gap: 4px;
+    justify-items: start;
+    position: relative;
+    padding-top: 14px;
+}
+
+/* the connecting rail */
+.checkout__payment-selector .payment-selector__schedule-stop::before {
+    content: "";
+    position: absolute;
+    top: 4px;
+    left: 10px;
+    right: -8px;
+    height: 2px;
+    background: var(--rzr-surface-line);
+}
+
+.checkout__payment-selector .payment-selector__schedule-stop:last-child::before {
+    display: none;
+}
+
+.checkout__payment-selector .payment-selector__schedule-dot {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--rzr-surface-card);
+    border: 2px solid var(--rzr-text-muted);
+}
+
+.checkout__payment-selector .payment-selector__schedule-stop--now .payment-selector__schedule-dot {
+    background: var(--rzr-green);
+    border-color: var(--rzr-green);
+}
+
+.checkout__payment-selector .payment-selector__schedule-date {
+    color: var(--rzr-text-tertiary);
+    font-size: var(--rzr-body-xs-size);
+    line-height: 1.4;
+}
+
+.checkout__payment-selector .payment-selector__schedule-amount {
+    color: var(--rzr-text-primary);
+    font-size: var(--rzr-body-sm-size);
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+/* Razer Gold wallet */
+.checkout__payment-selector .payment-selector__wallet-row {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--spacing-small);
+    color: var(--rzr-text-secondary);
+    font-size: var(--rzr-body-sm-size);
+    line-height: 2.2rem;
+}
+
+.checkout__payment-selector .payment-selector__wallet-row strong {
+    color: var(--rzr-text-primary);
+    font-weight: 600;
+}
+
+.checkout__payment-selector .payment-selector__wallet-row--total {
+    border-top: 1px solid var(--rzr-surface-line);
+    padding-top: var(--spacing-xsmall);
+}
+
+.checkout__payment-selector .payment-selector__gold {
+    color: #f5c451;
 }
 
 /* Mock card form */
