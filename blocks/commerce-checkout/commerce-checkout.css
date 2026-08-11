@@ -2,6 +2,7 @@
     display: grid;
     grid-template-columns: 1fr;
     gap: var(--spacing-big) 0;
+    counter-reset: checkout-step;
 }
 
 .checkout__merged-cart-banner {
@@ -13,13 +14,13 @@
 
 .checkout__main {
     display: grid;
-    row-gap: var(--spacing-xbig);
+    row-gap: var(--spacing-big);
     margin-top: var(--spacing-medium);
 }
 
 .checkout__aside {
     display: grid;
-    gap: var(--spacing-xbig);
+    gap: var(--spacing-big);
 }
 
 .checkout-header h1 {
@@ -31,16 +32,384 @@
     gap: var(--spacing-xsmall);
 }
 
-.checkout__shipping-form {
-    padding-top: var(--spacing-xbig);
-    border-top: var(--shape-border-width-3) solid var(--color-neutral-400);
+/*
+ * Step section cards: each checkout step sits on a raised surface with a
+ * numbered notch on its top border, replacing the old bare dividers.
+ */
+.checkout__login,
+.checkout__shipping-form,
+.checkout__bill-to-shipping,
+.checkout__delivery,
+.checkout__payment-selector,
+.checkout__billing-form,
+.checkout__terms-and-conditions {
+    position: relative;
+    background: var(--rzr-surface-raised);
+    border: 1px solid var(--rzr-surface-line);
+    border-radius: var(--rzr-radius-lg);
+    padding: var(--spacing-big);
+    transition: border-color var(--rzr-duration-fast) var(--rzr-ease-standard);
 }
 
+/* Numbered steps only. Counted rather than hard-coded: a virtual cart
+   empties the shipping form and the delivery options, and both are then
+   hidden by the :empty rules below. A hidden element increments no
+   counter, so the numbering closes the gap instead of running 01 then 04. */
+.checkout__login,
+.checkout__shipping-form,
+.checkout__delivery,
+.checkout__payment-selector {
+    counter-increment: checkout-step;
+}
+
+/* The bill-to-shipping checkbox reads as a slim companion strip, not a step */
+.checkout__bill-to-shipping {
+    padding: var(--spacing-small) var(--spacing-big);
+}
+
+.checkout__login:hover,
+.checkout__shipping-form:hover,
+.checkout__bill-to-shipping:hover,
+.checkout__delivery:hover,
+.checkout__payment-selector:hover,
+.checkout__billing-form:hover,
+.checkout__terms-and-conditions:hover {
+    border-color: var(--color-neutral-500);
+}
+
+/* Step number notches, sitting on the card's top border */
+.checkout__login::before,
+.checkout__shipping-form::before,
+.checkout__delivery::before,
+.checkout__payment-selector::before {
+    content: counter(checkout-step, decimal-leading-zero);
+    position: absolute;
+    top: -9px;
+    left: var(--spacing-medium);
+    padding: 0 var(--spacing-xsmall);
+    background: var(--rzr-surface-base);
+    color: var(--rzr-green);
+    font-family: var(--rzr-font-condensed);
+    font-size: var(--rzr-body-xs-size);
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    line-height: 18px;
+}
+
+/* Section titles inside the cards follow the display face */
+.checkout__login .checkout-login-form__title,
+.checkout__delivery .checkout-shipping-methods__title {
+    text-transform: uppercase;
+}
+
+/* Shipping methods as selectable radio cards.
+   The dropin ships width: fit-content on the method label, which only its
+   toggle-button variant overrides; left alone the cards would shrink-wrap
+   their own labels and sit at ragged widths. */
+.checkout__delivery .checkout-shipping-methods__method {
+    width: auto;
+    background: var(--rzr-surface-card);
+    border: 1px solid var(--rzr-surface-line);
+    border-radius: var(--rzr-radius-md);
+    padding: var(--spacing-small) var(--spacing-medium);
+    transition:
+        border-color var(--rzr-duration-fast) var(--rzr-ease-standard),
+        box-shadow var(--rzr-duration-fast) var(--rzr-ease-standard);
+}
+
+.checkout__delivery .checkout-shipping-methods__method:hover {
+    border-color: var(--color-neutral-500);
+}
+
+.checkout__delivery .checkout-shipping-methods__method:has(input:checked) {
+    border-color: var(--rzr-green);
+    box-shadow: 0 0 0 1px var(--rzr-green);
+}
+
+.checkout__delivery .checkout-shipping-methods__price {
+    color: var(--rzr-green);
+}
+
+/*
+ * The PaymentMethods dropin stays mounted so the cart's real payment method
+ * (checkmo) remains selected and synced, but the Razer payment selector is
+ * the visible payment UI.
+ */
 .checkout__payment-methods {
-    padding-top: var(--spacing-xbig);
-    border-top: var(--shape-border-width-3) solid var(--color-neutral-400);
-    padding-bottom: var(--spacing-xbig);
-    border-bottom: var(--shape-border-width-3) solid var(--color-neutral-400);
+    display: none;
+}
+
+/* Payment selector */
+.checkout__payment-selector .payment-selector {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    min-width: 0;
+}
+
+.checkout__payment-selector .payment-selector__heading {
+    font: var(--type-headline-2-default-font);
+    letter-spacing: var(--type-headline-2-default-letter-spacing);
+    color: var(--color-neutral-800);
+    text-transform: uppercase;
+    padding: 0;
+    margin-bottom: var(--spacing-xsmall);
+}
+
+.checkout__payment-selector .payment-selector__note {
+    display: block;
+    color: var(--rzr-text-tertiary);
+    font-size: var(--rzr-body-xs-size);
+    line-height: var(--rzr-body-xs-lh);
+    margin-bottom: var(--spacing-medium);
+}
+
+.checkout__payment-selector .payment-selector__tiles {
+    display: grid;
+    gap: var(--spacing-small);
+}
+
+.checkout__payment-selector .payment-selector__tile {
+    position: relative;
+    background: var(--rzr-surface-card);
+    border: 1px solid var(--rzr-surface-line);
+    border-radius: var(--rzr-radius-md);
+    transition:
+        border-color var(--rzr-duration-fast) var(--rzr-ease-standard),
+        box-shadow var(--rzr-duration-fast) var(--rzr-ease-standard);
+}
+
+.checkout__payment-selector .payment-selector__tile:hover {
+    border-color: var(--color-neutral-500);
+}
+
+.checkout__payment-selector .payment-selector__tile--selected,
+.checkout__payment-selector .payment-selector__tile--selected:hover {
+    border-color: var(--rzr-green);
+    box-shadow:
+        0 0 0 1px var(--rzr-green),
+        0 0 18px rgb(68 214 44 / 12%);
+}
+
+.checkout__payment-selector .payment-selector__input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.checkout__payment-selector .payment-selector__face {
+    display: grid;
+    grid-template-columns: 36px minmax(0, 1fr) auto;
+    align-items: center;
+    gap: var(--spacing-small);
+    padding: var(--spacing-small) var(--spacing-medium);
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.checkout__payment-selector .payment-selector__input:focus-visible + .payment-selector__face {
+    box-shadow: var(--rzr-focus-ring);
+    border-radius: var(--rzr-radius-md);
+}
+
+.checkout__payment-selector .payment-selector__mark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 24px;
+    color: var(--rzr-text-primary);
+}
+
+.checkout__payment-selector .payment-selector__mark svg {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.checkout__payment-selector .payment-selector__label {
+    display: block;
+    color: var(--rzr-text-primary);
+    font-size: var(--rzr-body-size);
+    font-weight: 600;
+    line-height: 2.2rem;
+}
+
+.checkout__payment-selector .payment-selector__sublabel {
+    display: block;
+    color: var(--rzr-text-tertiary);
+    font-size: var(--rzr-body-xs-size);
+    line-height: var(--rzr-body-xs-lh);
+}
+
+.checkout__payment-selector .payment-selector__badge {
+    color: var(--rzr-text-muted);
+    background: none;
+    border: 1px solid var(--rzr-surface-line);
+    border-radius: var(--rzr-radius-sm);
+    padding: 2px 8px;
+    font-family: var(--rzr-font-condensed);
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.checkout__payment-selector .payment-selector__badge--live {
+    color: var(--rzr-green);
+    border-color: var(--rzr-green-deep);
+    background: rgb(68 214 44 / 8%);
+}
+
+.checkout__payment-selector .payment-selector__panel-inner {
+    display: grid;
+    gap: var(--spacing-small);
+    margin: 0 var(--spacing-medium);
+    padding: var(--spacing-medium) 0;
+    border-top: 1px solid var(--rzr-surface-line);
+}
+
+.checkout__payment-selector .payment-selector__tile--selected .payment-selector__panel-inner {
+    animation: payment-panel-in var(--rzr-duration-base) var(--rzr-ease-standard);
+}
+
+@keyframes payment-panel-in {
+    from {
+        opacity: 0;
+        transform: translateY(-4px);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+.checkout__payment-selector .payment-selector__panel-line {
+    color: var(--rzr-text-secondary);
+    font-size: var(--rzr-body-sm-size);
+    line-height: 2rem;
+}
+
+.checkout__payment-selector .payment-selector__demo-line {
+    color: var(--rzr-text-muted);
+    font-size: var(--rzr-body-xs-size);
+    line-height: var(--rzr-body-xs-lh);
+}
+
+.checkout__payment-selector .payment-selector__wallet-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 160px;
+    height: 40px;
+    border-radius: var(--rzr-radius-md);
+    justify-self: start;
+}
+
+.checkout__payment-selector .payment-selector__wallet-button svg {
+    height: 22px;
+}
+
+.checkout__payment-selector .payment-selector__wallet-button--apple {
+    background: #000;
+    color: #fff;
+    border: 1px solid #444;
+}
+
+.checkout__payment-selector .payment-selector__wallet-button--google {
+    background: #fff;
+    color: #3c4043;
+    border: 1px solid #dadce0;
+}
+
+/* Mock card form */
+.checkout__payment-selector .payment-selector__card-form {
+    display: grid;
+    gap: var(--spacing-small);
+}
+
+.checkout__payment-selector .payment-selector__field {
+    display: grid;
+    gap: 4px;
+}
+
+.checkout__payment-selector .payment-selector__field-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-small);
+}
+
+.checkout__payment-selector .payment-selector__field label {
+    color: var(--rzr-text-tertiary);
+    font-size: var(--rzr-body-xs-size);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.checkout__payment-selector .payment-selector__field input {
+    width: 100%;
+    background: var(--color-neutral-100);
+    border: 1px solid var(--rzr-surface-line);
+    border-radius: var(--rzr-radius-sm);
+    color: var(--rzr-text-primary);
+    font-family: inherit;
+    font-size: var(--rzr-body-size);
+    padding: 10px 12px;
+    transition: border-color var(--rzr-duration-fast) var(--rzr-ease-standard);
+}
+
+.checkout__payment-selector .payment-selector__field--number input {
+    padding-right: 56px;
+}
+
+.checkout__payment-selector .payment-selector__field input:hover {
+    border-color: var(--color-neutral-500);
+}
+
+.checkout__payment-selector .payment-selector__field input:focus {
+    border-color: var(--rzr-green);
+}
+
+.checkout__payment-selector .payment-selector__field input.payment-selector__input-valid {
+    border-color: var(--rzr-green);
+}
+
+.checkout__payment-selector .payment-selector__field-shell {
+    position: relative;
+    display: block;
+}
+
+.checkout__payment-selector .payment-selector__card-brand {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.checkout__payment-selector .payment-selector__card-brand svg {
+    height: 100%;
+    width: auto;
+}
+
+/* Hide the backend demo's MCCS profile attributes: they are optional
+   custom address fields irrelevant to this storefront. */
+.checkout__shipping-form .dropin-field:has([id$="_servicestatus"]),
+.checkout__shipping-form .dropin-field:has([id$="_primaryinstallation"]),
+.checkout__shipping-form .dropin-field:has([id$="_branch"]),
+.checkout__shipping-form .dropin-field:has([id$="_rankcategory"]),
+.checkout__shipping-form .dropin-field:has([id$="_householdsize"]),
+.checkout__shipping-form .dropin-field:has([id$="_mpspouseservice"]),
+.checkout__billing-form .dropin-field:has([id$="_servicestatus"]),
+.checkout__billing-form .dropin-field:has([id$="_primaryinstallation"]),
+.checkout__billing-form .dropin-field:has([id$="_branch"]),
+.checkout__billing-form .dropin-field:has([id$="_rankcategory"]),
+.checkout__billing-form .dropin-field:has([id$="_householdsize"]),
+.checkout__billing-form .dropin-field:has([id$="_mpspouseservice"]) {
+    display: none;
 }
 
 /* Server error visibility */
@@ -76,6 +445,7 @@
 .checkout__content--error .checkout__shipping-form,
 .checkout__content--error .checkout__bill-to-shipping,
 .checkout__content--error .checkout__delivery,
+.checkout__content--error .checkout__payment-selector,
 .checkout__content--error .checkout__payment-methods,
 .checkout__content--error .checkout__billing-form,
 .checkout__content--error .checkout__terms-and-conditions {
@@ -87,6 +457,7 @@
 .checkout__merged-cart-banner:has(> :empty),
 .checkout__delivery:has(> div:first-child:empty),
 .checkout__bill-to-shipping:has(> :empty),
+.checkout__terms-and-conditions:has(> .conditional-wrapper:empty),
 .checkout__gift-options:has(.cart-gift-options-view--readonly:empty) {
     display: none;
 }
@@ -129,6 +500,15 @@
 /* remove margin from the heading divider */
 .checkout__heading .dropin-divider {
     margin: 0;
+}
+
+/* Summary cards in the aside share the step-card surface */
+.checkout__order-summary,
+.checkout__cart-summary {
+    background: var(--rzr-surface-raised);
+    border: 1px solid var(--rzr-surface-line);
+    border-radius: var(--rzr-radius-lg);
+    overflow: hidden;
 }
 
 /* Cart Summary */
@@ -210,6 +590,7 @@
     font: var(--type-headline-2-default-font);
     letter-spacing: var(--type-headline-2-default-letter-spacing);
     color: var(--color-neutral-800);
+    text-transform: uppercase;
     margin: 0 0 var(--spacing-medium) 0;
 }
 
@@ -241,6 +622,18 @@
     }
 }
 
+@media only screen and (min-width: 600px) {
+    .checkout__payment-selector .payment-selector__face {
+        grid-template-columns: 48px minmax(0, 1fr) auto;
+        gap: var(--spacing-medium);
+    }
+
+    .checkout__payment-selector .payment-selector__mark {
+        width: 48px;
+        height: 28px;
+    }
+}
+
 @media only screen and (min-width: 768px) {
     .checkout__content {
         display: grid;
@@ -256,12 +649,20 @@
 
     .checkout__main {
         grid-column: 1 / span 7;
-        row-gap: var(--spacing-xbig);
+        row-gap: var(--spacing-big);
     }
 
+    /* Sticky, but never taller than the space it is pinned into: the
+       summary and the item list together outrun a laptop viewport, and a
+       plain sticky would park their lower half permanently off-screen.
+       overflow-y: auto only produces a scrollbar when that happens. */
     .checkout__aside {
         grid-column: 9 / span 4;
-        gap: var(--spacing-xbig);
+        gap: var(--spacing-big);
+        position: sticky;
+        top: calc(var(--rzr-scroll-offset) + var(--spacing-medium));
+        max-height: calc(100vh - var(--rzr-scroll-offset) - (var(--spacing-medium) * 2));
+        overflow-y: auto;
     }
 
     .checkout__place-order {
