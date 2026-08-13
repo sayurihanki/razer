@@ -1,0 +1,23 @@
+{
+  "definitions": [
+    {
+      "title": "Razer Blade 18 Dual Mode",
+      "id": "razer-blade18-dualmode",
+      "model": "razer-blade18-dualmode",
+      "plugins": {
+        "da": {
+          "name": "razer-blade18-dualmode",
+          "rows": 1,
+          "columns": 8
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "razer-blade18-dualmode",
+      "fields": []
+    }
+  ],
+  "filters": []
+}

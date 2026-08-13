@@ -1,0 +1,187 @@
+/**
+ * razer-blade18-specs.css — the technical specification sheet.
+ *
+ * All selectors are scoped to `.razer-blade18-specs`. Tokens, typography and
+ * the content primitives come from styles/razer-design-system.css.
+ *
+ * Set as a reference document rather than a marketing surface: a hairline grid,
+ * tabular figures, and no colour except the group rules and the index's current
+ * item. It should be the calmest thing on the page.
+ */
+
+.razer-blade18-specs .blade-specs {
+  padding: clamp(56px, 9vw, 112px) 0 clamp(56px, 8vw, 100px);
+  background: var(--rzr-surface-raised);
+  scroll-margin-top: var(--rzr-scroll-offset);
+}
+
+.razer-blade18-specs .specs-layout {
+  display: grid;
+  gap: 32px;
+}
+
+/* ── Index ──────────────────────────────────────────────────────── */
+
+.razer-blade18-specs .specs-index ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.razer-blade18-specs .index-label {
+  margin: 0 0 12px;
+  font-family: var(--rzr-font-condensed);
+  font-size: var(--rzr-body-xs-size);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--rzr-text-muted);
+}
+
+.razer-blade18-specs .specs-index a {
+  display: inline-block;
+  padding: 7px 13px;
+  border: 1px solid var(--rzr-surface-line);
+  border-radius: var(--rzr-radius-xs);
+  font-size: var(--rzr-body-sm-size);
+  color: var(--rzr-text-tertiary);
+  transition:
+    border-color var(--rzr-duration-base) var(--rzr-ease-standard),
+    color var(--rzr-duration-base) var(--rzr-ease-standard);
+}
+
+.razer-blade18-specs .specs-index a:hover {
+  border-color: var(--rzr-green);
+  color: var(--rzr-green);
+}
+
+/* ── Table ──────────────────────────────────────────────────────── */
+
+.razer-blade18-specs .spec-group {
+  padding-top: 26px;
+  border-top: 1px solid var(--rzr-surface-line);
+  scroll-margin-top: calc(var(--rzr-scroll-offset) + 16px);
+}
+
+.razer-blade18-specs .spec-group + .spec-group {
+  margin-top: 34px;
+}
+
+.razer-blade18-specs .group-title {
+  margin: 0 0 4px;
+  font-family: var(--rzr-font-condensed);
+  font-size: var(--rzr-body-sm-size);
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--rzr-green);
+}
+
+/* Two columns on one grid, so every label and value lines up across the whole
+   group rather than per row. */
+.razer-blade18-specs .spec-rows {
+  display: grid;
+  grid-template-columns: 1fr;
+  margin: 0;
+}
+
+.razer-blade18-specs .spec-rows dt {
+  padding: 16px 0 2px;
+  font-size: var(--rzr-body-sm-size);
+  color: var(--rzr-text-muted);
+}
+
+.razer-blade18-specs .spec-rows dd {
+  margin: 0;
+  padding: 0 0 16px;
+  border-bottom: 1px solid rgb(51 51 51 / 60%);
+  font-size: var(--rzr-body-size);
+  line-height: 24px;
+  color: var(--rzr-text-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Entrance ───────────────────────────────────────────────────── */
+
+.razer-blade18-specs .section-heading,
+.razer-blade18-specs .specs-layout {
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity 0.7s var(--rzr-ease-standard),
+    transform 0.7s var(--rzr-ease-standard);
+}
+
+.razer-blade18-specs .section-heading.is-in,
+.razer-blade18-specs .specs-layout.is-in {
+  opacity: 1;
+  transform: none;
+}
+
+/* ── Tablet ─────────────────────────────────────────────────────── */
+
+@media (min-width: 681px) {
+  .razer-blade18-specs .spec-rows {
+    grid-template-columns: minmax(160px, 0.34fr) minmax(0, 0.66fr);
+    column-gap: 32px;
+  }
+
+  .razer-blade18-specs .spec-rows dt {
+    grid-column: 1;
+    padding: 15px 0;
+    border-bottom: 1px solid rgb(51 51 51 / 60%);
+  }
+
+  .razer-blade18-specs .spec-rows dd {
+    grid-column: 2;
+    padding: 15px 0;
+  }
+}
+
+/* ── Desktop ────────────────────────────────────────────────────── */
+
+@media (min-width: 981px) {
+  .razer-blade18-specs .specs-layout {
+    grid-template-columns: minmax(190px, 0.22fr) minmax(0, 0.78fr);
+    gap: 56px;
+    align-items: start;
+  }
+
+  /* Sticky, because the sheet is long enough that the index is worth keeping
+     within reach — the one piece of behaviour this section has. */
+  .razer-blade18-specs .specs-index {
+    position: sticky;
+    top: calc(var(--rzr-scroll-offset) + 16px);
+  }
+
+  .razer-blade18-specs .specs-index ul {
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .razer-blade18-specs .specs-index a {
+    display: block;
+    padding: 8px 12px;
+    border: 0;
+    border-left: 2px solid var(--rzr-surface-line);
+    border-radius: 0;
+  }
+
+  .razer-blade18-specs .specs-index a:hover {
+    border-left-color: var(--rzr-green);
+    background: rgb(255 255 255 / 4%);
+  }
+}
+
+/* ── Reduced motion ─────────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  .razer-blade18-specs .section-heading,
+  .razer-blade18-specs .specs-layout {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}

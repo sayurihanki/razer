@@ -1,0 +1,371 @@
+/**
+ * razer-blade18-dualmode.css — the dual-mode display section.
+ *
+ * All selectors are scoped to `.razer-blade18-dualmode`. Tokens, typography and
+ * the content primitives come from styles/razer-design-system.css.
+ *
+ * The layout is a simulated panel beside the argument for whichever mode is
+ * showing, under a two-up switch. The panel is the loud element on the page, so
+ * everything around it is deliberately quiet: hairline rules, one accent, and
+ * type that stays out of the way.
+ */
+
+.razer-blade18-dualmode .blade-dualmode {
+  padding: clamp(56px, 9vw, 112px) 0 clamp(48px, 7vw, 88px);
+  background: var(--rzr-surface-base);
+  scroll-margin-top: var(--rzr-scroll-offset);
+}
+
+/* ── Mode switch ────────────────────────────────────────────────── */
+
+.razer-blade18-dualmode .mode-switch {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.razer-blade18-dualmode .mode-tab {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 14px 18px;
+  border: 1px solid var(--rzr-surface-line);
+  border-radius: var(--rzr-radius-md);
+  background: var(--rzr-surface-raised);
+  text-align: left;
+  cursor: pointer;
+  transition:
+    border-color var(--rzr-duration-base) var(--rzr-ease-standard),
+    background var(--rzr-duration-base) var(--rzr-ease-standard),
+    box-shadow var(--rzr-duration-base) var(--rzr-ease-standard);
+}
+
+.razer-blade18-dualmode .mode-tab:hover {
+  border-color: #555;
+  background: var(--rzr-surface-card);
+}
+
+.razer-blade18-dualmode .mode-tab.is-active {
+  border-color: var(--rzr-green);
+  background: linear-gradient(180deg, rgb(68 214 44 / 12%), rgb(68 214 44 / 3%));
+  box-shadow: inset 0 -2px 0 var(--rzr-green);
+}
+
+.razer-blade18-dualmode .tab-label {
+  font-family: var(--rzr-font-display);
+  font-size: var(--rzr-display-3-size);
+  font-weight: 600;
+  line-height: 1.1;
+  color: var(--rzr-text-primary);
+}
+
+.razer-blade18-dualmode .tab-meta {
+  font-family: var(--rzr-font-condensed);
+  font-size: var(--rzr-body-xs-size);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--rzr-text-tertiary);
+}
+
+.razer-blade18-dualmode .mode-tab.is-active .tab-meta {
+  color: var(--rzr-green);
+}
+
+/* ── Panel ──────────────────────────────────────────────────────── */
+
+.razer-blade18-dualmode .dualmode-layout {
+  display: grid;
+  gap: 24px;
+}
+
+/* The panel is presented as a screen, so it gets a bezel and the same black
+   the machine in the hero is cut from — not a card. */
+.razer-blade18-dualmode .panel-frame {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  padding: 10px;
+  border: 1px solid var(--rzr-surface-line);
+  border-radius: var(--rzr-radius-lg);
+  background: #0a0a0c;
+  box-shadow: var(--rzr-shadow-lg);
+  overflow: hidden;
+  transition: box-shadow var(--rzr-duration-slow) var(--rzr-ease-standard);
+}
+
+.razer-blade18-dualmode .panel-frame[data-mode="mode-01"] {
+  box-shadow: var(--rzr-shadow-lg), 0 0 46px rgb(68 214 44 / 16%);
+}
+
+.razer-blade18-dualmode .panel-frame[data-mode="mode-02"] {
+  box-shadow: var(--rzr-shadow-lg), 0 0 46px rgb(0 224 255 / 16%);
+}
+
+.razer-blade18-dualmode .panel-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: var(--rzr-radius-xs);
+}
+
+/* The lattice, magnified and labelled. The canvas draws the same pitch at 1:1
+   across the whole panel; this is the readable version of the claim, sitting
+   in the corner the way a scope readout would. */
+.razer-blade18-dualmode .panel-pitch {
+  position: absolute;
+  right: 18px;
+  bottom: 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px 8px 8px;
+  border: 1px solid rgb(255 255 255 / 14%);
+  border-radius: var(--rzr-radius-sm);
+  background: rgb(0 0 0 / 62%);
+  backdrop-filter: blur(6px);
+}
+
+.razer-blade18-dualmode .pitch-grid {
+  width: 40px;
+  height: 40px;
+  border: 1px solid rgb(255 255 255 / 18%);
+  border-radius: var(--rzr-radius-xs);
+  background-image:
+    linear-gradient(rgb(255 255 255 / 26%) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(255 255 255 / 26%) 1px, transparent 1px);
+  background-size: var(--pitch, 12px) var(--pitch, 12px);
+  transition: background-size var(--rzr-duration-slow) var(--rzr-ease-standard);
+}
+
+.razer-blade18-dualmode .pitch-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.razer-blade18-dualmode .pitch-label {
+  font-family: var(--rzr-font-condensed);
+  font-size: var(--rzr-body-xs-size);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--rzr-text-tertiary);
+}
+
+.razer-blade18-dualmode .pitch-value {
+  font-size: var(--rzr-body-sm-size);
+  font-weight: 600;
+  line-height: 1.1;
+  color: var(--rzr-text-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+.razer-blade18-dualmode .panel-caption {
+  margin: 10px 0 0;
+  font-size: var(--rzr-body-xs-size);
+  line-height: var(--rzr-body-xs-lh);
+  color: var(--rzr-text-muted);
+}
+
+/* ── Argument ───────────────────────────────────────────────────── */
+
+.razer-blade18-dualmode .panel-detail {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.razer-blade18-dualmode .panel-detail:focus-visible {
+  outline: 2px solid var(--rzr-green);
+  outline-offset: 6px;
+}
+
+.razer-blade18-dualmode .mode-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border: 1px solid var(--rzr-green);
+  border-radius: var(--rzr-radius-xs);
+  font-family: var(--rzr-font-condensed);
+  font-size: var(--rzr-body-xs-size);
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--rzr-green);
+}
+
+.razer-blade18-dualmode .mode-headline {
+  margin: 16px 0 0;
+  font-family: var(--rzr-font-display);
+  font-size: clamp(24px, 3.2vw, 36px);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  color: var(--rzr-text-primary);
+  text-wrap: balance;
+}
+
+.razer-blade18-dualmode .mode-body {
+  margin: 14px 0 0;
+  max-width: 46ch;
+  font-size: var(--rzr-body-size);
+  line-height: 26px;
+  color: var(--rzr-text-secondary);
+}
+
+/* ── Readouts ───────────────────────────────────────────────────── */
+
+.razer-blade18-dualmode .panel-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px 12px;
+  width: 100%;
+  margin: 28px 0 0;
+  padding-top: 22px;
+  border-top: 1px solid var(--rzr-surface-line);
+}
+
+.razer-blade18-dualmode .stat-label {
+  grid-row: 1;
+  font-family: var(--rzr-font-condensed);
+  font-size: var(--rzr-body-xs-size);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--rzr-text-muted);
+}
+
+.razer-blade18-dualmode .stat-value {
+  grid-row: 2;
+  margin: 0;
+  font-family: var(--rzr-font-display);
+  font-size: clamp(17px, 1.9vw, 22px);
+  font-weight: 600;
+  line-height: 1.15;
+  color: var(--rzr-text-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+.razer-blade18-dualmode .stat-refresh .stat-number {
+  color: var(--rzr-green);
+}
+
+.razer-blade18-dualmode .stat-unit {
+  margin-left: 3px;
+  font-size: 0.66em;
+  font-weight: 400;
+  color: var(--rzr-text-tertiary);
+}
+
+/* ── Shared spec rail ───────────────────────────────────────────── */
+
+.razer-blade18-dualmode .panel-specs {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  margin: clamp(32px, 5vw, 52px) 0 0;
+  padding: 0;
+  list-style: none;
+  background: var(--rzr-surface-line);
+  border: 1px solid var(--rzr-surface-line);
+  border-radius: var(--rzr-radius-md);
+  overflow: hidden;
+}
+
+.razer-blade18-dualmode .panel-specs li {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 16px 18px;
+  background: var(--rzr-surface-raised);
+}
+
+.razer-blade18-dualmode .spec-label {
+  font-family: var(--rzr-font-condensed);
+  font-size: var(--rzr-body-xs-size);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--rzr-text-muted);
+}
+
+.razer-blade18-dualmode .spec-value {
+  font-size: var(--rzr-body-size);
+  font-weight: 500;
+  color: var(--rzr-text-primary);
+}
+
+/* ── Entrance ───────────────────────────────────────────────────── */
+
+.razer-blade18-dualmode .section-heading,
+.razer-blade18-dualmode .mode-switch,
+.razer-blade18-dualmode .dualmode-layout,
+.razer-blade18-dualmode .panel-specs {
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity 0.7s var(--rzr-ease-standard),
+    transform 0.7s var(--rzr-ease-standard);
+}
+
+.razer-blade18-dualmode .section-heading.is-in,
+.razer-blade18-dualmode .mode-switch.is-in,
+.razer-blade18-dualmode .dualmode-layout.is-in,
+.razer-blade18-dualmode .panel-specs.is-in {
+  opacity: 1;
+  transform: none;
+}
+
+/* ── Tablet ─────────────────────────────────────────────────────── */
+
+@media (max-width: 680px) {
+  .razer-blade18-dualmode .panel-pitch {
+    right: 10px;
+    bottom: 10px;
+    padding: 6px 9px 6px 6px;
+  }
+
+  .razer-blade18-dualmode .pitch-grid {
+    width: 30px;
+    height: 30px;
+  }
+}
+
+@media (min-width: 681px) {
+  .razer-blade18-dualmode .mode-switch {
+    max-width: 520px;
+    margin-bottom: 28px;
+  }
+
+  .razer-blade18-dualmode .panel-specs {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+/* ── Desktop ────────────────────────────────────────────────────── */
+
+@media (min-width: 901px) {
+  .razer-blade18-dualmode .dualmode-layout {
+    grid-template-columns: minmax(0, 1.24fr) minmax(300px, 0.76fr);
+    gap: 40px;
+    align-items: center;
+  }
+
+  .razer-blade18-dualmode .panel-detail {
+    padding-block: 8px;
+  }
+}
+
+/* ── Reduced motion ─────────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  .razer-blade18-dualmode .section-heading,
+  .razer-blade18-dualmode .mode-switch,
+  .razer-blade18-dualmode .dualmode-layout,
+  .razer-blade18-dualmode .panel-specs {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .razer-blade18-dualmode .panel-frame,
+  .razer-blade18-dualmode .pitch-grid {
+    transition: none;
+  }
+}
