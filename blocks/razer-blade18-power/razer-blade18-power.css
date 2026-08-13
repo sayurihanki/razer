@@ -1,0 +1,385 @@
+/**
+ * razer-blade18-power.css — performance and thermals.
+ *
+ * All selectors are scoped to `.razer-blade18-power`. Tokens, typography and
+ * the content primitives come from styles/razer-design-system.css.
+ *
+ * The schematic is drawn in an engineering register — hairlines, no fills to
+ * speak of, one accent — so the section reads as a spec drawing next to the
+ * page's other, more cinematic surfaces.
+ */
+
+.razer-blade18-power .blade-power {
+  padding: clamp(56px, 9vw, 112px) 0 clamp(56px, 8vw, 100px);
+  background:
+    radial-gradient(72% 46% at 50% 0%, rgb(68 214 44 / 7%), transparent 72%),
+    var(--rzr-surface-base);
+  scroll-margin-top: var(--rzr-scroll-offset);
+}
+
+/* ── Stat rail ──────────────────────────────────────────────────── */
+
+.razer-blade18-power .power-stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  margin: 0 0 clamp(40px, 6vw, 72px);
+  padding: 0;
+  list-style: none;
+  background: var(--rzr-surface-line);
+  border: 1px solid var(--rzr-surface-line);
+  border-radius: var(--rzr-radius-md);
+  overflow: hidden;
+}
+
+.razer-blade18-power .power-stat {
+  padding: 22px 20px 24px;
+  background: var(--rzr-surface-raised);
+}
+
+.razer-blade18-power .stat-figure {
+  margin: 0;
+  font-family: var(--rzr-font-display);
+  font-size: clamp(34px, 5.2vw, 56px);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--rzr-text-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+.razer-blade18-power .stat-unit {
+  margin-left: 4px;
+  font-size: 0.44em;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--rzr-green);
+}
+
+.razer-blade18-power .stat-label {
+  margin: 10px 0 0;
+  font-size: var(--rzr-body-sm-size);
+  line-height: 1.35;
+  color: var(--rzr-text-tertiary);
+}
+
+/* ── Thermal panel ──────────────────────────────────────────────── */
+
+.razer-blade18-power .thermal-panel {
+  display: grid;
+  gap: 28px;
+  padding: clamp(20px, 3.5vw, 36px);
+  border: 1px solid var(--rzr-surface-line);
+  border-radius: var(--rzr-radius-lg);
+  background: linear-gradient(160deg, #101013, #0a0a0c 62%);
+}
+
+.razer-blade18-power .thermal-drawing {
+  min-width: 0;
+}
+
+.razer-blade18-power .b18-schematic {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* Shared hairline weight: the drawing is one line thickness throughout, which
+   is what makes it read as a drawing rather than an illustration. */
+.razer-blade18-power .b18-chassis,
+.razer-blade18-power .b18-chamber-edge,
+.razer-blade18-power .b18-dies rect,
+.razer-blade18-power .b18-fan-housing {
+  fill: none;
+  stroke: #3a3a42;
+  stroke-width: 1.2;
+}
+
+.razer-blade18-power .b18-chassis {
+  stroke-dasharray: 6 5;
+}
+
+.razer-blade18-power .b18-chamber-edge {
+  stroke: rgb(68 214 44 / 55%);
+}
+
+.razer-blade18-power .b18-fins line {
+  stroke: #34343c;
+  stroke-width: 1.2;
+}
+
+.razer-blade18-power .b18-pipes path {
+  fill: none;
+  stroke: #2e2e36;
+  stroke-width: 7;
+  stroke-linecap: round;
+}
+
+.razer-blade18-power .b18-dies rect {
+  fill: rgb(68 214 44 / 10%);
+  stroke: var(--rzr-green);
+}
+
+.razer-blade18-power .b18-die-label {
+  fill: var(--rzr-green);
+  font-family: var(--rzr-font-condensed);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-anchor: middle;
+}
+
+.razer-blade18-power .b18-fan-rotor path {
+  fill: #2b2b33;
+}
+
+.razer-blade18-power .b18-fan-hub {
+  fill: #3a3a42;
+  stroke: none;
+}
+
+/* The heat path, drawn a second time over the pipes as a travelling dash.
+   Same geometry, so the light is unambiguously going where the pipes go. */
+.razer-blade18-power .b18-flow path {
+  fill: none;
+  stroke: var(--rzr-green);
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-dasharray: 16 150;
+  filter: drop-shadow(0 0 5px rgb(68 214 44 / 75%));
+  animation: b18-heat 3.4s linear infinite;
+}
+
+.razer-blade18-power .b18-flow path:nth-child(2) {
+  animation-delay: -0.85s;
+}
+
+.razer-blade18-power .b18-flow path:nth-child(3) {
+  animation-delay: -1.7s;
+}
+
+.razer-blade18-power .b18-flow path:nth-child(4) {
+  animation-delay: -2.55s;
+}
+
+/* fill-box, or the CSS rotation would resolve against the SVG's own origin
+   rather than the rotor's, and fling the blades into the corner of the
+   drawing — the attribute translate on the parent <g> is invisible to it. */
+.razer-blade18-power .b18-fan-rotor {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: b18-spin 2.6s linear infinite;
+  animation-delay: calc(var(--spin, 0) * -0.7s);
+}
+
+/* ── Thermal copy ───────────────────────────────────────────────── */
+
+.razer-blade18-power .thermal-title {
+  margin: 0 0 14px;
+  font-family: var(--rzr-font-display);
+  font-size: clamp(23px, 3vw, 32px);
+  font-weight: 600;
+  line-height: 1.12;
+  letter-spacing: -0.01em;
+  color: var(--rzr-text-primary);
+  text-wrap: balance;
+}
+
+.razer-blade18-power .thermal-body {
+  margin: 0;
+  max-width: 52ch;
+  font-size: var(--rzr-body-size);
+  line-height: 26px;
+  color: var(--rzr-text-secondary);
+}
+
+.razer-blade18-power .flow-block {
+  margin-top: 26px;
+  padding-top: 22px;
+  border-top: 1px solid var(--rzr-surface-line);
+}
+
+.razer-blade18-power .flow-label {
+  margin: 0 0 12px;
+  font-family: var(--rzr-font-condensed);
+  font-size: var(--rzr-body-xs-size);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--rzr-text-muted);
+}
+
+/* The heat path as a legend: each step separated by a chevron, so the list
+   reads in the same direction the animation travels. */
+.razer-blade18-power .thermal-flow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: flow;
+}
+
+.razer-blade18-power .thermal-flow li {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--rzr-font-condensed);
+  font-size: var(--rzr-body-sm-size);
+  letter-spacing: 0.04em;
+  color: var(--rzr-text-primary);
+}
+
+.razer-blade18-power .thermal-flow li + li::before {
+  content: "›";
+  margin-right: 4px;
+  color: var(--rzr-green);
+}
+
+/* ── Cards ──────────────────────────────────────────────────────── */
+
+.razer-blade18-power .power-cards {
+  display: grid;
+  gap: 14px;
+  margin: clamp(32px, 5vw, 56px) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.razer-blade18-power .power-card {
+  position: relative;
+  padding: 24px 22px 26px;
+  border: 1px solid var(--rzr-surface-line);
+  border-radius: var(--rzr-radius-md);
+  background: var(--rzr-surface-raised);
+  transition:
+    border-color var(--rzr-duration-base) var(--rzr-ease-standard),
+    background var(--rzr-duration-base) var(--rzr-ease-standard);
+}
+
+.razer-blade18-power .power-card:hover {
+  border-color: #4a4a52;
+  background: var(--rzr-surface-card);
+}
+
+.razer-blade18-power .card-index {
+  display: block;
+  margin-bottom: 14px;
+  font-family: var(--rzr-font-condensed);
+  font-size: var(--rzr-body-xs-size);
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  color: var(--rzr-green);
+}
+
+.razer-blade18-power .card-title {
+  margin: 0 0 10px;
+  font-family: var(--rzr-font-display);
+  font-size: var(--rzr-display-3-size);
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--rzr-text-primary);
+}
+
+.razer-blade18-power .card-body {
+  margin: 0;
+  font-size: var(--rzr-body-sm-size);
+  line-height: 22px;
+  color: var(--rzr-text-tertiary);
+}
+
+.razer-blade18-power .card-meta {
+  margin: 16px 0 0;
+  padding-top: 14px;
+  border-top: 1px solid var(--rzr-surface-line);
+  font-family: var(--rzr-font-condensed);
+  font-size: var(--rzr-body-xs-size);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--rzr-text-muted);
+}
+
+/* ── Entrance ───────────────────────────────────────────────────── */
+
+.razer-blade18-power .section-heading,
+.razer-blade18-power .power-stats,
+.razer-blade18-power .thermal-panel,
+.razer-blade18-power .power-cards {
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity 0.7s var(--rzr-ease-standard),
+    transform 0.7s var(--rzr-ease-standard);
+}
+
+.razer-blade18-power .section-heading.is-in,
+.razer-blade18-power .power-stats.is-in,
+.razer-blade18-power .thermal-panel.is-in,
+.razer-blade18-power .power-cards.is-in {
+  opacity: 1;
+  transform: none;
+}
+
+/* ── Keyframes ──────────────────────────────────────────────────── */
+
+@keyframes b18-heat {
+  from { stroke-dashoffset: 166; }
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes b18-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* ── Tablet ─────────────────────────────────────────────────────── */
+
+@media (min-width: 681px) {
+  .razer-blade18-power .power-stats {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .razer-blade18-power .power-cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* ── Desktop ────────────────────────────────────────────────────── */
+
+@media (min-width: 981px) {
+  .razer-blade18-power .thermal-panel {
+    grid-template-columns: minmax(0, 1.16fr) minmax(300px, 0.84fr);
+    gap: 40px;
+    align-items: center;
+  }
+
+  .razer-blade18-power .power-cards {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+/* ── Reduced motion ─────────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  .razer-blade18-power .section-heading,
+  .razer-blade18-power .power-stats,
+  .razer-blade18-power .thermal-panel,
+  .razer-blade18-power .power-cards {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  /* The heat path still has to read as a path, so it holds a static dash
+     rather than disappearing along with its animation. */
+  .razer-blade18-power .b18-flow path {
+    animation: none;
+    stroke-dasharray: 10 14;
+    opacity: 0.85;
+  }
+
+  .razer-blade18-power .b18-fan-rotor {
+    animation: none;
+  }
+}

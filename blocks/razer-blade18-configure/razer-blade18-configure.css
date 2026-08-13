@@ -1,0 +1,288 @@
+/**
+ * razer-blade18-configure.css — configurations and the closing call to action.
+ *
+ * All selectors are scoped to `.razer-blade18-configure`. Tokens, typography and
+ * the content primitives come from styles/razer-design-system.css.
+ *
+ * Three cards on one row, one of them lit. The featured card is raised with the
+ * brand green and a ribbon rather than by being bigger, so the row keeps its
+ * rhythm and the eye still lands where it should.
+ */
+
+.razer-blade18-configure .blade-configure {
+  padding: clamp(56px, 9vw, 112px) 0 clamp(64px, 9vw, 120px);
+  background:
+    radial-gradient(64% 40% at 50% 100%, rgb(68 214 44 / 8%), transparent 74%),
+    var(--rzr-surface-base);
+  scroll-margin-top: var(--rzr-scroll-offset);
+}
+
+/* ── Build cards ────────────────────────────────────────────────── */
+
+.razer-blade18-configure .build-grid {
+  display: grid;
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.razer-blade18-configure .build-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 28px 24px 26px;
+  border: 1px solid var(--rzr-surface-line);
+  border-radius: var(--rzr-radius-lg);
+  background: var(--rzr-surface-raised);
+  transition:
+    border-color var(--rzr-duration-base) var(--rzr-ease-standard),
+    transform var(--rzr-duration-base) var(--rzr-ease-standard);
+}
+
+.razer-blade18-configure .build-card:hover {
+  border-color: #4a4a52;
+  transform: translateY(-3px);
+}
+
+.razer-blade18-configure .build-card.is-featured {
+  border-color: var(--rzr-green);
+  background:
+    linear-gradient(180deg, rgb(68 214 44 / 10%), rgb(68 214 44 / 0%) 46%),
+    var(--rzr-surface-raised);
+  box-shadow: 0 0 40px rgb(68 214 44 / 14%);
+}
+
+.razer-blade18-configure .build-flag {
+  position: absolute;
+  top: -1px;
+  right: 18px;
+  padding: 5px 11px;
+  border-radius: 0 0 var(--rzr-radius-xs) var(--rzr-radius-xs);
+  background: var(--rzr-green);
+  font-family: var(--rzr-font-condensed);
+  font-size: var(--rzr-body-xs-size);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--rzr-text-on-accent);
+}
+
+.razer-blade18-configure .build-name {
+  margin: 0 0 18px;
+  padding-right: 84px;
+  font-family: var(--rzr-font-display);
+  font-size: var(--rzr-display-3-size);
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--rzr-text-primary);
+}
+
+.razer-blade18-configure .build-rows {
+  display: grid;
+  grid-template-columns: minmax(72px, auto) minmax(0, 1fr);
+  column-gap: 16px;
+  margin: 0 0 22px;
+}
+
+.razer-blade18-configure .build-rows dt {
+  padding: 9px 0;
+  border-top: 1px solid var(--rzr-surface-line);
+  font-family: var(--rzr-font-condensed);
+  font-size: var(--rzr-body-xs-size);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--rzr-text-muted);
+}
+
+.razer-blade18-configure .build-rows dd {
+  margin: 0;
+  padding: 9px 0;
+  border-top: 1px solid var(--rzr-surface-line);
+  font-size: var(--rzr-body-sm-size);
+  line-height: 21px;
+  color: var(--rzr-text-primary);
+}
+
+.razer-blade18-configure .build-price {
+  margin: auto 0 18px;
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.razer-blade18-configure .price-prefix {
+  font-family: var(--rzr-font-condensed);
+  font-size: var(--rzr-body-xs-size);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--rzr-text-muted);
+}
+
+.razer-blade18-configure .price-figure {
+  font-family: var(--rzr-font-display);
+  font-size: clamp(27px, 3.4vw, 34px);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--rzr-text-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+.razer-blade18-configure .build-card .button {
+  min-height: 46px;
+}
+
+.razer-blade18-configure .build-card:not(.is-featured) .button-primary {
+  background: transparent;
+  border: 1px solid #555;
+  color: var(--rzr-text-primary);
+}
+
+.razer-blade18-configure .build-card:not(.is-featured) .button-primary:hover {
+  border-color: var(--rzr-green);
+  background: rgb(68 214 44 / 12%);
+  color: var(--rzr-text-primary);
+}
+
+/* ── Assurances and note ────────────────────────────────────────── */
+
+.razer-blade18-configure .build-assure {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 26px;
+  margin: 26px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.razer-blade18-configure .build-assure li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: var(--rzr-body-sm-size);
+  color: var(--rzr-text-tertiary);
+}
+
+.razer-blade18-configure .build-assure li::before {
+  content: "";
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--rzr-green);
+}
+
+.razer-blade18-configure .price-note {
+  margin: 16px 0 0;
+  max-width: 70ch;
+  font-size: var(--rzr-body-xs-size);
+  line-height: var(--rzr-body-xs-lh);
+  color: var(--rzr-text-muted);
+}
+
+/* ── Closing panel ──────────────────────────────────────────────── */
+
+.razer-blade18-configure .closing-panel {
+  display: grid;
+  gap: 24px;
+  align-items: center;
+  margin-top: clamp(44px, 6vw, 76px);
+  padding: clamp(22px, 3.2vw, 34px);
+  border: 1px solid var(--rzr-surface-line);
+  border-radius: var(--rzr-radius-lg);
+  background: linear-gradient(150deg, #121215, #0a0a0c 60%);
+}
+
+.razer-blade18-configure .closing-figure {
+  margin: 0;
+  border-radius: var(--rzr-radius-md);
+  overflow: hidden;
+  background: #000;
+}
+
+/* The asset is a 355px portrait crop. Held at its own scale and cropped to a
+   landscape band rather than stretched, so it stays sharp. */
+.razer-blade18-configure .closing-image {
+  width: 100%;
+  height: clamp(190px, 30vw, 260px);
+  object-fit: cover;
+  object-position: 50% 62%;
+}
+
+.razer-blade18-configure .closing-title {
+  margin: 0 0 12px;
+  font-family: var(--rzr-font-display);
+  font-size: clamp(23px, 3vw, 32px);
+  font-weight: 600;
+  line-height: 1.12;
+  letter-spacing: -0.01em;
+  color: var(--rzr-text-primary);
+  text-wrap: balance;
+}
+
+.razer-blade18-configure .closing-body {
+  margin: 0 0 22px;
+  max-width: 52ch;
+  font-size: var(--rzr-body-size);
+  line-height: 26px;
+  color: var(--rzr-text-secondary);
+}
+
+/* ── Entrance ───────────────────────────────────────────────────── */
+
+.razer-blade18-configure .section-heading,
+.razer-blade18-configure .build-grid,
+.razer-blade18-configure .build-assure,
+.razer-blade18-configure .closing-panel {
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity 0.7s var(--rzr-ease-standard),
+    transform 0.7s var(--rzr-ease-standard);
+}
+
+.razer-blade18-configure .section-heading.is-in,
+.razer-blade18-configure .build-grid.is-in,
+.razer-blade18-configure .build-assure.is-in,
+.razer-blade18-configure .closing-panel.is-in {
+  opacity: 1;
+  transform: none;
+}
+
+/* ── Tablet ─────────────────────────────────────────────────────── */
+
+@media (min-width: 681px) {
+  .razer-blade18-configure .closing-panel {
+    grid-template-columns: minmax(0, 0.44fr) minmax(0, 0.56fr);
+    gap: 34px;
+  }
+
+  .razer-blade18-configure .closing-image {
+    height: clamp(220px, 26vw, 300px);
+  }
+}
+
+/* ── Desktop ────────────────────────────────────────────────────── */
+
+@media (min-width: 901px) {
+  .razer-blade18-configure .build-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* ── Reduced motion ─────────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  .razer-blade18-configure .section-heading,
+  .razer-blade18-configure .build-grid,
+  .razer-blade18-configure .build-assure,
+  .razer-blade18-configure .closing-panel {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .razer-blade18-configure .build-card:hover {
+    transform: none;
+  }
+}

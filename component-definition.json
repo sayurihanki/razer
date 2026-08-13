@@ -1221,6 +1221,66 @@
           }
         },
         {
+          "title": "Razer Blade 18 Configure",
+          "id": "razer-blade18-configure",
+          "model": "razer-blade18-configure",
+          "plugins": {
+            "da": {
+              "name": "razer-blade18-configure",
+              "rows": 1,
+              "columns": 8
+            }
+          }
+        },
+        {
+          "title": "Razer Blade 18 Dual Mode",
+          "id": "razer-blade18-dualmode",
+          "model": "razer-blade18-dualmode",
+          "plugins": {
+            "da": {
+              "name": "razer-blade18-dualmode",
+              "rows": 1,
+              "columns": 8
+            }
+          }
+        },
+        {
+          "title": "Razer Blade 18 Hero",
+          "id": "razer-blade18-hero",
+          "model": "razer-blade18-hero",
+          "plugins": {
+            "da": {
+              "name": "razer-blade18-hero",
+              "rows": 1,
+              "columns": 5
+            }
+          }
+        },
+        {
+          "title": "Razer Blade 18 Power",
+          "id": "razer-blade18-power",
+          "model": "razer-blade18-power",
+          "plugins": {
+            "da": {
+              "name": "razer-blade18-power",
+              "rows": 1,
+              "columns": 7
+            }
+          }
+        },
+        {
+          "title": "Razer Blade 18 Specs",
+          "id": "razer-blade18-specs",
+          "model": "razer-blade18-specs",
+          "plugins": {
+            "da": {
+              "name": "razer-blade18-specs",
+              "rows": 1,
+              "columns": 6
+            }
+          }
+        },
+        {
           "title": "Razer Campaign Carousel",
           "id": "razer-campaign-carousel",
           "model": "razer-campaign-carousel",

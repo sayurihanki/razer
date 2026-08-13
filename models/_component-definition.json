@@ -137,6 +137,21 @@
           "...": "../blocks/quote/_*.json#/definitions"
         },
         {
+          "...": "../blocks/razer-blade18-configure/_*.json#/definitions"
+        },
+        {
+          "...": "../blocks/razer-blade18-dualmode/_*.json#/definitions"
+        },
+        {
+          "...": "../blocks/razer-blade18-hero/_*.json#/definitions"
+        },
+        {
+          "...": "../blocks/razer-blade18-power/_*.json#/definitions"
+        },
+        {
+          "...": "../blocks/razer-blade18-specs/_*.json#/definitions"
+        },
+        {
           "...": "../blocks/razer-campaign-carousel/_*.json#/definitions"
         },
         {
