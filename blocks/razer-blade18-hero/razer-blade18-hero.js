@@ -362,6 +362,8 @@ export default async function decorate(block) {
 
   block.replaceChildren(section);
 
-  revealOnScroll([copy, scene, rail].filter(Boolean));
+  /* The copy animates from CSS on render — see the stylesheet's Entrance
+     section for why it must not wait on this observer. */
+  revealOnScroll([scene, rail].filter(Boolean));
   trackPointer(scene, stage);
 }

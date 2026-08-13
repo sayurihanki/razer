@@ -75,9 +75,18 @@
   align-items: center;
 }
 
+/* The copy is the LCP element, and it is always in view on load — so it must
+   not be gated on an IntersectionObserver like the rest of the entrance is.
+   Gating it cost the whole module waterfall (hero.js, then the shared
+   authoring helper it imports) plus a 0.9s transition before the headline was
+   allowed to paint at all, which put LCP past four seconds on throttled
+   mobile. A plain CSS animation runs the moment the block renders and clears
+   opacity 0 within a frame, so the entrance survives and the measurement
+   does not. */
 .razer-blade18-hero .hero-copy {
   max-width: 820px;
   text-align: center;
+  animation: b18-enter 0.5s var(--rzr-ease-standard) both;
 }
 
 .razer-blade18-hero .hero-copy .eyebrow {
@@ -313,7 +322,9 @@
 
 /* ── Entrance ───────────────────────────────────────────────────── */
 
-.razer-blade18-hero .hero-copy,
+/* The machine and the rail sit at or below the fold, so they keep the
+   observer — there is nothing to gain by animating them before they are
+   looked at. */
 .razer-blade18-hero .hero-scene,
 .razer-blade18-hero .hero-rail {
   opacity: 0;
@@ -323,7 +334,6 @@
     transform 0.9s var(--rzr-ease-standard) var(--enter-delay, 0s);
 }
 
-.razer-blade18-hero .hero-copy.is-in,
 .razer-blade18-hero .hero-scene.is-in,
 .razer-blade18-hero .hero-rail.is-in {
   opacity: 1;
@@ -331,6 +341,18 @@
 }
 
 /* ── Keyframes ──────────────────────────────────────────────────── */
+
+@keyframes b18-enter {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
 
 @keyframes b18-drift {
   from { transform: translate3d(-2%, -1%, 0) scale(1); }
@@ -440,5 +462,6 @@
     opacity: 1;
     transform: none;
     transition: none;
+    animation: none;
   }
 }
