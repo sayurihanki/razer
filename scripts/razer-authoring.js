@@ -26,6 +26,8 @@
  *    author wrote. The default, `merge`, layers the two.
  */
 
+import { moveInstrumentation } from './ue-utils.js';
+
 export const CLEAR_TOKEN = '__empty__';
 
 /**
@@ -129,12 +131,14 @@ export function el(tag, className = '', children = []) {
  * @param {Element} block The block element
  * @param {string[]} types The row types this block understands
  * @returns {{settings: Map<string, string>, settingCells: Map<string, Element>,
- *   rows: Map<string, Map<string, Element[]>>}} The parsed table
+ *   rows: Map<string, Map<string, Element[]>>,
+ *   rowNodes: Map<string, Map<string, Element>>}} The parsed table
  */
 export function parseTable(block, types) {
   const settings = new Map();
   const settingCells = new Map();
   const rows = new Map(types.map((type) => [type, new Map()]));
+  const rowNodes = new Map(types.map((type) => [type, new Map()]));
 
   [...block.children].forEach((row) => {
     const cells = [...row.children];
@@ -148,7 +152,10 @@ export function parseTable(block, types) {
       return;
     }
     if (rows.has(type)) {
-      if (key) rows.get(type).set(key, cells);
+      if (key) {
+        rows.get(type).set(key, cells);
+        rowNodes.get(type).set(key, row);
+      }
       return;
     }
     /* Universal Editor: `<field> | <value>`, so the type slot holds the key. */
@@ -158,7 +165,9 @@ export function parseTable(block, types) {
     }
   });
 
-  return { settings, settingCells, rows };
+  return {
+    settings, settingCells, rows, rowNodes,
+  };
 }
 
 /**
@@ -265,6 +274,41 @@ export function countTo(node, to, options = {}) {
     if (progress < 1) requestAnimationFrame(tick);
   };
   requestAnimationFrame(tick);
+}
+
+/**
+ * Hands an authored row's Universal Editor instrumentation to what was rendered
+ * from it.
+ *
+ * Every block in this family builds its own DOM and then calls
+ * `block.replaceChildren()`, which throws away the instrumented rows DA's
+ * editor proxy marked up. Without this the editor would still see the block —
+ * its attributes live on the block element, which survives — but every item
+ * inside it would become unreachable, so nothing in a collection could be
+ * selected, reordered or deleted.
+ *
+ * `cells` maps a column index (0-based, so column 3 of the authoring table is
+ * index 2) to the element that now displays it, which is what makes a chip's
+ * label editable in place rather than only through the properties rail.
+ *
+ * Rows the author never wrote — anything still coming from the block's baked-in
+ * defaults — have no source to carry, and are simply skipped. They render, but
+ * they are not editable until they exist in the document.
+ *
+ * @param {object} parsed A parsed table
+ * @param {string} type The row type
+ * @param {string} key The row key
+ * @param {Element} target The element rendered from that row
+ * @param {Object<number, Element>} [cells] Column index → element showing it
+ */
+export function carryInstrumentation(parsed, type, key, target, cells = {}) {
+  const row = parsed.rowNodes?.get(type)?.get(key);
+  if (!row || !target) return;
+  moveInstrumentation(row, target);
+  Object.entries(cells).forEach(([index, node]) => {
+    const cell = row.children[Number(index)];
+    if (cell && node) moveInstrumentation(cell, node);
+  });
 }
 
 /**

@@ -10,6 +10,52 @@
           "rows": 1,
           "columns": 8
         }
+      },
+      "filter": "razer-blade18-configure"
+    },
+    {
+      "title": "Razer Blade 18 Configure Row",
+      "id": "razer-blade18-configure-row",
+      "model": "razer-blade18-configure-row",
+      "plugins": {
+        "da": {
+          "rows": 1,
+          "columns": 8,
+          "fields": [
+            {
+              "name": "rowtype",
+              "selector": "div:nth-child(1)"
+            },
+            {
+              "name": "key",
+              "selector": "div:nth-child(2)"
+            },
+            {
+              "name": "field3",
+              "selector": "div:nth-child(3)"
+            },
+            {
+              "name": "field4",
+              "selector": "div:nth-child(4)"
+            },
+            {
+              "name": "field5",
+              "selector": "div:nth-child(5)"
+            },
+            {
+              "name": "field6",
+              "selector": "div:nth-child(6)"
+            },
+            {
+              "name": "field7",
+              "selector": "div:nth-child(7)"
+            },
+            {
+              "name": "field8",
+              "selector": "div:nth-child(8)"
+            }
+          ]
+        }
       }
     }
   ],
@@ -109,7 +155,89 @@
           "value": "Prices are indicative US recommended retail and exclude tax. Availability and configuration vary by region."
         }
       ]
+    },
+    {
+      "id": "razer-blade18-configure-row",
+      "fields": [
+        {
+          "component": "select",
+          "valueType": "string",
+          "name": "rowtype",
+          "label": "Row type",
+          "description": "Which kind of row this is. See the block README for the full contract.",
+          "options": [
+            {
+              "name": "Setting",
+              "value": "setting"
+            },
+            {
+              "name": "Configuration",
+              "value": "build"
+            },
+            {
+              "name": "Assurance",
+              "value": "assure"
+            }
+          ]
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "key",
+          "label": "Key",
+          "description": "Stable, zero-padded (chip-01, spec-02\u2026). Reuse a preset key to override it; a new key appends."
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "field3",
+          "label": "Value / label",
+          "description": "setting: the value \u00b7 build: name \u00b7 assure: label"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "field4",
+          "label": "Second value",
+          "description": "build: graphics"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "field5",
+          "label": "Third value",
+          "description": "build: memory"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "field6",
+          "label": "Fourth value",
+          "description": "build: storage"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "field7",
+          "label": "Fifth value",
+          "description": "build: price"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "field8",
+          "label": "Sixth value",
+          "description": "build: ribbon text \u2014 any text makes it the featured card"
+        }
+      ]
     }
   ],
-  "filters": []
+  "filters": [
+    {
+      "id": "razer-blade18-configure",
+      "components": [
+        "razer-blade18-configure-row"
+      ]
+    }
+  ]
 }

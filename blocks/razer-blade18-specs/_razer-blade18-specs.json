@@ -10,6 +10,44 @@
           "rows": 1,
           "columns": 6
         }
+      },
+      "filter": "razer-blade18-specs"
+    },
+    {
+      "title": "Razer Blade 18 Specs Row",
+      "id": "razer-blade18-specs-row",
+      "model": "razer-blade18-specs-row",
+      "plugins": {
+        "da": {
+          "rows": 1,
+          "columns": 6,
+          "fields": [
+            {
+              "name": "rowtype",
+              "selector": "div:nth-child(1)"
+            },
+            {
+              "name": "key",
+              "selector": "div:nth-child(2)"
+            },
+            {
+              "name": "field3",
+              "selector": "div:nth-child(3)"
+            },
+            {
+              "name": "field4",
+              "selector": "div:nth-child(4)"
+            },
+            {
+              "name": "field5",
+              "selector": "div:nth-child(5)"
+            },
+            {
+              "name": "field6",
+              "selector": "div:nth-child(6)"
+            }
+          ]
+        }
       }
     }
   ],
@@ -46,7 +84,75 @@
           "value": "Jump to"
         }
       ]
+    },
+    {
+      "id": "razer-blade18-specs-row",
+      "fields": [
+        {
+          "component": "select",
+          "valueType": "string",
+          "name": "rowtype",
+          "label": "Row type",
+          "description": "Which kind of row this is. See the block README for the full contract.",
+          "options": [
+            {
+              "name": "Setting",
+              "value": "setting"
+            },
+            {
+              "name": "Spec group",
+              "value": "group"
+            },
+            {
+              "name": "Spec row",
+              "value": "spec"
+            }
+          ]
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "key",
+          "label": "Key",
+          "description": "Stable, zero-padded (chip-01, spec-02\u2026). Reuse a preset key to override it; a new key appends."
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "field3",
+          "label": "Value / label",
+          "description": "setting: the value \u00b7 group: group name \u00b7 spec: its group key"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "field4",
+          "label": "Second value",
+          "description": "spec: the spec label"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "field5",
+          "label": "Third value",
+          "description": "spec: the spec value"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "field6",
+          "label": "Fourth value",
+          "description": "unused by the preset row types"
+        }
+      ]
     }
   ],
-  "filters": []
+  "filters": [
+    {
+      "id": "razer-blade18-specs",
+      "components": [
+        "razer-blade18-specs-row"
+      ]
+    }
+  ]
 }

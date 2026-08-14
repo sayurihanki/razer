@@ -1230,6 +1230,52 @@
               "rows": 1,
               "columns": 8
             }
+          },
+          "filter": "razer-blade18-configure"
+        },
+        {
+          "title": "Razer Blade 18 Configure Row",
+          "id": "razer-blade18-configure-row",
+          "model": "razer-blade18-configure-row",
+          "plugins": {
+            "da": {
+              "rows": 1,
+              "columns": 8,
+              "fields": [
+                {
+                  "name": "rowtype",
+                  "selector": "div:nth-child(1)"
+                },
+                {
+                  "name": "key",
+                  "selector": "div:nth-child(2)"
+                },
+                {
+                  "name": "field3",
+                  "selector": "div:nth-child(3)"
+                },
+                {
+                  "name": "field4",
+                  "selector": "div:nth-child(4)"
+                },
+                {
+                  "name": "field5",
+                  "selector": "div:nth-child(5)"
+                },
+                {
+                  "name": "field6",
+                  "selector": "div:nth-child(6)"
+                },
+                {
+                  "name": "field7",
+                  "selector": "div:nth-child(7)"
+                },
+                {
+                  "name": "field8",
+                  "selector": "div:nth-child(8)"
+                }
+              ]
+            }
           }
         },
         {
@@ -1241,6 +1287,52 @@
               "name": "razer-blade18-dualmode",
               "rows": 1,
               "columns": 8
+            }
+          },
+          "filter": "razer-blade18-dualmode"
+        },
+        {
+          "title": "Razer Blade 18 Dual Mode Row",
+          "id": "razer-blade18-dualmode-row",
+          "model": "razer-blade18-dualmode-row",
+          "plugins": {
+            "da": {
+              "rows": 1,
+              "columns": 8,
+              "fields": [
+                {
+                  "name": "rowtype",
+                  "selector": "div:nth-child(1)"
+                },
+                {
+                  "name": "key",
+                  "selector": "div:nth-child(2)"
+                },
+                {
+                  "name": "field3",
+                  "selector": "div:nth-child(3)"
+                },
+                {
+                  "name": "field4",
+                  "selector": "div:nth-child(4)"
+                },
+                {
+                  "name": "field5",
+                  "selector": "div:nth-child(5)"
+                },
+                {
+                  "name": "field6",
+                  "selector": "div:nth-child(6)"
+                },
+                {
+                  "name": "field7",
+                  "selector": "div:nth-child(7)"
+                },
+                {
+                  "name": "field8",
+                  "selector": "div:nth-child(8)"
+                }
+              ]
             }
           }
         },
@@ -1254,6 +1346,40 @@
               "rows": 1,
               "columns": 5
             }
+          },
+          "filter": "razer-blade18-hero"
+        },
+        {
+          "title": "Razer Blade 18 Hero Row",
+          "id": "razer-blade18-hero-row",
+          "model": "razer-blade18-hero-row",
+          "plugins": {
+            "da": {
+              "rows": 1,
+              "columns": 5,
+              "fields": [
+                {
+                  "name": "rowtype",
+                  "selector": "div:nth-child(1)"
+                },
+                {
+                  "name": "key",
+                  "selector": "div:nth-child(2)"
+                },
+                {
+                  "name": "field3",
+                  "selector": "div:nth-child(3)"
+                },
+                {
+                  "name": "field4",
+                  "selector": "div:nth-child(4)"
+                },
+                {
+                  "name": "field5",
+                  "selector": "div:nth-child(5)"
+                }
+              ]
+            }
           }
         },
         {
@@ -1266,6 +1392,48 @@
               "rows": 1,
               "columns": 7
             }
+          },
+          "filter": "razer-blade18-power"
+        },
+        {
+          "title": "Razer Blade 18 Power Row",
+          "id": "razer-blade18-power-row",
+          "model": "razer-blade18-power-row",
+          "plugins": {
+            "da": {
+              "rows": 1,
+              "columns": 7,
+              "fields": [
+                {
+                  "name": "rowtype",
+                  "selector": "div:nth-child(1)"
+                },
+                {
+                  "name": "key",
+                  "selector": "div:nth-child(2)"
+                },
+                {
+                  "name": "field3",
+                  "selector": "div:nth-child(3)"
+                },
+                {
+                  "name": "field4",
+                  "selector": "div:nth-child(4)"
+                },
+                {
+                  "name": "field5",
+                  "selector": "div:nth-child(5)"
+                },
+                {
+                  "name": "field6",
+                  "selector": "div:nth-child(6)"
+                },
+                {
+                  "name": "field7",
+                  "selector": "div:nth-child(7)"
+                }
+              ]
+            }
           }
         },
         {
@@ -1277,6 +1445,44 @@
               "name": "razer-blade18-specs",
               "rows": 1,
               "columns": 6
+            }
+          },
+          "filter": "razer-blade18-specs"
+        },
+        {
+          "title": "Razer Blade 18 Specs Row",
+          "id": "razer-blade18-specs-row",
+          "model": "razer-blade18-specs-row",
+          "plugins": {
+            "da": {
+              "rows": 1,
+              "columns": 6,
+              "fields": [
+                {
+                  "name": "rowtype",
+                  "selector": "div:nth-child(1)"
+                },
+                {
+                  "name": "key",
+                  "selector": "div:nth-child(2)"
+                },
+                {
+                  "name": "field3",
+                  "selector": "div:nth-child(3)"
+                },
+                {
+                  "name": "field4",
+                  "selector": "div:nth-child(4)"
+                },
+                {
+                  "name": "field5",
+                  "selector": "div:nth-child(5)"
+                },
+                {
+                  "name": "field6",
+                  "selector": "div:nth-child(6)"
+                }
+              ]
             }
           }
         },

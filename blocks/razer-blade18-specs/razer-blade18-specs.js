@@ -17,7 +17,7 @@
  */
 
 import {
-  el, mergeList, mergeSettings, parseTable, revealOnScroll,
+  carryInstrumentation, el, mergeList, mergeSettings, parseTable, revealOnScroll,
 } from '../../scripts/razer-authoring.js';
 
 export const DEFAULT_SETTINGS = {
@@ -152,15 +152,16 @@ export default async function decorate(block) {
   filled.forEach((group) => {
     const rows = el('dl', 'spec-rows');
     buckets.get(group.key).forEach((spec) => {
-      rows.append(
-        el('dt', '', [spec.label]),
-        el('dd', '', [spec.value]),
-      );
+      const term = el('dt', '', [spec.label]);
+      const value = el('dd', '', [spec.value]);
+      /* A <dt>/<dd> pair has no shared wrapper, so the row binds to its term
+         and the two cells bind to the pair. */
+      carryInstrumentation(parsed, 'spec', spec.key, term, { 3: term, 4: value });
+      rows.append(term, value);
     });
-    const groupNode = el('section', 'spec-group', [
-      el('h3', 'group-title', [group.label]),
-      rows,
-    ]);
+    const title = el('h3', 'group-title', [group.label]);
+    carryInstrumentation(parsed, 'group', group.key, title, { 2: title });
+    const groupNode = el('section', 'spec-group', [title, rows]);
     groupNode.id = `b18-${group.key}`;
     table.append(groupNode);
   });
