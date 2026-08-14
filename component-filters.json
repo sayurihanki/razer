@@ -117,6 +117,12 @@
     "components": []
   },
   {
+    "id": "razer-blade18-hero",
+    "components": [
+      "razer-blade18-hero-row"
+    ]
+  },
+  {
     "id": "razer-minipage-block2",
     "components": [
       "razer-minipage-block2-setting",

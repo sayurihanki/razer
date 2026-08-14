@@ -3154,6 +3154,55 @@
     ]
   },
   {
+    "id": "razer-blade18-hero-row",
+    "fields": [
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "rowtype",
+        "label": "Row type",
+        "options": [
+          {
+            "name": "Setting",
+            "value": "setting"
+          },
+          {
+            "name": "Chip",
+            "value": "chip"
+          },
+          {
+            "name": "Call to action",
+            "value": "cta"
+          }
+        ]
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "key",
+        "label": "Key"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "field3",
+        "label": "Value / label"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "field4",
+        "label": "Value 2"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "field5",
+        "label": "Value 3"
+      }
+    ]
+  },
+  {
     "id": "razer-blade18-power",
     "fields": [
       {

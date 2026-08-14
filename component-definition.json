@@ -1254,6 +1254,40 @@
               "rows": 1,
               "columns": 5
             }
+          },
+          "filter": "razer-blade18-hero"
+        },
+        {
+          "title": "Blade 18 Hero Row",
+          "id": "razer-blade18-hero-row",
+          "model": "razer-blade18-hero-row",
+          "plugins": {
+            "da": {
+              "rows": 1,
+              "columns": 5,
+              "fields": [
+                {
+                  "name": "rowtype",
+                  "selector": "div:nth-child(1)"
+                },
+                {
+                  "name": "key",
+                  "selector": "div:nth-child(2)"
+                },
+                {
+                  "name": "field3",
+                  "selector": "div:nth-child(3)"
+                },
+                {
+                  "name": "field4",
+                  "selector": "div:nth-child(4)"
+                },
+                {
+                  "name": "field5",
+                  "selector": "div:nth-child(5)"
+                }
+              ]
+            }
           }
         },
         {
