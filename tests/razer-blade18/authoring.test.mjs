@@ -19,6 +19,7 @@ import test from 'node:test';
 
 import {
   applyValue,
+  carryInstrumentation,
   escapeMarkup,
   mergeList,
   mergeSettings,
@@ -157,6 +158,63 @@ test('authored text reaching an SVG string cannot carry markup', () => {
   assert.ok(!escaped.includes('<'), 'no raw angle brackets survive');
   assert.ok(!escaped.includes('"'), 'no raw quote can close an attribute');
   assert.equal(escapeMarkup('Chroma & light'), 'Chroma &amp; light');
+});
+
+/* ── Universal Editor instrumentation ───────────────────────────── */
+
+/* moveInstrumentation works on real attribute APIs, so the fake cells grow
+   just enough of one to be moved between. */
+function aueCell(text, attrs = {}) {
+  const store = new Map(Object.entries(attrs));
+  return {
+    textContent: text,
+    querySelector: () => null,
+    get attributes() {
+      return [...store.keys()].map((nodeName) => ({ nodeName }));
+    },
+    getAttribute: (name) => store.get(name) ?? null,
+    setAttribute: (name, value) => store.set(name, value),
+    removeAttribute: (name) => store.delete(name),
+    has: (name) => store.has(name),
+  };
+}
+
+test('an authored row hands its instrumentation to what was rendered from it', () => {
+  const label = aueCell('Graphics', { 'data-aue-prop': 'field3', 'data-aue-type': 'text' });
+  const value = aueCell('RTX 5090', { 'data-aue-prop': 'field4', 'data-aue-type': 'text' });
+  const source = {
+    children: [aueCell('chip'), aueCell('chip-01'), label, value],
+    attributes: [{ nodeName: 'data-aue-resource' }, { nodeName: 'class' }],
+    getAttribute: (n) => (n === 'data-aue-resource' ? 'urn:ab:section-0/block-0/item-1' : null),
+    setAttribute: () => {},
+    removeAttribute: () => {},
+  };
+  const parsed = { rowNodes: new Map([['chip', new Map([['chip-01', source]])]]) };
+
+  const renderedItem = aueCell('');
+  const renderedLabel = aueCell('');
+  const renderedValue = aueCell('');
+  carryInstrumentation(parsed, 'chip', 'chip-01', renderedItem, {
+    2: renderedLabel, 3: renderedValue,
+  });
+
+  assert.equal(renderedItem.getAttribute('data-aue-resource'), 'urn:ab:section-0/block-0/item-1');
+  assert.equal(renderedItem.getAttribute('class'), null, 'only data-aue-* moves, not styling');
+  assert.equal(renderedLabel.getAttribute('data-aue-prop'), 'field3');
+  assert.equal(renderedValue.getAttribute('data-aue-prop'), 'field4');
+  assert.equal(label.has('data-aue-prop'), false, 'the source cell gives the attribute up');
+});
+
+test('an item with no authored row is left alone rather than throwing', () => {
+  const parsed = { rowNodes: new Map([['chip', new Map()]]) };
+  const rendered = aueCell('');
+  assert.doesNotThrow(() => carryInstrumentation(parsed, 'chip', 'chip-99', rendered));
+  assert.equal(rendered.getAttribute('data-aue-resource'), null);
+});
+
+test('a table parsed outside the editor carries row nodes for every entry', () => {
+  const parsed = parse(row('item', 'item-03', 'Third', 'Three'));
+  assert.ok(parsed.rowNodes.get('item').has('item-03'));
 });
 
 /* ── Baked-in defaults ──────────────────────────────────────────── */

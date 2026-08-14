@@ -15,7 +15,7 @@
  */
 
 import {
-  el, mergeList, mergeSettings, parseTable, revealOnScroll,
+  carryInstrumentation, el, mergeList, mergeSettings, parseTable, revealOnScroll,
 } from '../../scripts/razer-authoring.js';
 
 export const DEFAULT_SETTINGS = {
@@ -112,9 +112,11 @@ export default async function decorate(block) {
        leaving three identically-labelled links for a screen reader. */
     cta.setAttribute('aria-label', `${config['cta-label']}: ${build.name}`);
 
+    const name = el('h3', 'build-name', [build.name]);
+    const flag = build.flag && el('span', 'build-flag', [build.flag]);
     const card = el('li', `build-card${build.flag ? ' is-featured' : ''}`, [
-      build.flag && el('span', 'build-flag', [build.flag]),
-      el('h3', 'build-name', [build.name]),
+      flag,
+      name,
       rows,
       build.price && el('p', 'build-price', [
         config['price-prefix'] && el('span', 'price-prefix', [config['price-prefix']]),
@@ -122,11 +124,16 @@ export default async function decorate(block) {
       ]),
       config['cta-label'] && cta,
     ]);
+    carryInstrumentation(parsed, 'build', build.key, card, { 2: name, 7: flag });
     grid.append(card);
   });
 
   const assureRail = el('ul', 'build-assure');
-  assurances.forEach((item) => assureRail.append(el('li', '', [item.label])));
+  assurances.forEach((entry) => {
+    const item = el('li', '', [entry.label]);
+    carryInstrumentation(parsed, 'assure', entry.key, item, { 2: item });
+    assureRail.append(item);
+  });
 
   const closingCopy = el('div', 'closing-copy', [
     config['closing-title'] && el('h3', 'closing-title', [config['closing-title']]),

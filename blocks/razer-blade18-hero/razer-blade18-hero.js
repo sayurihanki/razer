@@ -24,7 +24,7 @@
  */
 
 import {
-  el, escapeMarkup, mergeList, mergeSettings, parseTable, revealOnScroll,
+  carryInstrumentation, el, escapeMarkup, mergeList, mergeSettings, parseTable, revealOnScroll,
 } from '../../scripts/razer-authoring.js';
 
 export const DEFAULT_SETTINGS = {
@@ -314,6 +314,7 @@ export default async function decorate(block) {
     ctas.forEach((cta) => {
       const link = el('a', `button button-${cta.variant || 'outline'}`, [cta.label]);
       link.href = cta.href || '#';
+      carryInstrumentation(parsed, 'cta', cta.key, link);
       row.append(link);
     });
     copy.append(row);
@@ -338,10 +339,11 @@ export default async function decorate(block) {
 
   const marquee = el('ul', 'hero-marquee');
   chips.forEach((chip) => {
-    marquee.append(el('li', 'marquee-chip', [
-      el('span', 'chip-label', [chip.label]),
-      el('span', 'chip-value', [chip.value]),
-    ]));
+    const label = el('span', 'chip-label', [chip.label]);
+    const value = el('span', 'chip-value', [chip.value]);
+    const item = el('li', 'marquee-chip', [label, value]);
+    carryInstrumentation(parsed, 'chip', chip.key, item, { 2: label, 3: value });
+    marquee.append(item);
   });
 
   const rail = el('div', 'hero-rail', [

@@ -10,6 +10,48 @@
           "rows": 1,
           "columns": 7
         }
+      },
+      "filter": "razer-blade18-power"
+    },
+    {
+      "title": "Razer Blade 18 Power Row",
+      "id": "razer-blade18-power-row",
+      "model": "razer-blade18-power-row",
+      "plugins": {
+        "da": {
+          "rows": 1,
+          "columns": 7,
+          "fields": [
+            {
+              "name": "rowtype",
+              "selector": "div:nth-child(1)"
+            },
+            {
+              "name": "key",
+              "selector": "div:nth-child(2)"
+            },
+            {
+              "name": "field3",
+              "selector": "div:nth-child(3)"
+            },
+            {
+              "name": "field4",
+              "selector": "div:nth-child(4)"
+            },
+            {
+              "name": "field5",
+              "selector": "div:nth-child(5)"
+            },
+            {
+              "name": "field6",
+              "selector": "div:nth-child(6)"
+            },
+            {
+              "name": "field7",
+              "selector": "div:nth-child(7)"
+            }
+          ]
+        }
       }
     }
   ],
@@ -74,7 +116,86 @@
           "value": "Cutaway diagram of the Blade 18 cooling system: a vapour chamber over the CPU and GPU dies, heat pipes to three fin stacks, and three fans"
         }
       ]
+    },
+    {
+      "id": "razer-blade18-power-row",
+      "fields": [
+        {
+          "component": "select",
+          "valueType": "string",
+          "name": "rowtype",
+          "label": "Row type",
+          "description": "Which kind of row this is. See the block README for the full contract.",
+          "options": [
+            {
+              "name": "Setting",
+              "value": "setting"
+            },
+            {
+              "name": "Stat",
+              "value": "stat"
+            },
+            {
+              "name": "Heat-path step",
+              "value": "flow"
+            },
+            {
+              "name": "Feature card",
+              "value": "card"
+            }
+          ]
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "key",
+          "label": "Key",
+          "description": "Stable, zero-padded (chip-01, spec-02\u2026). Reuse a preset key to override it; a new key appends."
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "field3",
+          "label": "Value / label",
+          "description": "setting: the value \u00b7 stat: the figure \u00b7 flow: label \u00b7 card: index"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "field4",
+          "label": "Second value",
+          "description": "stat: unit \u00b7 card: title"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "field5",
+          "label": "Third value",
+          "description": "stat: label \u00b7 card: body copy"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "field6",
+          "label": "Fourth value",
+          "description": "card: meta line"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "field7",
+          "label": "Fifth value",
+          "description": "unused by the preset row types"
+        }
+      ]
     }
   ],
-  "filters": []
+  "filters": [
+    {
+      "id": "razer-blade18-power",
+      "components": [
+        "razer-blade18-power-row"
+      ]
+    }
+  ]
 }

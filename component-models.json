@@ -3053,6 +3053,81 @@
     ]
   },
   {
+    "id": "razer-blade18-configure-row",
+    "fields": [
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "rowtype",
+        "label": "Row type",
+        "description": "Which kind of row this is. See the block README for the full contract.",
+        "options": [
+          {
+            "name": "Setting",
+            "value": "setting"
+          },
+          {
+            "name": "Configuration",
+            "value": "build"
+          },
+          {
+            "name": "Assurance",
+            "value": "assure"
+          }
+        ]
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "key",
+        "label": "Key",
+        "description": "Stable, zero-padded (chip-01, spec-02…). Reuse a preset key to override it; a new key appends."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "field3",
+        "label": "Value / label",
+        "description": "setting: the value · build: name · assure: label"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "field4",
+        "label": "Second value",
+        "description": "build: graphics"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "field5",
+        "label": "Third value",
+        "description": "build: memory"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "field6",
+        "label": "Fourth value",
+        "description": "build: storage"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "field7",
+        "label": "Fifth value",
+        "description": "build: price"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "field8",
+        "label": "Sixth value",
+        "description": "build: ribbon text — any text makes it the featured card"
+      }
+    ]
+  },
+  {
     "id": "razer-blade18-dualmode",
     "fields": [
       {
@@ -3096,6 +3171,81 @@
         "name": "pitch-label",
         "label": "Pixel pitch label",
         "value": "Pixel pitch"
+      }
+    ]
+  },
+  {
+    "id": "razer-blade18-dualmode-row",
+    "fields": [
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "rowtype",
+        "label": "Row type",
+        "description": "Which kind of row this is. See the block README for the full contract.",
+        "options": [
+          {
+            "name": "Setting",
+            "value": "setting"
+          },
+          {
+            "name": "Display mode",
+            "value": "mode"
+          },
+          {
+            "name": "Shared spec",
+            "value": "spec"
+          }
+        ]
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "key",
+        "label": "Key",
+        "description": "Stable, zero-padded (chip-01, spec-02…). Reuse a preset key to override it; a new key appends."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "field3",
+        "label": "Value / label",
+        "description": "setting: the value · mode: tab label · spec: label"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "field4",
+        "label": "Second value",
+        "description": "mode: badge (UHD+/FHD+) · spec: the value"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "field5",
+        "label": "Resolution",
+        "description": "mode only: e.g. 3840 × 2400"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "field6",
+        "label": "Refresh rate",
+        "description": "mode only: the number in Hz"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "field7",
+        "label": "Headline",
+        "description": "mode only"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "field8",
+        "label": "Body copy",
+        "description": "mode only"
       }
     ]
   },
@@ -3150,6 +3300,60 @@
         "name": "screen-alt",
         "label": "Machine alt text",
         "value": "Razer Blade 18 open on a desk, its Chroma keyboard and display lit"
+      }
+    ]
+  },
+  {
+    "id": "razer-blade18-hero-row",
+    "fields": [
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "rowtype",
+        "label": "Row type",
+        "description": "Which kind of row this is. See the block README for the full contract.",
+        "options": [
+          {
+            "name": "Setting",
+            "value": "setting"
+          },
+          {
+            "name": "Spec chip",
+            "value": "chip"
+          },
+          {
+            "name": "Call to action",
+            "value": "cta"
+          }
+        ]
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "key",
+        "label": "Key",
+        "description": "Stable, zero-padded (chip-01, spec-02…). Reuse a preset key to override it; a new key appends."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "field3",
+        "label": "Value / label",
+        "description": "setting: the value · chip: label · cta: button label"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "field4",
+        "label": "Second value",
+        "description": "chip: the spec itself · cta: link target"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "field5",
+        "label": "Third value",
+        "description": "cta: variant — primary, outline or ghost"
       }
     ]
   },
@@ -3215,6 +3419,78 @@
     ]
   },
   {
+    "id": "razer-blade18-power-row",
+    "fields": [
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "rowtype",
+        "label": "Row type",
+        "description": "Which kind of row this is. See the block README for the full contract.",
+        "options": [
+          {
+            "name": "Setting",
+            "value": "setting"
+          },
+          {
+            "name": "Stat",
+            "value": "stat"
+          },
+          {
+            "name": "Heat-path step",
+            "value": "flow"
+          },
+          {
+            "name": "Feature card",
+            "value": "card"
+          }
+        ]
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "key",
+        "label": "Key",
+        "description": "Stable, zero-padded (chip-01, spec-02…). Reuse a preset key to override it; a new key appends."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "field3",
+        "label": "Value / label",
+        "description": "setting: the value · stat: the figure · flow: label · card: index"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "field4",
+        "label": "Second value",
+        "description": "stat: unit · card: title"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "field5",
+        "label": "Third value",
+        "description": "stat: label · card: body copy"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "field6",
+        "label": "Fourth value",
+        "description": "card: meta line"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "field7",
+        "label": "Fifth value",
+        "description": "unused by the preset row types"
+      }
+    ]
+  },
+  {
     "id": "razer-blade18-specs",
     "fields": [
       {
@@ -3244,6 +3520,67 @@
         "name": "index-label",
         "label": "Index label",
         "value": "Jump to"
+      }
+    ]
+  },
+  {
+    "id": "razer-blade18-specs-row",
+    "fields": [
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "rowtype",
+        "label": "Row type",
+        "description": "Which kind of row this is. See the block README for the full contract.",
+        "options": [
+          {
+            "name": "Setting",
+            "value": "setting"
+          },
+          {
+            "name": "Spec group",
+            "value": "group"
+          },
+          {
+            "name": "Spec row",
+            "value": "spec"
+          }
+        ]
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "key",
+        "label": "Key",
+        "description": "Stable, zero-padded (chip-01, spec-02…). Reuse a preset key to override it; a new key appends."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "field3",
+        "label": "Value / label",
+        "description": "setting: the value · group: group name · spec: its group key"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "field4",
+        "label": "Second value",
+        "description": "spec: the spec label"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "field5",
+        "label": "Third value",
+        "description": "spec: the spec value"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "field6",
+        "label": "Fourth value",
+        "description": "unused by the preset row types"
       }
     ]
   },

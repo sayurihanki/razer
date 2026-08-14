@@ -10,6 +10,52 @@
           "rows": 1,
           "columns": 8
         }
+      },
+      "filter": "razer-blade18-dualmode"
+    },
+    {
+      "title": "Razer Blade 18 Dual Mode Row",
+      "id": "razer-blade18-dualmode-row",
+      "model": "razer-blade18-dualmode-row",
+      "plugins": {
+        "da": {
+          "rows": 1,
+          "columns": 8,
+          "fields": [
+            {
+              "name": "rowtype",
+              "selector": "div:nth-child(1)"
+            },
+            {
+              "name": "key",
+              "selector": "div:nth-child(2)"
+            },
+            {
+              "name": "field3",
+              "selector": "div:nth-child(3)"
+            },
+            {
+              "name": "field4",
+              "selector": "div:nth-child(4)"
+            },
+            {
+              "name": "field5",
+              "selector": "div:nth-child(5)"
+            },
+            {
+              "name": "field6",
+              "selector": "div:nth-child(6)"
+            },
+            {
+              "name": "field7",
+              "selector": "div:nth-child(7)"
+            },
+            {
+              "name": "field8",
+              "selector": "div:nth-child(8)"
+            }
+          ]
+        }
       }
     }
   ],
@@ -60,7 +106,89 @@
           "value": "Pixel pitch"
         }
       ]
+    },
+    {
+      "id": "razer-blade18-dualmode-row",
+      "fields": [
+        {
+          "component": "select",
+          "valueType": "string",
+          "name": "rowtype",
+          "label": "Row type",
+          "description": "Which kind of row this is. See the block README for the full contract.",
+          "options": [
+            {
+              "name": "Setting",
+              "value": "setting"
+            },
+            {
+              "name": "Display mode",
+              "value": "mode"
+            },
+            {
+              "name": "Shared spec",
+              "value": "spec"
+            }
+          ]
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "key",
+          "label": "Key",
+          "description": "Stable, zero-padded (chip-01, spec-02\u2026). Reuse a preset key to override it; a new key appends."
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "field3",
+          "label": "Value / label",
+          "description": "setting: the value \u00b7 mode: tab label \u00b7 spec: label"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "field4",
+          "label": "Second value",
+          "description": "mode: badge (UHD+/FHD+) \u00b7 spec: the value"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "field5",
+          "label": "Resolution",
+          "description": "mode only: e.g. 3840 \u00d7 2400"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "field6",
+          "label": "Refresh rate",
+          "description": "mode only: the number in Hz"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "field7",
+          "label": "Headline",
+          "description": "mode only"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "field8",
+          "label": "Body copy",
+          "description": "mode only"
+        }
+      ]
     }
   ],
-  "filters": []
+  "filters": [
+    {
+      "id": "razer-blade18-dualmode",
+      "components": [
+        "razer-blade18-dualmode-row"
+      ]
+    }
+  ]
 }

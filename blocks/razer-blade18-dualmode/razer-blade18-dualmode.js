@@ -25,7 +25,7 @@
  */
 
 import {
-  countTo, el, mergeList, mergeSettings, parseTable, revealOnScroll,
+  carryInstrumentation, countTo, el, mergeList, mergeSettings, parseTable, revealOnScroll,
 } from '../../scripts/razer-authoring.js';
 
 export const DEFAULT_SETTINGS = {
@@ -407,10 +407,11 @@ export default async function decorate(block) {
 
   const specRail = el('ul', 'panel-specs');
   specs.forEach((spec) => {
-    specRail.append(el('li', '', [
-      el('span', 'spec-label', [spec.label]),
-      el('span', 'spec-value', [spec.value]),
-    ]));
+    const label = el('span', 'spec-label', [spec.label]);
+    const value = el('span', 'spec-value', [spec.value]);
+    const item = el('li', '', [label, value]);
+    carryInstrumentation(parsed, 'spec', spec.key, item, { 2: label, 3: value });
+    specRail.append(item);
   });
 
   const panel = createPanel(canvas);
@@ -478,6 +479,7 @@ export default async function decorate(block) {
       event.preventDefault();
       select((index + step + modes.length) % modes.length, true);
     });
+    carryInstrumentation(parsed, 'mode', mode.key, tab);
     tabs.push(tab);
     tablist.append(tab);
   });

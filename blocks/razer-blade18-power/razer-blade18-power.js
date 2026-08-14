@@ -21,7 +21,8 @@
  */
 
 import {
-  countTo, el, escapeMarkup, mergeList, mergeSettings, parseTable, revealOnScroll,
+  carryInstrumentation, countTo, el, escapeMarkup, mergeList,
+  mergeSettings, parseTable, revealOnScroll,
 } from '../../scripts/razer-authoring.js';
 
 export const DEFAULT_SETTINGS = {
@@ -248,20 +249,29 @@ export default async function decorate(block) {
      the counter writes into or it would be overwritten every frame. */
   const rail = el('ul', 'power-stats');
   stats.forEach((stat) => {
-    rail.append(el('li', 'power-stat', [
+    const label = el('p', 'stat-label', [stat.label]);
+    const item = el('li', 'power-stat', [
       el('p', 'stat-figure', [
         el('span', 'stat-number', ['0']),
         stat.unit && el('span', 'stat-unit', [stat.unit]),
       ]),
-      el('p', 'stat-label', [stat.label]),
-    ]));
+      label,
+    ]);
+    /* The figure is skipped: the counter rewrites it every frame, so an
+       editable node there would be clobbered mid-animation. */
+    carryInstrumentation(parsed, 'stat', stat.key, item, { 4: label });
+    rail.append(item);
   });
 
   const drawing = el('div', 'thermal-drawing');
   drawing.innerHTML = schematicMarkup(config);
 
   const flowList = el('ol', 'thermal-flow');
-  flow.forEach((step) => flowList.append(el('li', '', [step.label])));
+  flow.forEach((step) => {
+    const item = el('li', '', [step.label]);
+    carryInstrumentation(parsed, 'flow', step.key, item, { 2: item });
+    flowList.append(item);
+  });
 
   const thermalCopy = el('div', 'thermal-copy', [
     config['thermal-eyebrow'] && el('p', 'eyebrow', [config['thermal-eyebrow']]),
@@ -277,12 +287,15 @@ export default async function decorate(block) {
 
   const cardGrid = el('ul', 'power-cards');
   cards.forEach((card) => {
-    cardGrid.append(el('li', 'power-card', [
-      card.index && el('span', 'card-index', [card.index]),
-      el('h3', 'card-title', [card.title]),
-      card.body && el('p', 'card-body', [card.body]),
-      card.meta && el('p', 'card-meta', [card.meta]),
-    ]));
+    const index = card.index && el('span', 'card-index', [card.index]);
+    const title = el('h3', 'card-title', [card.title]);
+    const body = card.body && el('p', 'card-body', [card.body]);
+    const meta = card.meta && el('p', 'card-meta', [card.meta]);
+    const item = el('li', 'power-card', [index, title, body, meta]);
+    carryInstrumentation(parsed, 'card', card.key, item, {
+      2: index, 3: title, 4: body, 5: meta,
+    });
+    cardGrid.append(item);
   });
 
   const section = el('section', 'blade-power', [

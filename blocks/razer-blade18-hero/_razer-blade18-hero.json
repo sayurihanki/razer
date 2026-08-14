@@ -10,6 +10,40 @@
           "rows": 1,
           "columns": 5
         }
+      },
+      "filter": "razer-blade18-hero"
+    },
+    {
+      "title": "Razer Blade 18 Hero Row",
+      "id": "razer-blade18-hero-row",
+      "model": "razer-blade18-hero-row",
+      "plugins": {
+        "da": {
+          "rows": 1,
+          "columns": 5,
+          "fields": [
+            {
+              "name": "rowtype",
+              "selector": "div:nth-child(1)"
+            },
+            {
+              "name": "key",
+              "selector": "div:nth-child(2)"
+            },
+            {
+              "name": "field3",
+              "selector": "div:nth-child(3)"
+            },
+            {
+              "name": "field4",
+              "selector": "div:nth-child(4)"
+            },
+            {
+              "name": "field5",
+              "selector": "div:nth-child(5)"
+            }
+          ]
+        }
       }
     }
   ],
@@ -67,7 +101,68 @@
           "value": "Razer Blade 18 open on a desk, its Chroma keyboard and display lit"
         }
       ]
+    },
+    {
+      "id": "razer-blade18-hero-row",
+      "fields": [
+        {
+          "component": "select",
+          "valueType": "string",
+          "name": "rowtype",
+          "label": "Row type",
+          "description": "Which kind of row this is. See the block README for the full contract.",
+          "options": [
+            {
+              "name": "Setting",
+              "value": "setting"
+            },
+            {
+              "name": "Spec chip",
+              "value": "chip"
+            },
+            {
+              "name": "Call to action",
+              "value": "cta"
+            }
+          ]
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "key",
+          "label": "Key",
+          "description": "Stable, zero-padded (chip-01, spec-02\u2026). Reuse a preset key to override it; a new key appends."
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "field3",
+          "label": "Value / label",
+          "description": "setting: the value \u00b7 chip: label \u00b7 cta: button label"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "field4",
+          "label": "Second value",
+          "description": "chip: the spec itself \u00b7 cta: link target"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "field5",
+          "label": "Third value",
+          "description": "cta: variant \u2014 primary, outline or ghost"
+        }
+      ]
     }
   ],
-  "filters": []
+  "filters": [
+    {
+      "id": "razer-blade18-hero",
+      "components": [
+        "razer-blade18-hero-row"
+      ]
+    }
+  ]
 }
