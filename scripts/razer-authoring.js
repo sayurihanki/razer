@@ -114,8 +114,17 @@ export function el(tag, className = '', children = []) {
 /**
  * Sorts the block's rows into settings and per-type key maps.
  *
- * Rows whose type is not in `types` are ignored, which is what lets an author
- * leave notes in the table without them reaching the render.
+ * Two row shapes reach a setting, because two editors write them. DA's table
+ * editor writes the family's typed form, `setting | <key> | <value>`. The
+ * Universal Editor has no concept of a row type — it writes a component's
+ * model fields as plain `<field> | <value>` pairs — so a two-cell row whose
+ * first cell is not a known row type is read as a setting too. That is what
+ * lets the same block be edited from either surface without either one
+ * needing to know about the other.
+ *
+ * The two-cell rule is deliberately narrow: a row with three or more cells and
+ * an unrecognised type is still ignored, so an author can keep notes in the
+ * table without them reaching the render.
  *
  * @param {Element} block The block element
  * @param {string[]} types The row types this block understands
@@ -138,8 +147,15 @@ export function parseTable(block, types) {
       }
       return;
     }
-    if (!key || !rows.has(type)) return;
-    rows.get(type).set(key, cells);
+    if (rows.has(type)) {
+      if (key) rows.get(type).set(key, cells);
+      return;
+    }
+    /* Universal Editor: `<field> | <value>`, so the type slot holds the key. */
+    if (type && cells.length === 2) {
+      settings.set(type, cellText(cells[1]));
+      settingCells.set(type, cells[1]);
+    }
   });
 
   return { settings, settingCells, rows };

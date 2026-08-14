@@ -16,7 +16,36 @@
   "models": [
     {
       "id": "razer-blade18-specs",
-      "fields": []
+      "fields": [
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "eyebrow",
+          "label": "Eyebrow",
+          "value": "Technical specifications"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "heading",
+          "label": "Heading",
+          "value": "The whole sheet."
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "body",
+          "label": "Body copy",
+          "value": "Every figure for the 2025 Razer Blade 18. Configurations vary by region and retailer."
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "index-label",
+          "label": "Index label",
+          "value": "Jump to"
+        }
+      ]
     }
   ],
   "filters": []

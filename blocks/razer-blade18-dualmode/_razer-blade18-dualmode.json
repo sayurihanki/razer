@@ -16,7 +16,50 @@
   "models": [
     {
       "id": "razer-blade18-dualmode",
-      "fields": []
+      "fields": [
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "eyebrow",
+          "label": "Eyebrow",
+          "value": "The display"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "heading",
+          "label": "Heading",
+          "value": "One panel. Two machines."
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "body",
+          "label": "Body copy",
+          "value": "Dual Mode switches the 18-inch panel between an ultra-sharp UHD+ desktop at 240Hz and a competition-grade FHD+ surface at 440Hz. Same screen, two entirely different jobs."
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "switch-label",
+          "label": "Mode switch label",
+          "value": "Choose a display mode"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "caption",
+          "label": "Simulation caption",
+          "value": "Simulated for illustration: the pixel lattice is drawn at the two modes\u2019 true 2:1 ratio, and motion persistence is exaggerated so the difference is visible on the screen you are reading this on."
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "pitch-label",
+          "label": "Pixel pitch label",
+          "value": "Pixel pitch"
+        }
+      ]
     }
   ],
   "filters": []

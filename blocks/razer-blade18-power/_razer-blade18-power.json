@@ -16,7 +16,64 @@
   "models": [
     {
       "id": "razer-blade18-power",
-      "fields": []
+      "fields": [
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "eyebrow",
+          "label": "Eyebrow",
+          "value": "Performance"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "heading",
+          "label": "Heading",
+          "value": "Everything, at once."
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "body",
+          "label": "Body copy",
+          "value": "A desktop-class GPU and a 24-core processor share one vapour chamber and three fans, so the Blade 18 holds its clocks instead of trading them away."
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "thermal-eyebrow",
+          "label": "Cooling eyebrow",
+          "value": "Cooling"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "thermal-title",
+          "label": "Cooling title",
+          "value": "One vapour chamber. Three fans."
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "thermal-body",
+          "label": "Cooling body",
+          "value": "A full-width vapour chamber spreads heat off the CPU and GPU dies the moment it appears, then hands it to fin stacks at both flanks and the rear. Three fans pull cool air across the whole stack \u2014 which is how 175 watts fits inside a chassis this thin."
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "flow-label",
+          "label": "Heat path label",
+          "value": "Heat path"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "schematic-alt",
+          "label": "Schematic alt text",
+          "value": "Cutaway diagram of the Blade 18 cooling system: a vapour chamber over the CPU and GPU dies, heat pipes to three fin stacks, and three fans"
+        }
+      ]
     }
   ],
   "filters": []

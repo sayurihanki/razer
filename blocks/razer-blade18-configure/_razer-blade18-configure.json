@@ -16,7 +16,99 @@
   "models": [
     {
       "id": "razer-blade18-configure",
-      "fields": []
+      "fields": [
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "eyebrow",
+          "label": "Eyebrow",
+          "value": "Configurations"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "heading",
+          "label": "Heading",
+          "value": "Pick your ceiling."
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "body",
+          "label": "Body copy",
+          "value": "Every Blade 18 ships with the same 18-inch dual-mode panel, the same Core Ultra 9 275HX and the same cooling stack. What you choose is how much graphics power sits underneath it."
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "price-prefix",
+          "label": "Price prefix",
+          "value": "From"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "currency",
+          "label": "Currency symbol",
+          "value": "US$"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "cta-label",
+          "label": "Build CTA label",
+          "value": "Configure at Razer.com"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "cta-href",
+          "label": "Build CTA link",
+          "value": "https://www.razer.com/gaming-laptops/razer-blade-18"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "closing-title",
+          "label": "Closing title",
+          "value": "Built to outlast the generation."
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "closing-body",
+          "label": "Closing body",
+          "value": "Two memory slots, two M.2 bays and a chassis milled from one piece of aluminium. The Blade 18 is meant to be opened, upgraded and kept."
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "closing-cta-label",
+          "label": "Closing CTA label",
+          "value": "Explore the Blade 18"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "closing-cta-href",
+          "label": "Closing CTA link",
+          "value": "https://www.razer.com/gaming-laptops/razer-blade-18"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "closing-image-alt",
+          "label": "Closing image alt text",
+          "value": "Razer Blade 18 open on a desk, its Chroma keyboard and wave wallpaper lit in a dark room"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "price-note",
+          "label": "Price note",
+          "value": "Prices are indicative US recommended retail and exclude tax. Availability and configuration vary by region."
+        }
+      ]
     }
   ],
   "filters": []

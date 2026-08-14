@@ -2958,23 +2958,294 @@
   },
   {
     "id": "razer-blade18-configure",
-    "fields": []
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "eyebrow",
+        "label": "Eyebrow",
+        "value": "Configurations"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "heading",
+        "label": "Heading",
+        "value": "Pick your ceiling."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "body",
+        "label": "Body copy",
+        "value": "Every Blade 18 ships with the same 18-inch dual-mode panel, the same Core Ultra 9 275HX and the same cooling stack. What you choose is how much graphics power sits underneath it."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "price-prefix",
+        "label": "Price prefix",
+        "value": "From"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "currency",
+        "label": "Currency symbol",
+        "value": "US$"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "cta-label",
+        "label": "Build CTA label",
+        "value": "Configure at Razer.com"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "cta-href",
+        "label": "Build CTA link",
+        "value": "https://www.razer.com/gaming-laptops/razer-blade-18"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "closing-title",
+        "label": "Closing title",
+        "value": "Built to outlast the generation."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "closing-body",
+        "label": "Closing body",
+        "value": "Two memory slots, two M.2 bays and a chassis milled from one piece of aluminium. The Blade 18 is meant to be opened, upgraded and kept."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "closing-cta-label",
+        "label": "Closing CTA label",
+        "value": "Explore the Blade 18"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "closing-cta-href",
+        "label": "Closing CTA link",
+        "value": "https://www.razer.com/gaming-laptops/razer-blade-18"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "closing-image-alt",
+        "label": "Closing image alt text",
+        "value": "Razer Blade 18 open on a desk, its Chroma keyboard and wave wallpaper lit in a dark room"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "price-note",
+        "label": "Price note",
+        "value": "Prices are indicative US recommended retail and exclude tax. Availability and configuration vary by region."
+      }
+    ]
   },
   {
     "id": "razer-blade18-dualmode",
-    "fields": []
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "eyebrow",
+        "label": "Eyebrow",
+        "value": "The display"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "heading",
+        "label": "Heading",
+        "value": "One panel. Two machines."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "body",
+        "label": "Body copy",
+        "value": "Dual Mode switches the 18-inch panel between an ultra-sharp UHD+ desktop at 240Hz and a competition-grade FHD+ surface at 440Hz. Same screen, two entirely different jobs."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "switch-label",
+        "label": "Mode switch label",
+        "value": "Choose a display mode"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "caption",
+        "label": "Simulation caption",
+        "value": "Simulated for illustration: the pixel lattice is drawn at the two modes’ true 2:1 ratio, and motion persistence is exaggerated so the difference is visible on the screen you are reading this on."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "pitch-label",
+        "label": "Pixel pitch label",
+        "value": "Pixel pitch"
+      }
+    ]
   },
   {
     "id": "razer-blade18-hero",
-    "fields": []
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "eyebrow",
+        "label": "Eyebrow",
+        "value": "Gaming Laptops — Flagship"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "title",
+        "label": "Headline",
+        "value": "Razer Blade 18"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "tagline",
+        "label": "Tagline",
+        "value": "Desktop power, folded flat."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "body",
+        "label": "Body copy",
+        "value": "A GeForce RTX 5090 at up to 175W and an 18-inch panel that switches from UHD+ colour work to 440Hz competition — in a CNC-milled aluminium unibody."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "scroll-label",
+        "label": "Scroll cue label",
+        "value": "Scroll to explore"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "scroll-href",
+        "label": "Scroll cue target",
+        "value": "#dual-mode"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "screen-alt",
+        "label": "Machine alt text",
+        "value": "Razer Blade 18 open on a desk, its Chroma keyboard and display lit"
+      }
+    ]
   },
   {
     "id": "razer-blade18-power",
-    "fields": []
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "eyebrow",
+        "label": "Eyebrow",
+        "value": "Performance"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "heading",
+        "label": "Heading",
+        "value": "Everything, at once."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "body",
+        "label": "Body copy",
+        "value": "A desktop-class GPU and a 24-core processor share one vapour chamber and three fans, so the Blade 18 holds its clocks instead of trading them away."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "thermal-eyebrow",
+        "label": "Cooling eyebrow",
+        "value": "Cooling"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "thermal-title",
+        "label": "Cooling title",
+        "value": "One vapour chamber. Three fans."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "thermal-body",
+        "label": "Cooling body",
+        "value": "A full-width vapour chamber spreads heat off the CPU and GPU dies the moment it appears, then hands it to fin stacks at both flanks and the rear. Three fans pull cool air across the whole stack — which is how 175 watts fits inside a chassis this thin."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "flow-label",
+        "label": "Heat path label",
+        "value": "Heat path"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "schematic-alt",
+        "label": "Schematic alt text",
+        "value": "Cutaway diagram of the Blade 18 cooling system: a vapour chamber over the CPU and GPU dies, heat pipes to three fin stacks, and three fans"
+      }
+    ]
   },
   {
     "id": "razer-blade18-specs",
-    "fields": []
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "eyebrow",
+        "label": "Eyebrow",
+        "value": "Technical specifications"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "heading",
+        "label": "Heading",
+        "value": "The whole sheet."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "body",
+        "label": "Body copy",
+        "value": "Every figure for the 2025 Razer Blade 18. Configurations vary by region and retailer."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "index-label",
+        "label": "Index label",
+        "value": "Jump to"
+      }
+    ]
   },
   {
     "id": "razer-campaign-carousel",

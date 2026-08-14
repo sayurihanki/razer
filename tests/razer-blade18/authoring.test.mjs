@@ -122,6 +122,34 @@ test('row types and keys are matched case-insensitively', () => {
   assert.equal(items.length, 2, 'the row matched the preset rather than appending');
 });
 
+/* ── The Universal Editor's row shape ───────────────────────────── */
+
+test('a two-cell row is read as a setting, which is how UE writes fields', () => {
+  const parsed = parse(row('heading', 'Written from the Universal Editor'));
+  assert.equal(
+    mergeSettings(parsed, PRESET_SETTINGS).heading,
+    'Written from the Universal Editor',
+  );
+});
+
+test('the UE and DA row shapes mean the same thing', () => {
+  const viaUE = mergeSettings(parse(row('eyebrow', 'Display')), PRESET_SETTINGS);
+  const viaDA = mergeSettings(parse(row('setting', 'eyebrow', 'Display')), PRESET_SETTINGS);
+  assert.deepEqual(viaUE, viaDA);
+});
+
+test('a two-cell row never shadows a real row type', () => {
+  // `item` is a known type; a two-cell `item` row is a malformed list entry,
+  // not a setting called "item".
+  const parsed = parse(row('item', 'item-01'));
+  assert.equal(parsed.settings.has('item'), false);
+});
+
+test('an unknown row with three or more cells is still ignored', () => {
+  const parsed = parse(row('note', 'todo', 'confirm the 5080 price'));
+  assert.equal(parsed.settings.has('note'), false);
+});
+
 /* ── Escaping ───────────────────────────────────────────────────── */
 
 test('authored text reaching an SVG string cannot carry markup', () => {

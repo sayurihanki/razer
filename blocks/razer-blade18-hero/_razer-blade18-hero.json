@@ -16,7 +16,57 @@
   "models": [
     {
       "id": "razer-blade18-hero",
-      "fields": []
+      "fields": [
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "eyebrow",
+          "label": "Eyebrow",
+          "value": "Gaming Laptops \u2014 Flagship"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "title",
+          "label": "Headline",
+          "value": "Razer Blade 18"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "tagline",
+          "label": "Tagline",
+          "value": "Desktop power, folded flat."
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "body",
+          "label": "Body copy",
+          "value": "A GeForce RTX 5090 at up to 175W and an 18-inch panel that switches from UHD+ colour work to 440Hz competition \u2014 in a CNC-milled aluminium unibody."
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "scroll-label",
+          "label": "Scroll cue label",
+          "value": "Scroll to explore"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "scroll-href",
+          "label": "Scroll cue target",
+          "value": "#dual-mode"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "screen-alt",
+          "label": "Machine alt text",
+          "value": "Razer Blade 18 open on a desk, its Chroma keyboard and display lit"
+        }
+      ]
     }
   ],
   "filters": []
